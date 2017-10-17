@@ -1,0 +1,10 @@
+./Assembly-CSharp.csproj
+Library/*
+obj/*
+ProjectSettings/*
+meogTPS.sln
+Temp/*
+meogTPS.csproj
+./Assembly-CSharp.csproj
+
+Assets/main/LightingData.asset
