@@ -36,7 +36,7 @@ public class ChangeCharacter : MonoBehaviour {
     public void ReadyButton()
     {
         int protocolDetail;
-        if(CheckState.GetCurState() == State.ClientNotReady)
+        if(CheckState.GetCurState() == State.ClientNotReady || CheckState.GetCurState() == State.ClientNotAllReady)
         {
             protocolDetail = (int)ProtocolDetail.SetReadyGame;
             CheckState.ChangeState(State.ClientRequestGaemReady); // 요청 상태로 변경
