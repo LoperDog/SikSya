@@ -19,7 +19,8 @@ namespace ConstValueInfo
         ClientCommend,       // 클라이언트 명령
         RequestResult,       // 요청 결과
         SceneChange,         // 씬 변경
-        ExitGameProcess
+        ExitGameProcess,
+        RoomInfo
         //PlayerInfo          // 플레이어 정보( 캐릭터, 이름 )
     }
 
@@ -47,9 +48,14 @@ namespace ConstValueInfo
         MyInfoImage,                 // 내정보
         MyInfoName,
         OutMainGameScene,        // 게임씬에서 룸으로 이동
-        ReadyInfo
+        ReadyInfo,
+        RequestRoomInfo
     }
 
+    public enum ProtocolRoomPrivatePublic
+    {
+        Private, Public
+    };
 
     public enum ProtocolCharacterImageNameIndex
     {
@@ -99,7 +105,7 @@ namespace ConstValueInfo
 
     public enum ProtocolRoomSceneObj
     {
-        Room, ButtonTofu, ButtonMandu, ButtonTangsuyuk, ButtonBack, ButtonReady, ButtonLockCharacter, ButtonLockExit
+        Room, ButtonTofu, ButtonMandu, ButtonTangsuyuk, ButtonBack, ButtonReady, ButtonLockCharacter, ButtonLockExit, RoomInfoText
     }
 
     public enum ProtocolTeamAmount
@@ -135,6 +141,7 @@ namespace ConstValueInfo
     static public class ConstValue
     {
         public const int Port = 9000;
+        //public const string IP = "127.0.0.1";
         public const string IP = "192.168.30.51";
         public const int BufSizeRecv = 1024;
         public const int BufSizeSend = 1024;

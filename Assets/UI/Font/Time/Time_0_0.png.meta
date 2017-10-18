@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: a72c110d3d6b3f546ad38be6f64afe1d
+<<<<<<< HEAD
 timeCreated: 1508317882
+=======
+timeCreated: 1508321181
+>>>>>>> jongwoon
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

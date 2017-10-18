@@ -147,9 +147,67 @@ public class DataMatchInfo
         DataInfo = dataInfo;
         DataTagNumber = dataTagNumber;
         DataValue = dataValue;
-        
     }
 }
+
+public class DataRoomInfo
+{
+    public ProtocolRoomPrivatePublic IsPublicRoom;
+    public ProtocolTeamAmount TeamAmount; // PlayerLimit
+    public string RoomNumber;
+
+    public DataRoomInfo(ProtocolRoomPrivatePublic isPublicRoom, ProtocolTeamAmount teamAmount, string roomNumber)
+    {
+        IsPublicRoom = isPublicRoom;
+        TeamAmount = teamAmount;
+        RoomNumber = roomNumber;
+    }
+
+    public string GetTeamInfoString()
+    {
+        switch(TeamAmount)
+        {
+            case ProtocolTeamAmount.OneTeam:
+                return "1 VS 1";
+            case ProtocolTeamAmount.TwoTeam:
+                return "2 VS 2";
+            case ProtocolTeamAmount.ThreeTeam:
+                return "3 VS 3";
+            default:
+                return "???";
+        }
+    }
+
+    public int GetPlayerLimit()
+    {
+        switch (TeamAmount)
+        {
+            case ProtocolTeamAmount.OneTeam:
+                return 2;
+            case ProtocolTeamAmount.TwoTeam:
+                return 4;
+            case ProtocolTeamAmount.ThreeTeam:
+                return 6;
+            default:
+                return ConstValue.WrongValue;
+        }
+    }
+
+    public string GetPublicRoomString()
+    {
+        switch(IsPublicRoom)
+        {
+            case ProtocolRoomPrivatePublic.Private:
+                return "비공개방";
+            case ProtocolRoomPrivatePublic.Public:
+                return "공개방";
+            default:
+                return "???";
+        }
+    }
+
+}
+
 // 채팅
 public class DataChatMessage
 {
