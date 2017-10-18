@@ -478,12 +478,12 @@ public class CharacterMgr : MonoBehaviour
         Click_Right = Input.GetMouseButton(1);
         if (Input.GetMouseButton(1))
         {
-            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterStAttack", RPCMode.AllBuffered, null);
         }
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
         }
         Key_Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         if (Key_Shift && !Click_Left && !Click_Right && !thisCharacter.GetIsReload())
