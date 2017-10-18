@@ -29,8 +29,8 @@ public class ConfigClass {
         #region 만두콘피그
         ManduStatus["HP"] = 150f;
 
-        ManduStatus["MoveSpeed"] = 1.7f;//이동속도,뛰는속도 수정시 말해줘야됨
-        ManduStatus["RunSpeed"] = 3.5f;//이동속도,뛰는속도 수정시 말해줘야됨
+        ManduStatus["MoveSpeed"] = 1.5f;//수정 X
+        ManduStatus["RunSpeed"] = 3.5f;//수정 X
         ManduStatus["JumpForce"] = 1500f;//수정X
 
         ManduStatus["Cartridge"] = 7f; //장탄 수
@@ -56,7 +56,7 @@ public class ConfigClass {
         DubuStatus["HP"] = 100f;
 
         DubuStatus["MoveSpeed"] = 2.0f;
-        DubuStatus["RunSpeed"] = 4.0f;
+        DubuStatus["RunSpeed"] = 6.0f;
         DubuStatus["JumpForce"] = 1500;
         // 장탄수
         DubuStatus["Cartridge"] = 50f;

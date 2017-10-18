@@ -207,18 +207,17 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
         // 캐릭터 마스터 스테이터스,
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
+        //UI
         if (_networkView.isMine)
         {
             switch (Character_ID)
             {
                 case Chacracter_Type.Dubu:
-                    //UI
                     Dubu.enabled = true;
                     Dubu_Special.enabled = true;
                     Dubu_Right.enabled = true;
                     break;
                 case Chacracter_Type.Mandu:
-                    //UI
                     Mandu.enabled = true;
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
@@ -247,13 +246,16 @@ public class CharacterMgr : MonoBehaviour
         {
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("Started", RPCMode.AllBuffered, null);
         }
-
     }
     [RPC]
     void Started()
     {
         Debug.Log("게임 시작0");
         IsInGameSetting = true;
+        if (_networkView.isMine)
+        {
+            Player_rb.useGravity = true;
+        }
     }
     void Update()
     {
@@ -270,9 +272,8 @@ public class CharacterMgr : MonoBehaviour
         }
 
         // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
-        if (IsInGameSetting && !IsGameLoaded && IsInGameSetting)
+        if (IsInGameSetting && !IsGameLoaded)
         {
-            Debug.Log("세팅이 끝났고 게임이 시작되어도 좋다.");
             IsGameLoaded = true;
             thisCharacter.CanControll = true;
             //Debug.Log(thisCharacter.GetComponent<Transform>().name + "캐릭터가 움직일수 있다" + thisCharacter.CanControll);
@@ -402,13 +403,11 @@ public class CharacterMgr : MonoBehaviour
             thisAnim.PlayAnimation();
             return;
         }
-
         thisCharacter.CharacterUpdate();
         thisCharacter.SetCharacterMove(Key_H, Key_V);
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
-            //Debug.Log("입력을 하로 왔다." + thisCharacter.CanControll);
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -421,7 +420,6 @@ public class CharacterMgr : MonoBehaviour
             }
             InputControll();
             thisCharacter.Turn();
-            //Debug.Log("입력이 진행되고 있다.");
         }
     }
 
