@@ -153,10 +153,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<DubuAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
-                ////UI
-                //Dubu.enabled = true;
-                //Dubu_Special.enabled = true;
-                //Dubu_Right.enabled = true;
                 break;
             case Chacracter_Type.Mandu:
                 thisCharacter = new ManduCharacter();
@@ -166,10 +162,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
-                ////UI
-                //Mandu.enabled = true;
-                //Mandu_Special.enabled = true;
-                //Mandu_Right.enabled = true;
                 break;
             default:
 
@@ -275,7 +267,6 @@ public class CharacterMgr : MonoBehaviour
             Debug.Log("세팅이 끝났고 게임이 시작되어도 좋다.");
             IsGameLoaded = true;
             thisCharacter.CanControll = true;
-            //Debug.Log(thisCharacter.GetComponent<Transform>().name + "캐릭터가 움직일수 있다" + thisCharacter.CanControll);
         }
         /*
         else
