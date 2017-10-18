@@ -94,33 +94,36 @@ public class NetworkMgr : MonoBehaviour
     {
         MyPlayer = Player;
     }
+    /*
     void OnGUI()
     {
-        // 싱글플레이시 여길 연다
-        //if (Network.peerType == NetworkPeerType.Disconnected)
-        //{
-        //    // 게임 서버 생성 버튼+
-        //    if (GUI.Button(new Rect(20, 20, 200, 50), "두부 캐릭터로 세팅"))
-        //    {
-        //        MyInfoClass.GetInstance().MyCharNumb = 0;
-        //        MyInfoClass.GetInstance().MyGameNumb = 0;
-        //    }
-        //    // 게임에 접속하는 버튼
-        //    if (GUI.Button(new Rect(20, 100, 200, 50), "만두 캐릭터 세팅"))
-        //    {
-        //        MyInfoClass.GetInstance().MyCharNumb = 1;
-        //        MyInfoClass.GetInstance().MyGameNumb = 1;
-        //    }
-        //    if (GUI.Button(new Rect(20, 180, 200, 50), "호스트"))
-        //    {
-        //        Network.InitializeServer(20, port, _useNat);
-        //    }
-        //    if (GUI.Button(new Rect(20, 260, 200, 50), "로컬 접속"))
-        //    {
-        //        Network.Connect("127.0.0.1", port);
-        //    }
-        //}
-    }
+         //싱글플레이시 여길 연다
+        if (Network.peerType == NetworkPeerType.Disconnected)
+        {
+            // 게임 서버 생성 버튼+
+            if (GUI.Button(new Rect(20, 20, 200, 50), "두부 캐릭터로 세팅"))
+            {
+                MyInfoClass.GetInstance().MyCharNumb = 0;
+                MyInfoClass.GetInstance().MyGameNumb = 0;
+            }
+            // 게임에 접속하는 버튼
+            if (GUI.Button(new Rect(20, 100, 200, 50), "만두 캐릭터 세팅"))
+            {
+                MyInfoClass.GetInstance().MyCharNumb = 1;
+                MyInfoClass.GetInstance().MyGameNumb = 1;
+            }
+            if (GUI.Button(new Rect(20, 180, 200, 50), "호스트"))
+            {
+                Network.InitializeServer(20, port, _useNat);
+                //GettingStarted();
+            }
+            if (GUI.Button(new Rect(20, 260, 200, 50), "로컬 접속"))
+            {
+                Network.Connect("127.0.0.1", port);
+                //GettingStarted();
+            }
+        }
+    }*/
     // 호스트 아이피를 찾는다.
     public void SetHostIP(string hostip)
     {

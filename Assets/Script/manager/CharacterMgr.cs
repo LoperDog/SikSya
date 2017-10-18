@@ -44,6 +44,13 @@ public class CharacterMgr : MonoBehaviour
     public Image Dubu_Right;
     public Image Mandu_Right;
 
+    // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
+    private Vector3 LerpPos;
+    private Quaternion LerpRot;
+    private float LerpSpeed = 1.0f;
+    private float LerpPosStartTime = 0.0f;
+    private float LerpRotStartTime = 0.0f;
+
     public enum Chacracter_Type
     {
         Dubu,
@@ -256,9 +263,26 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Show_UI();
-            //InputControll();
-            // 키를 적용해준다.
-            //thisCharacter.SetCharacterMove(Key_H, Key_V);
+        }
+        else
+        {
+            // PC가 아닌 캐릭터들의 이동 및 회전 선형보간
+            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f 
+                ? 1.0f : ((Time.time - LerpPosStartTime) * LerpSpeed);
+            Player_tr.position = Vector3.Lerp(
+                Player_tr.position,
+                LerpPos,
+                LerpPosT
+                );
+
+            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f 
+                ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
+            Player_tr.rotation = Quaternion.Lerp(
+                Player_tr.rotation,
+                LerpRot,
+                LerpRotT
+                );
+
         }
 
         // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
@@ -537,8 +561,21 @@ public class CharacterMgr : MonoBehaviour
             // 플레이어 코드 업데이트
             //thisCharacter.SetPlayerCode(CodeTemp);
 
-            Player_tr.position = revPos;
-            Player_tr.rotation = revRot;
+            //Player_tr.position = revPos;
+            //Player_tr.rotation = revRot;
+            // 네트워크에서 들어온값이 내가 가진값과 차이가 난다.
+            float PosDistance = Vector3.Distance(LerpPos, revPos);
+            if (PosDistance > Mathf.Epsilon)
+            {
+                //값을 초기화 하고 러프를 시작한다.
+                LerpPos = revPos;
+                LerpPosStartTime = Time.time;
+            }
+            if(revRot != LerpRot)
+            {
+                LerpRot = revRot;
+                LerpRotStartTime = Time.time;
+            }
             Key_H = recvh;
             Key_V = recvv;
             thisCharacter.SetRun(recvshift);
