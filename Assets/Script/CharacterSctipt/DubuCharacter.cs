@@ -106,6 +106,7 @@ public class DubuCharacter : CharacterSuper
     }
     public override void UpAttack()
     {
+        base.UpAttack();
         if (config == null)
         {
             config = new ConfigClass();
