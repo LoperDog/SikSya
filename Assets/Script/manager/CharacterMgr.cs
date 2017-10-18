@@ -69,8 +69,7 @@ public class CharacterMgr : MonoBehaviour
 
     [SerializeField]
     public int PlayerCode = 0;
-    [SerializeField]
-    private NetworkViewID wasLastAttackPC;
+
     public float RAY_MaxDist = 500;
 
     private bool IsCharacterLoaded = false; // 캐릭터 세팅이 끝났는가?
@@ -134,7 +133,6 @@ public class CharacterMgr : MonoBehaviour
     public CloseAttack m_StrongAttack;
     public CloseAttack m_SpecialAttack;
     #endregion
-
     // 캐릭터를 만들기 위해 아이디를 받는다.
     void Start()
     {
@@ -267,7 +265,7 @@ public class CharacterMgr : MonoBehaviour
     [RPC]
     void Started()
     {
-        //Debug.Log("게임 시작0");
+        Debug.Log("게임 시작0");
         IsInGameSetting = true;
         if (_networkView.isMine)
         {
@@ -398,11 +396,10 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.ReLoad();
     }
     [RPC]
-    public void GetDamage(float de,NetworkViewID AttackPC)
+    public void GetDamage(float de)
     {
         //Debug.Log("맞은 아이디 : " + _networkView.viewID + " 남은 채력 : " + Char_Current_HP);
         Char_Current_HP -= de;
-        wasLastAttackPC = AttackPC;
     }
     // 강공격
     [RPC]
@@ -433,23 +430,21 @@ public class CharacterMgr : MonoBehaviour
     {
         if (_networkView.isMine)
         {
-            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
+            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de);
         }
     }
     void FixedUpdate()
     {
-        if (_networkView.isMine && Char_Current_HP <= 0 && !thisCharacter.Is_Dead)
+        if (Char_Current_HP <= 0)
         {
             thisCharacter.Is_Dead = true;
-            _networkView.RPC("PCisDead", RPCMode.AllBuffered, wasLastAttackPC);
+            thisAnim.PlayAnimation();
             return;
         }
-        if (thisCharacter.Is_Dead) return;
         thisCharacter.CharacterUpdate();
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
-            InputControll();
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -460,17 +455,12 @@ public class CharacterMgr : MonoBehaviour
                 Key_Shift = false;
                 return;
             }
+            InputControll();
             thisCharacter.Turn();
             thisCharacter.SetCharacterMove(Key_H, Key_V);
         }
     }
-    [RPC]
-    public void PCisDead(NetworkViewID Someone)
-    {
-        thisCharacter.Is_Dead = true;
-        thisAnim.PlayAnimation();
-        wasLastAttackPC = Someone;
-    }
+
     public void InputControll()
     {
         Key_H = Input.GetAxis("Horizontal");
