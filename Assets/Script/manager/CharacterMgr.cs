@@ -494,9 +494,12 @@ public class CharacterMgr : MonoBehaviour
         Key_Space = Input.GetKey(KeyCode.R);
         if (Input.GetKey(KeyCode.R))
         {
-            _networkView.RPC("SetCharacterReload", RPCMode.AllBuffered, null);
+            CharacterReLoad();
         }
-
+    }
+    public void CharacterReLoad()
+    {
+        _networkView.RPC("SetCharacterReload", RPCMode.AllBuffered, null);
     }
     public void PlayAnimation()
     {
