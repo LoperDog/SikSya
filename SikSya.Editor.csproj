@@ -133,10 +133,10 @@
   <ItemGroup>
     <None Include="Assets\Character\All_Character_Shader.shader" />
     <None Include="Assets\EF(NEW)\Attack\E_Hit\Rim.shader" />
-    <None Include="Assets\UI\Font\BulletFont\Bullet_Font.fnt" />
-    <None Include="Assets\UI\Font\Score_Blue\Score_Blue.fnt" />
-    <None Include="Assets\UI\Font\Score_Red\Score_Red.fnt" />
-    <None Include="Assets\UI\Font\Time\Time_0.fnt" />
+    <None Include="Assets\UI\Out_Game\Font\BulletFont\Bullet_Font.fnt" />
+    <None Include="Assets\UI\Out_Game\Font\Score_Blue\Score_Blue.fnt" />
+    <None Include="Assets\UI\Out_Game\Font\Score_Red\Score_Red.fnt" />
+    <None Include="Assets\UI\Out_Game\Font\Time\Time_0.fnt" />
     <None Include="Assets\rim.shader" />
     <None Include="Assets\rim_1.shader" />
   </ItemGroup>
