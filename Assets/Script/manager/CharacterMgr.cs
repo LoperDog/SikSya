@@ -415,9 +415,9 @@ public class CharacterMgr : MonoBehaviour
     }
     //도발
     [RPC]
-    public void SetCharacterTaunt()
+    public void SetCharacterTaunt(int tnumb)
     {
-        thisCharacter.Taunt();
+        thisCharacter.Taunt(tnumb);
     }
     // 마우스 올림
     [RPC]
@@ -505,12 +505,12 @@ public class CharacterMgr : MonoBehaviour
         Click_Left = Input.GetKeyDown(KeyCode.Alpha1);
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, 1);
         }
         Click_Left = Input.GetKeyDown(KeyCode.Alpha2);
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, 2);
         }
     }
     public void CharacterReLoad()

@@ -238,14 +238,14 @@ public class CharacterSuper : MonoBehaviour
         Debug.Log("상속전 캐릭터 재장전 끝");
     }
     //도발
-    public virtual void Taunt()
+    public virtual void Taunt(int tauntnumb)
     {
-        if (!Is_Taunt1 && !Is_Taunt2 && Input.GetKeyDown(KeyCode.Alpha1) && !Is_Jump)//1번 도발
+        if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 1)//1번 도발
         {
             Is_Taunt1 = true;
             coroutine.StartTaunt1();
         }
-        else if (!Is_Taunt1 && !Is_Taunt2 && Input.GetKeyDown(KeyCode.Alpha2) && !Is_Jump)//2번 도발
+        else if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 2)//2번 도발
         {
             Is_Taunt2 = true;
             coroutine.StartTaunt2();
