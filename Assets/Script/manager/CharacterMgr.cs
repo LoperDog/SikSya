@@ -413,6 +413,12 @@ public class CharacterMgr : MonoBehaviour
     {
         thisCharacter.SpecialAttack();
     }
+    //도발
+    [RPC]
+    public void SetCharacterTaunt()
+    {
+        thisCharacter.Taunt();
+    }
     // 마우스 올림
     [RPC]
     public void SetMouseUp()
@@ -472,12 +478,12 @@ public class CharacterMgr : MonoBehaviour
         Click_Right = Input.GetMouseButton(1);
         if (Input.GetMouseButton(1))
         {
-            _networkView.RPC("SetCharacterStAttack", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
         }
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
         }
         Key_Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         if (Key_Shift && !Click_Left && !Click_Right && !thisCharacter.GetIsReload())
@@ -495,6 +501,16 @@ public class CharacterMgr : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             CharacterReLoad();
+        }
+        Click_Left = Input.GetKeyDown(KeyCode.Alpha1);
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
+        }
+        Click_Left = Input.GetKeyDown(KeyCode.Alpha2);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, null);
         }
     }
     public void CharacterReLoad()

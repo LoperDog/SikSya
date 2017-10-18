@@ -189,6 +189,11 @@ public class CheckState : MonoBehaviour {
         makeRoomPanel.SetActive(makeRoom);
         GameObject enterRoomPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("EnterRoomPanel").gameObject;
         enterRoomPanel.SetActive(enterRoom);
+        if(true == enterRoom)
+        {
+            enterRoomPanel.GetComponentInChildren<Transform>().FindChild("EnterRoomNumberInputField").gameObject.GetComponent<InputField>().ActivateInputField();
+        }
+
         GameObject failRoomPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("EnterRoomFailPopPanel").gameObject;
         failRoomPanel.SetActive(failRoom);
     }

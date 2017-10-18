@@ -69,6 +69,16 @@ public class MakeRoomPanel : MonoBehaviour {
             }
             mMakeRoomButton.interactable = isMake;
             mInfoPWText.text = ConstValue.InfoPWText[(int)pwState]; // 비밀번호 입력란에 안내
+
+            if (Input.GetKeyUp("return") || Input.GetKeyUp(KeyCode.KeypadEnter))
+            {
+                MakeRoom();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp("escape"))
+            {
+                CancleMakeRoom();
+            }
         }
     }
 
@@ -78,6 +88,9 @@ public class MakeRoomPanel : MonoBehaviour {
         if(false == mInputRoomPWComponent.interactable)
         {
             mInputRoomPWComponent.text = "";
+        }else
+        {
+            mInputRoomPWComponent.ActivateInputField();
         }
     }
 
