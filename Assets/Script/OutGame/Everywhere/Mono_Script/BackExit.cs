@@ -18,12 +18,15 @@ public class BackExit : MonoBehaviour {
 //        Debug.Log("뒤로가기 버튼 클릭 / 상태에 따른 씬변경 요청");
         State curState = CheckState.GetCurState();
         DataPacketInfo dataInfo = new DataPacketInfo();
+        Debug.Log("ExitButton curState = " + curState);
         if (curState != State.ClientReady && curState != State.ClientRequestBackExit)
         {
             switch(curState)
             {
+                case State.ClientNotAllReady:
                 case State.ClientNotReady:
                     dataInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutRoom, (int)State.ClientRequestBackExit, null);
+                    Debug.Log("나가기 요청 패킷 만듬");
                     break;
                 default:
                     break;

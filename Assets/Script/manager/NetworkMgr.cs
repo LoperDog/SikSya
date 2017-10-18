@@ -27,12 +27,19 @@ public class NetworkMgr : MonoBehaviour
 
     // 플레이어의 수를 확인한다.
     //public int PlayerLimit = MyInfoClass.GetInstance().PlayerLimit;
-    public const int PlayerLimit = 6;
+    public int PlayerLimit = ConstValue.WrongValue;
     // 게임이 시작되었는지 확인한다.
     public bool IsStartGame = false;
 
     // 자신이 서버일때
     public bool ReadyToInitializeServer = false;    // 서버가 시작되었는지를 확인한다.
+
+    private void Awake()
+    {
+        PlayerLimit = MyInfoClass.GetInstance().MyRoomInfo.GetPlayerLimit();
+        Debug.Log("===== Awake PlayerLimit ===== " + PlayerLimit);
+    }
+
     // 시작할때 플레이어들의 번호에 맞추어 넣자.
     private void Start()
     {
@@ -80,7 +87,7 @@ public class NetworkMgr : MonoBehaviour
             {
                 int LoadedPlayerCnt = GameObject.FindGameObjectsWithTag("PLAYER").Length;
                 Debug.Log("현재 연결된 플레이어 수 : " + LoadedPlayerCnt + " 리미트 플레이어수 : " + PlayerLimit);
-                if (Network.connections.Length == 5 && MyPlayer != null && LoadedPlayerCnt == 6 )
+                if (Network.connections.Length == (PlayerLimit-1) && MyPlayer != null && LoadedPlayerCnt == PlayerLimit )
                 {
                     Debug.Log("호스트의 플레이어 수 : " + GameObject.FindGameObjectsWithTag("PLAYER").Length);
                     Debug.Log("Player Is Limit : " + Network.connections.Length + " 제한수 " + PlayerLimit);

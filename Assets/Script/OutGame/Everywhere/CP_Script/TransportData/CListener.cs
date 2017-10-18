@@ -166,8 +166,11 @@ public class CListener {
             case (int)ProtocolInfo.SceneChange:
                 CheckState.ChangeSceneState((ProtocolSceneName)dataPacket.InfoTagNumber);
                 break;
+            case (int)ProtocolInfo.RoomInfo:
+                MyInfoClass.GetInstance().MyRoomInfo = new DataRoomInfo((ProtocolRoomPrivatePublic)dataPacket.InfoProtocolDetail, (ProtocolTeamAmount)dataPacket.InfoTagNumber, dataPacket.InfoValue);
+                break;
             default:
-                Debug.Log("분류 할 수 없는 enum ProtocolInfo에 등록 되어 있지 않음");
+                Debug.Log("분류 할 수 없는 enum ProtocolInfo에 등록 되어 있지 않음 = " + (int)ProtocolInfo.RoomInfo);
                 break;
         }
     }
