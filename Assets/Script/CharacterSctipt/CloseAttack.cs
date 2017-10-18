@@ -33,10 +33,10 @@ public class CloseAttack : MonoBehaviour {
         }
     }
     //무언가에 닿았다
-    protected virtual void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         Transform tempTransForm = other.GetComponent<Transform>();
-        if (tempTransForm.tag == "Player")
+        if (tempTransForm.tag == "PLAYER")
         {
             // 만약 자기 자신이라면
             if (tempTransForm == Player)
@@ -61,7 +61,7 @@ public class CloseAttack : MonoBehaviour {
     }
 
     // 플레이어를 공격했다!.
-    protected virtual void AttackPlayer(NetworkView Tg)
+    public virtual void AttackPlayer(NetworkView Tg)
     {
         MyMgr.ShotPlayer(Tg, Damege);
     }
@@ -69,6 +69,7 @@ public class CloseAttack : MonoBehaviour {
     // 공격을 멈추고 돌아간다.
     public virtual void ReSetAttack()
     {
+        Debug.Log("일단 근접공격이 끝났다.");
         Target_NetworkView = new NetworkView[6];
         gameObject.SetActive(false);
     }
