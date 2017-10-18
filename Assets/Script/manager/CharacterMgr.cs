@@ -101,7 +101,15 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터키값
     // 이동키
     private float Key_H = 0.0f;             //키동기 필요
+    public float keyh
+    {
+        get { return Key_H; }
+    }
     private float Key_V = 0.0f;
+    public float keyv
+    {
+        get { return Key_V; }
+    }
     // 공격키
     private bool Click_Left = false;        // 개별동기
     private bool Click_Right = false;
@@ -428,7 +436,6 @@ public class CharacterMgr : MonoBehaviour
             return;
         }
         thisCharacter.CharacterUpdate();
-        thisCharacter.SetCharacterMove(Key_H, Key_V);
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
@@ -444,6 +451,7 @@ public class CharacterMgr : MonoBehaviour
             }
             InputControll();
             thisCharacter.Turn();
+            thisCharacter.SetCharacterMove(Key_H, Key_V);
         }
     }
 

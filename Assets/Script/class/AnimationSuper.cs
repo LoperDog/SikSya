@@ -7,6 +7,7 @@ public class AnimationSuper
     protected Animator m_Anim;
     protected CharacterSuper m_Char_State;
     protected ConfigClass m_Config;
+    protected CharacterMgr m_Mgr;
         
     public AnimationSuper()
     {
@@ -33,8 +34,11 @@ public class AnimationSuper
     }
     public virtual void PlayMove() // 이동
     {
-        m_Anim.SetFloat("H",m_Char_State.GetMoveH());
-        m_Anim.SetFloat("V",m_Char_State.GetMoveV());
+        //m_Anim.SetFloat("H", m_Char_State.GetMoveH());
+        //m_Anim.SetFloat("V", m_Char_State.GetMoveV());
+        // 키이동 수정
+        m_Anim.SetFloat("H", m_Mgr.keyh);
+        m_Anim.SetFloat("V", m_Mgr.keyv);
     }
     public virtual void PlayRun()//뛰기
     {
@@ -75,7 +79,7 @@ public class AnimationSuper
     public virtual void SetChar(CharacterSuper CharScript) { m_Char_State = CharScript; }
 
     public virtual void SetAnimator( Animator anim) { m_Anim = anim; }
-
+    public virtual void SetMgr(CharacterMgr mgr) { m_Mgr = mgr; }
     ~AnimationSuper()
     {
         m_Anim = null;
