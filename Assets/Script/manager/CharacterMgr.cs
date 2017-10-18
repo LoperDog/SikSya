@@ -445,6 +445,7 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
+            thisCharacter.SetCharacterMove(Key_H, Key_V);
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -457,7 +458,6 @@ public class CharacterMgr : MonoBehaviour
             }
             InputControll();
             thisCharacter.Turn();
-            thisCharacter.SetCharacterMove(Key_H, Key_V);
         }
     }
 
