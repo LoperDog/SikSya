@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D15BFA60-7838-525D-87C7-AB7D1E867008}</ProjectGuid>
+    <ProjectGuid>{F92F80D3-960C-FEFD-DFE8-A7D15CEDD4C6}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <AssemblyName>Assembly-CSharp.dll</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -50,85 +50,76 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.EditorTestsRunner">
-      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.PlaymodeTestsRunner">
-      <HintPath>Library\UnityAssemblies\UnityEditor.PlaymodeTestsRunner.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PlaymodeTestsRunner">
-      <HintPath>Library\UnityAssemblies\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TreeEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Analytics">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.HoloLens">
-      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
-      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.VR">
-      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
-      <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Graphs">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
-      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
     </Reference>
     <Reference Include="I18N.CJK">
-      <HintPath>Assets\Plugins\I18N.CJK.dll</HintPath>
+      <HintPath>Assets/Plugins/I18N.CJK.dll</HintPath>
     </Reference>
     <Reference Include="I18N">
-      <HintPath>Assets\Plugins\I18N.dll</HintPath>
+      <HintPath>Assets/Plugins/I18N.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SikSya.csproj">
-      <Project>{261CBBBA-C267-FA63-DA43-6C891481F402}</Project>
-      <Name>SikSya</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\UI\BitmapFontImporter\Editor\BFImporter.cs" />
-    <Compile Include="Assets\UI\BitmapFontImporter\Editor\BFMenuTool.cs" />
-    <Compile Include="Assets\UI\BitmapFontImporter\Editor\FntParse.cs" />
+    <Compile Include="Assets\Script\Camera\Cam.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\CloseAttack.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\DubuAnimation.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\DubuAttack.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\DubuCharacter.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\DubuCoroutin.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\ManduAnimation.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\ManduAttack.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\ManduCharacter.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\ManduCoroutin.cs" />
+    <Compile Include="Assets\Script\EffectScript\DestroyMe.cs" />
+    <Compile Include="Assets\Script\EffectScript\DestroyMe1.cs" />
+    <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\Channel.cs" />
+    <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\EnterRoomPanel.cs" />
+    <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\MakeRoomPanel.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\ConnectReady\CReadyNetWork.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\TransportData\CListener.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\TransportData\CSender.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\TransportData\ConstValueInfo.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\TransportData\StructData.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\BackExit.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\CheckState.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\Start\Init.cs" />
+    <Compile Include="Assets\Script\OutGame\FrontScene\Mono_Script\Front.cs" />
+    <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\ChangeCharacter.cs" />
+    <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\Chatting.cs" />
+    <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\TeamPanel.cs" />
+    <Compile Include="Assets\Script\TestScript\TestScript.cs" />
+    <Compile Include="Assets\Script\TestScript\coroutinTestSuper.cs" />
+    <Compile Include="Assets\Script\class\AnimationSuper.cs" />
+    <Compile Include="Assets\Script\class\BulletSuper.cs" />
+    <Compile Include="Assets\Script\class\CharacterSuper.cs" />
+    <Compile Include="Assets\Script\class\ConfigClass.cs" />
+    <Compile Include="Assets\Script\class\CoroutinClass.cs" />
+    <Compile Include="Assets\Script\class\MyInfoClass.cs" />
+    <Compile Include="Assets\Script\class\UISuper.cs" />
+    <Compile Include="Assets\Script\manager\CharacterMgr.cs" />
+    <Compile Include="Assets\Script\manager\GameMgr.cs" />
+    <Compile Include="Assets\Script\manager\NetworkMgr.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Character\All_Character_Shader.shader" />
