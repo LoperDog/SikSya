@@ -207,7 +207,7 @@ public class CharacterMgr : MonoBehaviour
 
         thisCharacter.CreateBullet(config.StatusConfigs[CharType]["Cartridge"], tempBullet);
         thisCharacter.SetBulletObject(tempBullet);
-
+        thisAnim.SetMgr(this);
         // 임시
         thisCharacter.SetEffect(Effect);
         thisCharacter.SetEffectPosition(Effectposition);
