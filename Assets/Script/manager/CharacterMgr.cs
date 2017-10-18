@@ -519,7 +519,6 @@ public class CharacterMgr : MonoBehaviour
     }
     public void PlayAnimation()
     {
-        // 이동 애니매이션
         thisAnim.PlayMove();
         // 공격 애니매이션
 

@@ -46,7 +46,7 @@ public class NetworkMgr : MonoBehaviour
         PlayerCreatePosition[0] = new Vector3(-13f, 10f, -42f);//x축 중점 -1
         PlayerCreatePosition[2] = new Vector3(-1f, 10f, -42f);
         PlayerCreatePosition[4] = new Vector3(11f, 10f, -42f);
-        PlayerCreatePosition[5] = new Vector3(-13f, 10f, 42f);
+        PlayerCreatePosition[5] = new Vector3(-12f, 10f, 42f);
         PlayerCreatePosition[3] = new Vector3(-1f, 10f, 42f);
         PlayerCreatePosition[1] = new Vector3(11f, 10f, 42f);
 
