@@ -112,7 +112,6 @@ public class CharacterSuper : MonoBehaviour
         Check_Ground();
         Move();
         Run();
-        Taunt();
     }
     // 생성자.
     public void SetCharacterSuper()
