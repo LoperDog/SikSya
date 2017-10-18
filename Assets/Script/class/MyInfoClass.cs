@@ -10,7 +10,8 @@ public class MyInfoClass
     public int MyCharNumb = ConstValue.WrongValue;
     public int MyGameNumb = ConstValue.WrongValue;
     public string MyName = null;
-    public const int PlayerLimit = 6;
+    //public const int PlayerLimit = 6;
+    public DataRoomInfo MyRoomInfo = null; // room정보 PlayerLimit 여기 포함
     public NetworkMgr MyNetwork;
     
     public static MyInfoClass GetInstance()

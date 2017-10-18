@@ -27,7 +27,7 @@ public class CheckState : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         DontDestroyOnLoad(this.gameObject);
-        mRoomSceneObjs = new GameObject[8];
+        mRoomSceneObjs = new GameObject[9];
         mCurrentSceneState = ProtocolSceneName.FrontScene;
         mIsSceneChangeStart = false;
         mIsSceneChanged = false;
@@ -79,6 +79,7 @@ public class CheckState : MonoBehaviour {
                     break;
                 case ProtocolSceneName.RoomScene:
                     RoomSceneSet();
+                    RoomSceneInfoSet();
                     ChangeState(State.ClientNotReady);
                     //mRoomStatePanels = GameObject.FindGameObjectsWithTag("RoomPanel");
                     //mRoomStateScripts = GameObject.FindGameObjectsWithTag("RoomScript");
@@ -191,10 +192,10 @@ public class CheckState : MonoBehaviour {
         GameObject failRoomPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("EnterRoomFailPopPanel").gameObject;
         failRoomPanel.SetActive(failRoom);
     }
-    // RoomScene의 버튼 가져오기
+    // RoomScene의 obj 가져오기
     void RoomSceneSet()
     {
-        Debug.Log("RoomSceneSet 호출");
+       // Debug.Log("RoomSceneSet 호출");
         mMapCharacterPanel = GameObject.FindGameObjectWithTag("TagMapCharacterPanel");
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.Room] = GameObject.FindGameObjectWithTag("TagRoom");
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonTofu] = mMapCharacterPanel.GetComponentInChildren<Transform>().FindChild("ButtonTofu").gameObject;
@@ -204,6 +205,20 @@ public class CheckState : MonoBehaviour {
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonReady] = GameObject.FindGameObjectWithTag("TagRoomReadyButton");
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockCharacter] = mMapCharacterPanel.GetComponentInChildren<Transform>().FindChild("ButtonLockCharacter").gameObject;
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockExit] = mRoomSceneObjs[(int)ProtocolRoomSceneObj.Room].GetComponentInChildren<Transform>().FindChild("ButtonLockExit").gameObject;
+        mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoText] = GameObject.FindGameObjectWithTag("TagRoomInfoText");
+    }
+
+    void RoomSceneInfoSet()
+    {
+        if(MyInfoClass.GetInstance().MyRoomInfo == null)
+        {
+            DataPacketInfo requestMyRoomInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.RequestRoomInfo, (int)ProtocolTagNull.Null, null);
+            CSender.GetInstance().Sendn(ref requestMyRoomInfo);
+        }
+        string roomInfo = MyInfoClass.GetInstance().MyRoomInfo.RoomNumber + "         "
+                        + MyInfoClass.GetInstance().MyRoomInfo.GetPublicRoomString() + "         "
+                        + MyInfoClass.GetInstance().MyRoomInfo.GetTeamInfoString();
+        mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoText].GetComponent<Text>().text = roomInfo;
     }
 
     void RoomInit(bool ready)
@@ -214,7 +229,7 @@ public class CheckState : MonoBehaviour {
         }
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockCharacter].SetActive(ready);
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockExit].SetActive(ready);
-        Debug.Log("이름 = " + mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockExit].name);
+//        Debug.Log("이름 = " + mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockExit].name);
         Debug.Log("ready = " + ready);
         if(ready)
         {
