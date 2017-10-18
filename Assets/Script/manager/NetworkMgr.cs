@@ -23,7 +23,7 @@ public class NetworkMgr : MonoBehaviour
     // 플레이어 프리팹
     public GameObject[] player = new GameObject[4];
     public GameObject MyPlayer;
-    public int MyPlayerNumb = 0;
+    public int MyPlayerNumb = 2;
 
     // 플레이어의 수를 확인한다.
     //public int PlayerLimit = MyInfoClass.GetInstance().PlayerLimit;
@@ -37,7 +37,7 @@ public class NetworkMgr : MonoBehaviour
     private void Awake()
     {
         PlayerLimit = MyInfoClass.GetInstance().MyRoomInfo.GetPlayerLimit();
-        Debug.Log("===== Awake PlayerLimit ===== " + PlayerLimit);
+        //Debug.Log("===== Awake PlayerLimit ===== " + PlayerLimit);
     }
 
     // 시작할때 플레이어들의 번호에 맞추어 넣자.
@@ -71,7 +71,6 @@ public class NetworkMgr : MonoBehaviour
             CSender tempSender = CSender.GetInstance();
             DataPacketInfo tempData = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.GetHostIP, 0, null);
             tempSender.Sendn(ref tempData);
-            //Debug.Log("요청 후");
     }
     private void Update()
     {
@@ -100,13 +99,13 @@ public class NetworkMgr : MonoBehaviour
     public void SetPlayer(GameObject Player)
     {
         MyPlayer = Player;
-    }
-    /*
+    }/*
     void OnGUI()
     {
          //싱글플레이시 여길 연다
-        if (Network.peerType == NetworkPeerType.Disconnected)
-        {
+        //if (Network.peerType == NetworkPeerType.Disconnected)
+//{
+        //}
             // 게임 서버 생성 버튼+
             if (GUI.Button(new Rect(20, 20, 200, 50), "두부 캐릭터로 세팅"))
             {
@@ -129,7 +128,6 @@ public class NetworkMgr : MonoBehaviour
                 Network.Connect("127.0.0.1", port);
                 //GettingStarted();
             }
-        }
     }*/
     // 호스트 아이피를 찾는다.
     public void SetHostIP(string hostip)
@@ -144,11 +142,8 @@ public class NetworkMgr : MonoBehaviour
         // 내가 호스트가 아닐경우
         if (OtherIP != MyIP)
         {
-            Debug.Log("연결을 시작한다.");
             while (errorCode != NetworkConnectionError.NoError)
             {
-                Debug.Log("연결을 시도 한다.");
-                //Debug.Log("에러가 아니다.");
                 try
                 {
                     errorCode = Network.Connect(OtherIP, port);
@@ -200,25 +195,13 @@ public class NetworkMgr : MonoBehaviour
     // 플레이어를 생성하는 함수
     void CreatePlayer()
     {
-
         Vector3 pos = PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
-        // 네트워크 상에 플레이어를 동적 생성
-        // 현재 게임에 접속한 모든 사용자에게 프리팹을 생성해주며 내부적으로 Buffered RPC를 호출해 나중에 접속한
-        // 사용자도 미리 생성된 프리팹을 볼 수 있다.
-        // Network.Instantiate(프리펩, 생성위치, 각도, 그릅) 
-        // 그릅을 지정하면 그릅에만 생성되게 할 수 있다.
         Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb], pos, Quaternion.identity, 0);
-        //.Log("되는건가? " + MyPlayer.name);
     }
-    // 모든 플레이어가 준비가 되었는지를 확인한다.
+
+    // 모든 플레이어가 로드 되었다.
     public void GettingStarted()
     {
-        // 플레이어들에게 시작하라고 명령을 내린다.
-        //Debug.Log("이게 느린건가? " + MyPlayer.name);
-        //for(int i =0; i < 1000; i++)
-        //{
-        //    Debug.Log("시작준비중..");
-        //}
         MyPlayer.GetComponent<Transform>().GetComponent<CharacterMgr>().SetStarted();
     }
     // 접속이 종료된 플레이어의 네트워크 객체를 모두 소멸 처리
