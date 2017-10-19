@@ -142,9 +142,9 @@ namespace ConstValueInfo
     {
         public const int Port = 9000;
         //public const string IP = "127.0.0.1";
-        public const string IP = "192.168.30.31";
+        public const string IP = "192.168.30.123";
         public const int BufSizeRecv = 1024;
-        public const int BufSizeSend = 1024;
+        public const int BufSizeSend = 1024;   
         //public const int BufSizeTag = 64;  // 오브젝트 Tag값
         public const int BufSizeValue = 128; // 채팅 메세지, 혹은 값
         public const int CharacterLimitChatting = 40; // 채팅 InputField 글자수 제한
