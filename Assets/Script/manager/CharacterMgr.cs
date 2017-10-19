@@ -435,10 +435,11 @@ public class CharacterMgr : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (Char_Current_HP <= 0)
+        if (_networkView.isMine && !thisCharacter.Is_Dead && Char_Current_HP <= 0)
         {
             thisCharacter.Is_Dead = true;
             thisAnim.PlayAnimation();
+            thisCharacter.coroutine.SetRespawn();
             return;
         }
         thisCharacter.CharacterUpdate();
