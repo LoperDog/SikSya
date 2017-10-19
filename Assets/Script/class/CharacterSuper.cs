@@ -197,7 +197,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void UpAttack()
     {
-
+        
     }
     public virtual void ReLoad()
     {

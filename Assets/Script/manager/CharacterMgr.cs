@@ -134,7 +134,7 @@ public class CharacterMgr : MonoBehaviour
     public CloseAttack m_SpecialAttack;
     #endregion
     // 캐릭터를 만들기 위해 아이디를 받는다.
-    void Start()
+    public void Start()
     {
         // 캐릭터 받아오기 세팅
         Player_tr = GetComponent<Transform>();
@@ -461,6 +461,17 @@ public class CharacterMgr : MonoBehaviour
         }
     }
 
+    public virtual void StartRespawn()
+    {
+        _networkView.RPC("Respawn", RPCMode.AllBuffered, null);
+    }
+    [RPC]
+    public virtual void Respawn()
+    {
+        thisCharacter.Is_Dead = false;
+        Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
+        Start();
+    }
     public void InputControll()
     {
         Key_H = Input.GetAxis("Horizontal");

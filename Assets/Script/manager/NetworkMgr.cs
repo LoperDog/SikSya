@@ -13,7 +13,7 @@ public class NetworkMgr : MonoBehaviour
     private string OtherIP = "";
 
     // 플레이어 번호에 맞는 생성위치를 잡아준다.
-    private Vector3[] PlayerCreatePosition = new Vector3[6];
+    public Vector3[] PlayerCreatePosition = new Vector3[6];
     //접속 IP
     //private const string ip = "192.168.30.64";
     //접속 Port
