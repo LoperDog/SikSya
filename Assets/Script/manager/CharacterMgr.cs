@@ -439,7 +439,7 @@ public class CharacterMgr : MonoBehaviour
         {
             thisCharacter.Is_Dead = true;
             thisAnim.PlayAnimation();
-            thisCharacter.coroutine.SetRespawn();
+            thisCharacter.coroutine.StartRespawn();
             return;
         }
         thisCharacter.CharacterUpdate();
