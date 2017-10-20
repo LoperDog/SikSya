@@ -26,7 +26,6 @@ public class NetworkMgr : MonoBehaviour
     public int MyPlayerNumb = 2;
 
     // 플레이어의 수를 확인한다.
-    //public int PlayerLimit = MyInfoClass.GetInstance().PlayerLimit;
     public int PlayerLimit = ConstValue.WrongValue;
     // 게임이 시작되었는지 확인한다.
     public bool IsStartGame = false;
@@ -34,28 +33,17 @@ public class NetworkMgr : MonoBehaviour
     // 자신이 서버일때
     public bool ReadyToInitializeServer = false;    // 서버가 시작되었는지를 확인한다.
 
-    private void Awake()
+    // 시작할때 플레이어들의 번호에 맞추어 넣자.
+    private void Start()
     {
         PlayerLimit = MyInfoClass.GetInstance().MyRoomInfo.GetPlayerLimit();
         PlayerCreatePosition = new Vector3[6];
-        PlayerCreatePosition[0] = new Vector3(-12f, 10f, -42f);//x축 중점 -1
+        PlayerCreatePosition[0] = new Vector3(-12f, 10f, -42f);//Red
         PlayerCreatePosition[2] = new Vector3(-1f, 10f, -42f);
-        PlayerCreatePosition[4] = new Vector3(11f, 10f, -42f);
-        PlayerCreatePosition[5] = new Vector3(-12f, 10f, 42f);
+        PlayerCreatePosition[4] = new Vector3(10f, 10f, -42f);
+        PlayerCreatePosition[5] = new Vector3(-12f, 10f, 42f);//Blue
         PlayerCreatePosition[3] = new Vector3(-1f, 10f, 42f);
         PlayerCreatePosition[1] = new Vector3(8f, 10f, 42f);
-        //Debug.Log("===== Awake PlayerLimit ===== " + PlayerLimit);
-    }
-
-    // 시작할때 플레이어들의 번호에 맞추어 넣자.
-    private void Start()
-    {/*
-        PlayerCreatePosition[0] = new Vector3(-12f, 10f, -42f);//x축 중점 -1
-        PlayerCreatePosition[2] = new Vector3(-1f, 10f, -42f);
-        PlayerCreatePosition[4] = new Vector3(11f, 10f, -42f);
-        PlayerCreatePosition[5] = new Vector3(-12f, 10f, 42f);
-        PlayerCreatePosition[3] = new Vector3(-1f, 10f, 42f);
-        PlayerCreatePosition[1] = new Vector3(10f, 10f, 42f);*/
 
         // 싱글 플레이시에는 여기서 부터 스타트함수를 끝까지 주석한다.
         MyInfoClass.GetInstance().MyNetwork = this;
@@ -162,7 +150,6 @@ public class NetworkMgr : MonoBehaviour
                     Debug.Log(e);
                 }
             }
-
             Debug.Log("게스트 접속 성공");
         }
         // 내가 호스트인경우
@@ -198,11 +185,8 @@ public class NetworkMgr : MonoBehaviour
     // 플레이어를 생성하는 함수
     void CreatePlayer()
     {
-        Debug.Log("createPlayer 호출");
         Vector3 pos = PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
-        Debug.Log("위치지정");
         Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb], pos, Quaternion.identity, 0);
-        Debug.Log("캐릭터 생성");
     }
 
     // 모든 플레이어가 로드 되었다.

@@ -155,7 +155,7 @@ public class CharacterMgr : MonoBehaviour
         {
             config = new ConfigClass();
         }
-
+        //
         Screen.lockCursor = true;
         // 캐릭터 생성
         switch (Character_ID)
@@ -168,10 +168,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<DubuAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
-                ////UI
-                //Dubu.enabled = true;
-                //Dubu_Special.enabled = true;
-                //Dubu_Right.enabled = true;
                 break;
             case Chacracter_Type.Mandu:
                 thisCharacter = new ManduCharacter();
@@ -181,10 +177,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
-                ////UI
-                //Mandu.enabled = true;
-                //Mandu_Special.enabled = true;
-                //Mandu_Right.enabled = true;
                 break;
             default:
 
@@ -470,6 +462,7 @@ public class CharacterMgr : MonoBehaviour
     public virtual void Respawn()
     {
         thisCharacter.Is_Dead = false;
+        thisCharacter.Long_Falling = false;
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
         Start();
     }

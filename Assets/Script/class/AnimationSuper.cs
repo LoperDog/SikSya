@@ -27,10 +27,7 @@ public class AnimationSuper
     }
     public virtual void Long_Landing()//시작 착지 애니메이션
     {
-        if (m_Char_State.GetIsGroud())
-        {
-            m_Anim.SetBool("Long_Landing", true);
-        }
+        m_Anim.SetBool("Long_Landing", m_Char_State.GetIsGroud());
     }
     public virtual void PlayMove() // 이동
     {
@@ -67,14 +64,7 @@ public class AnimationSuper
     }
     public virtual void PlayDie()//사망
     {
-        if (m_Char_State.GetIsDead())
-        {
-            m_Anim.SetTrigger("Dead");
-            if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Move.Die") && m_Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.88f)
-            {
-                m_Anim.Stop();
-            }
-        }
+        m_Anim.SetBool("Dead", m_Char_State.GetIsDead());
     }
     public virtual void SetChar(CharacterSuper CharScript) { m_Char_State = CharScript; }
 
