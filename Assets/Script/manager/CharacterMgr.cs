@@ -38,7 +38,9 @@ public class CharacterMgr : MonoBehaviour
 
     //캐릭터별 UI
     public Image Dubu;
+    public Image Dubu_dead;
     public Image Mandu;
+    public Image Mandu_dead;
     public Image Dubu_Special;
     public Image Mandu_Special;
     public Image Dubu_Right;
@@ -144,10 +146,12 @@ public class CharacterMgr : MonoBehaviour
 
         //캐릭터별 UI 세팅
         Dubu = GameObject.Find("Dubu").GetComponent<Image>();
+        Dubu_dead = GameObject.Find("Dubu_dead").GetComponent<Image>();
         Dubu_Special = GameObject.Find("Dubu_Special").GetComponent<Image>();
         Dubu_Right = GameObject.Find("Dubu_Right").GetComponent<Image>();
 
         Mandu = GameObject.Find("Mandu").GetComponent<Image>();
+        Mandu_dead = GameObject.Find("Mandu_dead").GetComponent<Image>();
         Mandu_Special = GameObject.Find("Mandu_Special").GetComponent<Image>();
         Mandu_Right = GameObject.Find("Mandu_Right").GetComponent<Image>();
 
@@ -221,11 +225,13 @@ public class CharacterMgr : MonoBehaviour
             {
                 case Chacracter_Type.Dubu:
                     Dubu.enabled = true;
+                    Dubu_dead.enabled = true;
                     Dubu_Special.enabled = true;
                     Dubu_Right.enabled = true;
                     break;
                 case Chacracter_Type.Mandu:
                     Mandu.enabled = true;
+                    Mandu_dead.enabled = true;
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
                     break;
@@ -261,6 +267,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Player_rb.useGravity = true;
+            Debug.Log("중력 키잖아아아앙아");
         }
     }
     void Update()
@@ -342,7 +349,7 @@ public class CharacterMgr : MonoBehaviour
         //공격
         Current_Bullet = thisCharacter.m_Current_Bullet;
         Max_Bullet = thisCharacter.m_Max_Bullet;
-        Bullet_count.text = Current_Bullet + "/" + Max_Bullet + ToString();
+        Bullet_count.text = Current_Bullet + "/" + Max_Bullet;
         //강공격
         StrongAttackCoolTime = Mathf.Floor(StrongAttackCoolTime * 10) / 10;
         Right_Black.fillAmount = StrongAttackCoolTime / config.StatusConfigs[CharType]["StrongAttack_CoolTime"];
@@ -454,6 +461,7 @@ public class CharacterMgr : MonoBehaviour
     {
         _networkView.RPC("StartDeadRPC", RPCMode.AllBuffered, null);
     }
+    [RPC]
     public void StartDeadRPC()
     {
         thisCharacter.Is_Dead = true;
