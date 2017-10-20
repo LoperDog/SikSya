@@ -426,8 +426,8 @@ public class CharacterMgr : MonoBehaviour
     {
         if (_networkView.isMine && !thisCharacter.Is_Dead && Char_Current_HP <= 0)
         {
-            thisCharacter.Is_Dead = true;
-            thisAnim.PlayAnimation();
+            StartDead();
+            thisCharacter.CanControll = false;
             thisCharacter.coroutine.StartRespawn();
             return;
         }
@@ -450,18 +450,30 @@ public class CharacterMgr : MonoBehaviour
             thisCharacter.Turn();
         }
     }
-
-    public virtual void StartRespawn()
+    public void StartDead()
+    {
+        _networkView.RPC("StartDeadRPC", RPCMode.AllBuffered, null);
+    }
+    public void StartDeadRPC()
+    {
+        thisCharacter.Is_Dead = true;
+        thisAnim.PlayAnimation();
+    }
+    public void StartRespawn()
     {
         _networkView.RPC("Respawn", RPCMode.AllBuffered, null);
     }
     [RPC]
-    public virtual void Respawn()
+    public void Respawn()
     {
+        Debug.Log("캐릭터 리스폰 시작");
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
         Start();
+        // 애니매이터 시작시켜준다.
+        thisCharacter.CanControll = true;
+        Debug.Log("리스폰 끝");
     }
     public void InputControll()
     {
