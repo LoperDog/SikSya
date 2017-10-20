@@ -175,6 +175,6 @@ public class CoroutinClass : MonoBehaviour
         // 여기에 죽었을때의 작업이 들어간다.
         // 예를 들면 죽었을때 유아이를 바꿔 죽음을 확인하고 돌려보면서 다른 플레이어의 플레이를 감상하거나 하는 둥의 작업
         yield return new WaitForSeconds(5.0f);
-        thisMgr.Respawn();
+        thisMgr.StartRespawn();
     }
 }
