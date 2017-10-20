@@ -257,7 +257,6 @@ public class CharacterMgr : MonoBehaviour
     [RPC]
     void Started()
     {
-        Debug.Log("게임 시작0");
         IsInGameSetting = true;
         if (_networkView.isMine)
         {
@@ -292,7 +291,6 @@ public class CharacterMgr : MonoBehaviour
                 LerpRot,
                 LerpRotT
                 );
-
         }
 
         // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
@@ -300,7 +298,6 @@ public class CharacterMgr : MonoBehaviour
         {
             IsGameLoaded = true;
             thisCharacter.CanControll = true;
-            //Debug.Log(thisCharacter.GetComponent<Transform>().name + "캐릭터가 움직일수 있다" + thisCharacter.CanControll);
         }
         /*
         else
