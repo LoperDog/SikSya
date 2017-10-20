@@ -13,7 +13,8 @@ public class CoroutinClass : MonoBehaviour
     {
         thisCharacterScript = CharacterClass;
     }
-    public virtual void SetMgr(CharacterMgr mg) {
+    public virtual void SetMgr(CharacterMgr mg)
+    {
         thisMgr = mg;
     }
 
@@ -22,24 +23,20 @@ public class CoroutinClass : MonoBehaviour
     {
         StartCoroutine(SetAttackState());
     }
-    // 외부에서 실행시키는 강공격
     public virtual void StartStrongAttckSetting()
     {
         StartCoroutine(SetStrongAttack());
         StartCoroutine(StartStrongCoolTime());
     }
-    // 외부에서 실행시키는 특수기
     public virtual void StartSpecialAttackSetting()
     {
         StartCoroutine(SetSpecialAttack());
         StartCoroutine(StartSpecialCoolTime());
     }
-    // 외부에서 실행시키는 재장전
     public virtual void StartReLoad()
     {
         StartCoroutine(SetReLoad());
     }
-    //외부에서 실행시키는 도발
     public virtual void StartTaunt1()
     {
         StartCoroutine(SetTaunt1());
@@ -84,26 +81,22 @@ public class CoroutinClass : MonoBehaviour
         yield return new WaitForSeconds(thisCharacterScript.CurrentAttack);
         thisCharacterScript.IsAttack = false;
     }
-    //강공격
     public virtual IEnumerator SetStrongAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
         thisCharacterScript.IsStrongAttack = false;
     }
-    //특수기
     public virtual IEnumerator SetSpecialAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentSpecialAttack);
         thisCharacterScript.IsSpecialAttack = false;
     }
-    // 리로딩
     public virtual IEnumerator SetReLoad()
     {
         yield return new WaitForSeconds(thisCharacterScript.m_TimeReload);
         thisCharacterScript.SetBullet(thisCharacterScript.m_Max_Bullet);
         thisCharacterScript.IsReLoad = false;
     }
-    // 도발
     public virtual IEnumerator SetTaunt1()
     {
         yield return new WaitForSeconds(thisCharacterScript.m_Time_Taunt);
@@ -174,8 +167,6 @@ public class CoroutinClass : MonoBehaviour
         }
         thisMgr.Dubu.enabled = false;
         thisMgr.Mandu.enabled = false;
-        // 여기에 죽었을때의 작업이 들어간다.
-        // 예를 들면 죽었을때 유아이를 바꿔 죽음을 확인하고 돌려보면서 다른 플레이어의 플레이를 감상하거나 하는 둥의 작업
         yield return new WaitForSeconds(5.0f);
         thisMgr.StartRespawn();
     }

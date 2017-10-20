@@ -25,11 +25,11 @@ public class AnimationSuper
         SetTaunt2();
         PlayDie();
     }
-    public virtual void Long_Landing()//시작 착지 애니메이션
+    public virtual void Long_Landing()
     {
         m_Anim.SetBool("Long_Landing", m_Char_State.GetIsGroud());
     }
-    public virtual void PlayMove() // 이동
+    public virtual void PlayMove()
     {
         //m_Anim.SetFloat("H", m_Char_State.GetMoveH());
         //m_Anim.SetFloat("V", m_Char_State.GetMoveV());
@@ -37,32 +37,31 @@ public class AnimationSuper
         m_Anim.SetFloat("H", m_Mgr.keyh);
         m_Anim.SetFloat("V", m_Mgr.keyv);
     }
-    public virtual void PlayRun()//뛰기
+    public virtual void PlayRun()
     {
         m_Anim.SetFloat("Speed", m_Char_State.GetSpeed());
     }
-    public virtual void PlayJump() //점프
+    public virtual void PlayJump()
     {
         m_Anim.SetBool("Falling", m_Char_State.GetIsJump());
     }
-    public virtual void PlayAttack()// 공격
+    public virtual void PlayAttack()
     {
-        //m_Anim.SetBool("Is_Attack", m_Char_State.GetIsAttack());
+
     }
-    public virtual void PlayReload()// 재장전
+    public virtual void PlayReload()
     {
         m_Anim.SetBool("Reload", m_Char_State.GetIsReload());
     }
-    //도발
-    public void SetTaunt1()//1번 도발
+    public void SetTaunt1()
     {
         m_Anim.SetBool("Taunt1", m_Char_State.GetIsTaunt1());
     }
-    public void SetTaunt2()//2번 도발
+    public void SetTaunt2()
     {
         m_Anim.SetBool("Taunt2", m_Char_State.GetIsTaunt2());
     }
-    public virtual void PlayDie()//사망
+    public virtual void PlayDie()
     {
         m_Anim.SetBool("Dead", m_Char_State.GetIsDead());
     }

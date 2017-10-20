@@ -12,7 +12,6 @@ public class ManduCoroutin : CoroutinClass
         ManduChar = (ManduCharacter)CharacterClass;
     }
 
-     //강공격
     public override void StartStrongAttckSetting()
     {
         if (config == null)
@@ -22,7 +21,6 @@ public class ManduCoroutin : CoroutinClass
         thisMgr.StrongAttackCoolTime = config.StatusConfigs["Mandu"]["StrongAttack_CoolTime"];
         base.StartStrongAttckSetting();
     }
-     //특수기
     public override void StartSpecialAttackSetting()
     {
         if (config == null)
@@ -45,7 +43,6 @@ public class ManduCoroutin : CoroutinClass
         thisCharacterScript.CanControll = true;
         thisCharacterScript.IsSpecialAttack = false;
     }
-    //도발
     public override IEnumerator SetTaunt1()
     {
         if (config == null)
