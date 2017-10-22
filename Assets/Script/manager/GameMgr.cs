@@ -13,7 +13,17 @@ public class GameMgr : MonoBehaviour
     public ConfigClass.GameState ThisGameState;
     public ConfigClass.GameState BeforeGameStete;
 
-	void Start ()
+    // 플레이어들의 네트워크 뷰 아이디를 가지고 있는다.
+    public NetworkViewID [] PlayersID;
+    // 킬데스 기록 앞이 순서 뒤가 기록 이다.
+    public Dictionary<int,Dictionary<NetworkViewID, NetworkViewID>> GameKillDeathLog;
+    // 플레이어들의 이름, 팀번호, 캐릭터 번호, 킬, 데스
+    public Dictionary<NetworkViewID, string> PlayersName;
+    public Dictionary<NetworkViewID, int> PlayersTeam;
+    public Dictionary<NetworkViewID, int> PlayersChar;
+    public Dictionary<NetworkViewID, int> PlayersKill;
+    public Dictionary<NetworkViewID, int> PlayersDeath;
+    void Start ()
     {
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
@@ -87,7 +97,12 @@ public class GameMgr : MonoBehaviour
             yield return null;
         }
     }
-
+    public void StartGetGamePlayerInfo()
+    {
+        GameObject [] Players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("Test Get GamePlayers : " + Players.Length);
+        PlayersID = new NetworkViewID[Players.Length];
+    }
     #region preProcess in GameState
         #endregion
         #region postProcess in GameState
