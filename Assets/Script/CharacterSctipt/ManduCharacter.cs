@@ -39,6 +39,10 @@ public class ManduCharacter : CharacterSuper
         if (!IsStrongAttack && GetIsGroud() && mgr.StrongAttackCoolTime == 0)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
         {
             coroutine.StartStrongAttckSetting();
+            Transform temp = Instantiate(effect[3], effectPosition[1].position, Player_tr.rotation);//이팩트 생성
+            temp.GetComponent<DestroyMe1>().Target = effectPosition[0];//0.3초후 제거
+            temp.SetParent(Player_tr);//위치잡아줌
+            //mgr.RoundAttack[0].SetActive(true);
         }
     }
     //특수기 시작
