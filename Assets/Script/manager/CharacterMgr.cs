@@ -63,6 +63,7 @@ public class CharacterMgr : MonoBehaviour
     };
     public string MyName;
     public int MyTeam;
+    public int MyCharNumb;
 
     #region 캐릭터 정보
     [SerializeField]
@@ -274,19 +275,25 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Player_rb.useGravity = true;
-            Debug.Log("내 캐릭터 번호 : " + MyInfoClass.GetInstance().MyCharNumb);
-            Debug.Log("내 캐릭터 이름 : " + MyInfoClass.GetInstance().MyName);
-            Debug.Log("내 캐릭터 팀 : " + MyInfoClass.GetInstance().MyGameNumb % 2);
+            // 메니저에 플레이어들을 세팅 시킨다.
+            MyMgr.StartGetGamePlayerInfo();
+            // 자신의 정보를 네트워크를 통해 넘긴다.
+            StartSetMyInfo();
         }
     }
     private void StartSetMyInfo()
     {
-
+        // 자신의 정보를 모든 Client를 향해 던진다.
+        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb % 2);
     }
     [RPC]
     public void SetMyInfo(string Name, int CharNumb, int TeamNumb)
     {
-
+        MyName = Name;
+        MyTeam = TeamNumb;
+        MyCharNumb = CharNumb;
+        // 각자 알아서 자신의 정보를 세팅한다.
+        MyMgr.AddPlayer(_networkView.viewID, MyName, MyTeam, MyCharNumb);
     }
     void Update()
     {
@@ -444,6 +451,12 @@ public class CharacterMgr : MonoBehaviour
     {
         if (_networkView.isMine)
         {
+            // 만약 같은 팀이라면 쏘지 않는다.
+            if (MyMgr.GetTeam(_networkView.viewID) == MyMgr.GetTeam(Player.viewID))
+            {
+                Debug.Log("같은 팀을 쏘고 있다.");
+                return;
+            }
             Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de);
         }
     }
