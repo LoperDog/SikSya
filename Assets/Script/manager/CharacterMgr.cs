@@ -65,6 +65,8 @@ public class CharacterMgr : MonoBehaviour
     public int MyTeam;
     public int MyCharNumb;
 
+    // 마지막으로 날 공격한 놈의 네트워크 뷰 아이디
+    public NetworkViewID LastAttacker;
     #region 캐릭터 정보
     [SerializeField]
     public float Char_Max_HP;
@@ -308,7 +310,7 @@ public class CharacterMgr : MonoBehaviour
         else
         {
             // PC가 아닌 캐릭터들의 이동 및 회전 선형보간
-            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f 
+            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f
                 ? 1.0f : ((Time.time - LerpPosStartTime) * LerpSpeed);
             Player_tr.position = Vector3.Lerp(
                 Player_tr.position,
@@ -316,7 +318,7 @@ public class CharacterMgr : MonoBehaviour
                 LerpPosT
                 );
 
-            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f 
+            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f
                 ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
             Player_tr.rotation = Quaternion.Lerp(
                 Player_tr.rotation,
@@ -416,9 +418,9 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.ReLoad();
     }
     [RPC]
-    public void GetDamage(float de)
+    public void GetDamage(float de, NetworkViewID Attacker)
     {
-        //Debug.Log("맞은 아이디 : " + _networkView.viewID + " 남은 채력 : " + Char_Current_HP);
+        LastAttacker = Attacker;
         Char_Current_HP -= de;
     }
     // 강공격
@@ -453,19 +455,19 @@ public class CharacterMgr : MonoBehaviour
             // 만약 같은 팀이라면 쏘지 않는다.
             if (MyMgr.GetTeam(_networkView.viewID) == MyMgr.GetTeam(Player.viewID))
             {
-                Debug.Log("같은 팀을 쏘고 있다.");
                 return;
             }
-            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de);
+            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
         }
     }
     void FixedUpdate()
     {
         if (_networkView.isMine && !thisCharacter.Is_Dead && Char_Current_HP <= 0)
         {
-            StartDead();
             thisCharacter.CanControll = false;
             thisCharacter.coroutine.StartRespawn();
+            StartDead();
+
             return;
         }
         thisCharacter.CharacterUpdate();
@@ -486,6 +488,15 @@ public class CharacterMgr : MonoBehaviour
             InputControll();
             thisCharacter.Turn();
         }
+    }
+    public void SendKD()
+    {
+        _networkView.RPC("SetKD", RPCMode.AllBuffered, LastAttacker, _networkView.viewID);
+    }
+    [RPC]
+    public void SetKD(NetworkViewID PK, NetworkViewID PD)
+    {
+        MyMgr.PKPD(PK, PD);
     }
     public void StartDead()
     {

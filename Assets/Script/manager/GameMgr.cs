@@ -140,12 +140,16 @@ public class GameMgr : MonoBehaviour
         PlayersTeam[ID] = TeamNumb;
         PlayersKill[ID] = 0;
         PlayersDeath[ID] = 0;
-        Debug.Log(ID + "번의 플레이어 추가됨 이름 : " + PlayersName[ID]);
-        Debug.Log(ID + "번의 플레이어 정보 캐릭터 번호 : " + PlayersChar[ID]);
-        Debug.Log(ID + "번의 플레이어 정보 캐릭터 팀 : " + PlayersTeam[ID]);
-        Debug.Log(ID + "번의 플레이어 정보 캐릭터 킬 : " + PlayersKill[ID]);
-        Debug.Log(ID + "번의 플레이어 정보 캐릭터 데스 : " + PlayersDeath[ID]);
     }
+    // 누군가 누굴 죽였다.
+    public void PKPD(NetworkViewID PK, NetworkViewID PD)
+    {
+        PlayersKill[PK] += 1;
+        PlayersDeath[PD] += 1;
+        Debug.Log(PlayersName[PK] + "가 " + PlayersName[PD] + "를 죽였다.");
+        Debug.Log(PlayersName[PK] + "의 킬 : " + PlayersKill[PK]);
+        Debug.Log(PlayersName[PD] + "의 데스 : " + PlayersDeath[PD]);
+     }
 
     #region preProcess in GameState
         #endregion
