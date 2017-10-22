@@ -29,7 +29,7 @@ public class CharacterMgr : MonoBehaviour
     [SerializeField]
     public GameMgr MyMgr;
 
-    //UI
+    //공용UI
     public Text Bullet_count;
     public Image Special;
     public Image HP_image;
@@ -324,7 +324,6 @@ public class CharacterMgr : MonoBehaviour
                 LerpRotT
                 );
         }
-
         // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
         if (IsInGameSetting && !IsGameLoaded)
         {
@@ -595,6 +594,7 @@ public class CharacterMgr : MonoBehaviour
     #region 네트워크 콜백
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
+        //if (thisCharacter == null) return;
         if (stream.isWriting)
         {
             // 임시 각자의 코드 값 세팅
@@ -664,6 +664,7 @@ public class CharacterMgr : MonoBehaviour
             }
             Key_H = recvh;
             Key_V = recvv;
+            if (thisCharacter == null) return;
             thisCharacter.SetRun(recvshift);
         }
     }

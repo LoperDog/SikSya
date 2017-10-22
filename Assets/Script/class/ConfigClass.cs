@@ -62,7 +62,7 @@ public class ConfigClass {
         DubuStatus["Cartridge"] = 50f;//장탄수
         DubuStatus["ReLoadTime"] = 1.7f;
 
-        DubuStatus["Attack"] = 15f;//공격력
+        DubuStatus["Attack"] = 10f;//공격력
         DubuStatus["AtttackSpeed"] = 0.25f;
 
         DubuStatus["StrongAttack"] = 30f;//우클릭 공격력

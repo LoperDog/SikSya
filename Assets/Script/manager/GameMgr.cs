@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
+    //시간
     public static float Game_Time;
     public Text Game_Time_M;
     public Text Game_Time_S;
+    //탭키
+    public Image Tab;
+    public bool Tab_Open= false;
 
     public int PlayerCode;
     public ConfigClass.GameState ThisGameState;
@@ -28,6 +32,8 @@ public class GameMgr : MonoBehaviour
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
 
+        Tab = GameObject.Find("Tab").GetComponent<Image>();
+
         ThisGameState = ConfigClass.GameState.NoSession;
         BeforeGameStete = ConfigClass.GameState.NotStart;
         StartCoroutine("Game_Timer");
@@ -36,7 +42,9 @@ public class GameMgr : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(this.ThisGameState != this.BeforeGameStete)
+        Tab_State();
+
+        if (this.ThisGameState != this.BeforeGameStete)
         {
 
             switch (this.BeforeGameStete)
@@ -73,6 +81,38 @@ public class GameMgr : MonoBehaviour
                 break;*/
 
         }
+    }
+    void Tab_State()
+    {
+        if (!Tab_Open && Input.GetKey(KeyCode.Tab))
+        {
+            Tab.enabled = true;
+            Tab_Open = true;
+        }
+        else if (Tab_Open && Input.GetKeyUp(KeyCode.Tab))
+        {
+            Tab.enabled = false;
+            Tab_Open = false;
+        }
+        /*
+        if (!inventoryopen && Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryopen = true;
+        }
+        else if (inventoryopen && Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryopen = false;
+        }
+
+
+        if (inventoryopen)
+        {
+            UI_Inventory.gameObject.SetActive(true);
+        }
+        else
+        {
+            UI_Inventory.gameObject.SetActive(false);
+        }*/
     }
     IEnumerator Game_Timer()
     {
