@@ -9,8 +9,9 @@ public class GameMgr : MonoBehaviour
     public static float Game_Time;
     public Text Game_Time_M;
     public Text Game_Time_S;
+
     //탭키
-    public Image Tab;
+    public GameObject Tab;
     public bool Tab_Open= false;
 
     public int PlayerCode;
@@ -27,12 +28,14 @@ public class GameMgr : MonoBehaviour
     public Dictionary<NetworkViewID, int> PlayersChar = new Dictionary<NetworkViewID, int>();
     public Dictionary<NetworkViewID, int> PlayersKill = new Dictionary<NetworkViewID, int>();
     public Dictionary<NetworkViewID, int> PlayersDeath = new Dictionary<NetworkViewID, int>();
+
     void Start ()
     {
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
 
-        Tab = GameObject.Find("Tab").GetComponent<Image>();
+        Tab = GameObject.Find("Tab").GetComponent<Transform>().gameObject;
+        Tab.gameObject.SetActive(false);
 
         ThisGameState = ConfigClass.GameState.NoSession;
         BeforeGameStete = ConfigClass.GameState.NotStart;
@@ -86,33 +89,14 @@ public class GameMgr : MonoBehaviour
     {
         if (!Tab_Open && Input.GetKey(KeyCode.Tab))
         {
-            Tab.enabled = true;
+            Tab.gameObject.SetActive(true);
             Tab_Open = true;
         }
         else if (Tab_Open && Input.GetKeyUp(KeyCode.Tab))
         {
-            Tab.enabled = false;
+            Tab.gameObject.SetActive(false);
             Tab_Open = false;
         }
-        /*
-        if (!inventoryopen && Input.GetKeyDown(KeyCode.I))
-        {
-            inventoryopen = true;
-        }
-        else if (inventoryopen && Input.GetKeyDown(KeyCode.I))
-        {
-            inventoryopen = false;
-        }
-
-
-        if (inventoryopen)
-        {
-            UI_Inventory.gameObject.SetActive(true);
-        }
-        else
-        {
-            UI_Inventory.gameObject.SetActive(false);
-        }*/
     }
     IEnumerator Game_Timer()
     {
