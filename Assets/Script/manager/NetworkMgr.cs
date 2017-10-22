@@ -32,9 +32,7 @@ public class NetworkMgr : MonoBehaviour
 
     // 자신이 서버일때
     public bool ReadyToInitializeServer = false;    // 서버가 시작되었는지를 확인한다.
-
-    public Dictionary<NetworkViewID, Dictionary<string, int>> GameStageInfo; 
-
+    
     // 시작할때 플레이어들의 번호에 맞추어 넣자.
     private void Start()
     {

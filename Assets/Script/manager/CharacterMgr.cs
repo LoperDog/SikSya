@@ -23,6 +23,7 @@ public class CharacterMgr : MonoBehaviour
     Dictionary<string, GameObject> TempBulletPool;
     [SerializeField]
     List<GameObject> LoadChar;
+
     [SerializeField]
     public List<GameObject> LoadBullet;
     [SerializeField]
@@ -53,11 +54,16 @@ public class CharacterMgr : MonoBehaviour
     private float LerpPosStartTime = 0.0f;
     private float LerpRotStartTime = 0.0f;
 
+    // 캐릭터 리스트가 필요하다.
+
     public enum Chacracter_Type
     {
         Dubu,
         Mandu
     };
+    public string MyName;
+    public int MyTeam;
+
     #region 캐릭터 정보
     [SerializeField]
     public float Char_Max_HP;
@@ -218,6 +224,7 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
         // 캐릭터 마스터 스테이터스,
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
+        MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
         //UI
         if (_networkView.isMine)
         {
@@ -267,8 +274,19 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Player_rb.useGravity = true;
-            Debug.Log("중력 키잖아아아앙아");
+            Debug.Log("내 캐릭터 번호 : " + MyInfoClass.GetInstance().MyCharNumb);
+            Debug.Log("내 캐릭터 이름 : " + MyInfoClass.GetInstance().MyName);
+            Debug.Log("내 캐릭터 팀 : " + MyInfoClass.GetInstance().MyGameNumb % 2);
         }
+    }
+    private void StartSetMyInfo()
+    {
+
+    }
+    [RPC]
+    public void SetMyInfo(string Name, int CharNumb, int TeamNumb)
+    {
+
     }
     void Update()
     {
