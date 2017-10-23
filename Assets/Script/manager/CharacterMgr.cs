@@ -180,7 +180,9 @@ public class CharacterMgr : MonoBehaviour
                 thisCharacter.SetCoroutine(gameObject.AddComponent<DubuCoroutin>());
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<DubuAttack>();
+                m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
+                m_SpecialAttack.SetEffect(Effect[8]);
                 break;
             case Chacracter_Type.Mandu:
                 thisCharacter = new ManduCharacter();
