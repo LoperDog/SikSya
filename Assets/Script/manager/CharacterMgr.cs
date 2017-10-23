@@ -467,7 +467,7 @@ public class CharacterMgr : MonoBehaviour
             thisCharacter.CanControll = false;
             thisCharacter.coroutine.StartRespawn();
             StartDead();
-
+            SendKD();
             return;
         }
         thisCharacter.CharacterUpdate();
