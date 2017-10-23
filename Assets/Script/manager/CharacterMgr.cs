@@ -297,6 +297,20 @@ public class CharacterMgr : MonoBehaviour
         // 각자 알아서 자신의 정보를 세팅한다.
         MyMgr.AddPlayer(_networkView.viewID, MyName, MyTeam, MyCharNumb);
     }
+    public void SetGameEnd()
+    {
+        GameObject[] AllPlayer = GameObject.FindGameObjectsWithTag("PLAYER");
+        for (int i = 0; i < AllPlayer.Length; i++)
+        {
+            AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("GameEnd", RPCMode.AllBuffered, null);
+        }
+    }
+    [RPC]
+    public void GameEnd()
+    {
+        MyMgr.MgrGameEnd();
+        thisCharacter.CanControll = false;
+    }
     void Update()
     {
         //캐릭터 업데이트

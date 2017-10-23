@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
+using ConstValueInfo;
+using System;
 using UnityEngine.UI;
-
 public class GameMgr : MonoBehaviour
 {
     //시간
@@ -16,8 +19,7 @@ public class GameMgr : MonoBehaviour
 
     public Text [] Team_ID;
     public Text [] Team_KD;
-
-    public int PlayerCode;
+    
     public ConfigClass.GameState ThisGameState;
     public ConfigClass.GameState BeforeGameStete;
 
@@ -123,7 +125,7 @@ public class GameMgr : MonoBehaviour
     }
     IEnumerator Game_Timer()
     {
-        for (Game_Time = 300.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
+        for (Game_Time = 60.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
         {
             Game_Time_M.text = "0" + (int)(Game_Time / 60) + " :";
             if ((int)(Game_Time % 60) < 10)
@@ -136,6 +138,47 @@ public class GameMgr : MonoBehaviour
             }
             yield return null;
         }
+        // 끝나면 실행되겠지?
+        GameObject.FindGameObjectWithTag("PLAYER").GetComponent<CharacterMgr>().SetGameEnd();
+    }
+    public void MgrGameEnd()
+    {
+        StartCoroutine(EndGameTurm());
+    }
+    public IEnumerator EndGameTurm()
+    {
+        // UI띄우기
+        int MyTeam = MyInfoClass.GetInstance().MyGameNumb % 2;
+        int redKill = 0 ;
+        int blueKill = 0 ;
+        for(int i = 0; i < PlayersID.Length; i++)
+        {
+            if (GetTeam(PlayersID[i]) == 0)
+                redKill += PlayersKill[PlayersID[i]];
+            else
+                blueKill += PlayersKill[PlayersID[i]];
+        }
+
+        if(redKill > blueKill)
+        {
+            // 레드팀이 이겼다.
+        }else if(blueKill < redKill)
+        {
+            // 블루팀이 이겼다
+        }else
+        {
+            // 비겼다.
+        }
+
+        yield return new WaitForSeconds(5.0f);
+        if(Network.isServer)
+            GameOver();
+    }
+    public void GameOver()
+    {
+        CSender tempSender = CSender.GetInstance();
+        DataPacketInfo gameOverPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutMainGameScene, (int)ProtocolTagNull.Null, null);
+        tempSender.Sendn(ref gameOverPacket);
     }
     // 플레이어 정보를 세팅하기 위해 기본적으로 아이디 들을 가지고 있는다. 그냥 캐싱.
     public void StartGetGamePlayerInfo()
@@ -190,8 +233,6 @@ public class GameMgr : MonoBehaviour
         #endregion
         #region postProcess in GameState
         #endregion
-    public void SetPlayerCode(int Code) { PlayerCode = Code; }
-    public int GetPlayerCode() { return PlayerCode; }
     // 플레이어들의 팀정보를 받아온다.
     public int GetTeam(NetworkViewID ID) { return PlayersTeam[ID]%2; }
 }
