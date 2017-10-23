@@ -27,55 +27,56 @@ public class ConfigClass {
     public ConfigClass()
     {
         #region 만두콘피그
-        ManduStatus["HP"] = 150f;
+        ManduStatus["HP"] = 150f; //체력
 
-        ManduStatus["MoveSpeed"] = 1.7f;//이동속도,뛰는속도 수정시 말해줘야됨
-        ManduStatus["RunSpeed"] = 3.5f;//이동속도,뛰는속도 수정시 말해줘야됨
-        ManduStatus["JumpForce"] = 1500f;//수정X
+        ManduStatus["MoveSpeed"] = 1.5f;
+        ManduStatus["RunSpeed"] = 3.5f;
+        ManduStatus["JumpForce"] = 1500f;
 
-        ManduStatus["Cartridge"] = 7f; //장탄 수
-        ManduStatus["ReLoadTime"] = 3.14f;//수정X
+        ManduStatus["Cartridge"] = 7f;//장탄수 수정
+        ManduStatus["ReLoadTime"] = 3.14f;
 
-        ManduStatus["Attack"] = 50f;
+        ManduStatus["Attack"] = 50f;//공격력
         ManduStatus["AtttackSpeed"] = 1.9f;
 
-        ManduStatus["StrongAttack"] = 50f;
-        ManduStatus["StrongAttack_CoolTime"] = 10.0f;
+        ManduStatus["StrongAttack"] = 50f;//우클릭 공격력
+        ManduStatus["StrongAttack_CoolTime"] = 10.0f;//우클릭 쿨타임
 
-        ManduStatus["SpecialAttack"] = 100.0f;
-        ManduStatus["SpecialAttack_CoolTime"] = 30.0f;
-        ManduStatus["SpecialAttackTime"] = 3.4f;//수정X
+        ManduStatus["SpecialAttack"] = 100.0f;//Q스킬 공격력
+        ManduStatus["SpecialAttack_CoolTime"] = 30.0f;// Q스킬 쿨타임
+        ManduStatus["SpecialAttackTime"] = 3.4f;
 
-        ManduStatus["Taunt1"] = 3.2f;//수정X
-        ManduStatus["Taunt2"] = 3.83f;//수정X
+        ManduStatus["Taunt1"] = 3.2f;
+        ManduStatus["Taunt2"] = 3.83f;
 
-        ManduPosition.Add("FirePosition", new Vector3(0.0f, 0.9f, 0.8f));
+        ManduPosition.Add("FirePosition", new Vector3(0.2f, 0.9f, 1.3f));
         #endregion
 
         #region 두부콘피그
-        DubuStatus["HP"] = 100f;
+        DubuStatus["HP"] = 100f;//체력
 
         DubuStatus["MoveSpeed"] = 2.0f;
-        DubuStatus["RunSpeed"] = 4.0f;
+        DubuStatus["RunSpeed"] = 6.0f;
         DubuStatus["JumpForce"] = 1500;
         // 장탄수
-        DubuStatus["Cartridge"] = 50f;
+        DubuStatus["Cartridge"] = 50f;//장탄수
         DubuStatus["ReLoadTime"] = 1.7f;
 
-        DubuStatus["Attack"] = 15f;
+        DubuStatus["Attack"] = 10f;//공격력
         DubuStatus["AtttackSpeed"] = 0.25f;
 
-        DubuStatus["StrongAttack"] = 30f;
-        DubuStatus["StrongAttack_CoolTime"] = 5.0f;
-        DubuStatus["StongAttackReady"] = 0.23f;//수정X
-        DubuStatus["StongAttackTime"] = 0.43f;//수정X
-        DubuStatus["StongAttackEnd"] = 0.86f;//수정X
+        DubuStatus["StrongAttack"] = 30f;//우클릭 공격력
+        DubuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
+        DubuStatus["StongAttackReady"] = 0.26f;
+        DubuStatus["StongAttackTime"] = 0.46f;
+        DubuStatus["StongAttackEnd"] = 0.9f;
 
-        DubuStatus["SpecialAttack"] = 100.0f;
-        DubuStatus["SpecialAttack_CoolTime"] = 25.0f;
-        DubuStatus["SpecialAttackReady"] = 0.86f;//수정X
-        DubuStatus["SpecialAttackTime"] = 0.56f;//수정X
-        DubuStatus["SpecialAttackEnd"] = 1.43f;//수정X
+        DubuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
+        DubuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
+        DubuStatus["SpecialAttackReady"] = 0.86f;
+        DubuStatus["SpecialAttackTime"] = 0.56f;
+        DubuStatus["SpecialAttackEnd"] = 1.43f;
+
         DubuStatus["Taunt1"] = 3.0f;
         DubuStatus["Taunt2"] = 1.3f;
 

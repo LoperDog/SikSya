@@ -13,7 +13,8 @@ public class CoroutinClass : MonoBehaviour
     {
         thisCharacterScript = CharacterClass;
     }
-    public virtual void SetMgr(CharacterMgr mg) {
+    public virtual void SetMgr(CharacterMgr mg)
+    {
         thisMgr = mg;
     }
 
@@ -22,24 +23,20 @@ public class CoroutinClass : MonoBehaviour
     {
         StartCoroutine(SetAttackState());
     }
-    // 외부에서 실행시키는 강공격
     public virtual void StartStrongAttckSetting()
     {
         StartCoroutine(SetStrongAttack());
         StartCoroutine(StartStrongCoolTime());
     }
-    // 외부에서 실행시키는 특수기
     public virtual void StartSpecialAttackSetting()
     {
         StartCoroutine(SetSpecialAttack());
         StartCoroutine(StartSpecialCoolTime());
     }
-    // 외부에서 실행시키는 재장전
     public virtual void StartReLoad()
     {
         StartCoroutine(SetReLoad());
     }
-    //외부에서 실행시키는 도발
     public virtual void StartTaunt1()
     {
         StartCoroutine(SetTaunt1());
@@ -47,6 +44,10 @@ public class CoroutinClass : MonoBehaviour
     public virtual void StartTaunt2()
     {
         StartCoroutine(SetTaunt2());
+    }
+    public virtual void StartRespawn()
+    {
+        StartCoroutine(SetRespawn());
     }
     public virtual void StartBuffSetting(float time, CharacterSuper.ItemCode code, float value)
     {
@@ -80,26 +81,22 @@ public class CoroutinClass : MonoBehaviour
         yield return new WaitForSeconds(thisCharacterScript.CurrentAttack);
         thisCharacterScript.IsAttack = false;
     }
-    //강공격
     public virtual IEnumerator SetStrongAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
         thisCharacterScript.IsStrongAttack = false;
     }
-    //특수기
     public virtual IEnumerator SetSpecialAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentSpecialAttack);
         thisCharacterScript.IsSpecialAttack = false;
     }
-    // 리로딩
     public virtual IEnumerator SetReLoad()
     {
         yield return new WaitForSeconds(thisCharacterScript.m_TimeReload);
         thisCharacterScript.SetBullet(thisCharacterScript.m_Max_Bullet);
         thisCharacterScript.IsReLoad = false;
     }
-    // 도발
     public virtual IEnumerator SetTaunt1()
     {
         yield return new WaitForSeconds(thisCharacterScript.m_Time_Taunt);
@@ -161,5 +158,16 @@ public class CoroutinClass : MonoBehaviour
             thisMgr.SpecialAttackCoolTime -= Time.deltaTime;
         }
         thisMgr.SpecialAttackCoolTime = 0.0f;
+    }
+    public virtual IEnumerator SetRespawn()
+    {
+        if(config == null)
+        {
+            config = new ConfigClass();
+        }
+        thisMgr.Dubu.enabled = false;
+        thisMgr.Mandu.enabled = false;
+        yield return new WaitForSeconds(5.0f);
+        thisMgr.StartRespawn();
     }
 }

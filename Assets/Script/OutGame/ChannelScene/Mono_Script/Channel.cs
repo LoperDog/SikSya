@@ -16,8 +16,16 @@ public class Channel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        State curState = CheckState.GetCurState();
+        if (State.ClientMatching == curState)
+        {
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp("escape"))
+            {
+                CancleMatching();
+            }
+        }
+
+    }
 
     public void RequestMatching()
     {

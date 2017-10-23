@@ -23,12 +23,13 @@ public class CharacterMgr : MonoBehaviour
     Dictionary<string, GameObject> TempBulletPool;
     [SerializeField]
     List<GameObject> LoadChar;
+
     [SerializeField]
     public List<GameObject> LoadBullet;
     [SerializeField]
     public GameMgr MyMgr;
 
-    //UI
+    //공용UI
     public Text Bullet_count;
     public Image Special;
     public Image HP_image;
@@ -38,17 +39,32 @@ public class CharacterMgr : MonoBehaviour
 
     //캐릭터별 UI
     public Image Dubu;
+    public Image Dubu_dead;
     public Image Mandu;
+    public Image Mandu_dead;
     public Image Dubu_Special;
     public Image Mandu_Special;
     public Image Dubu_Right;
     public Image Mandu_Right;
+
+    // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
+    private Vector3 LerpPos;
+    private Quaternion LerpRot;
+    private float LerpSpeed = 5.0f;
+    private float LerpPosStartTime = 0.0f;
+    private float LerpRotStartTime = 0.0f;
+
+    // 캐릭터 리스트가 필요하다.
 
     public enum Chacracter_Type
     {
         Dubu,
         Mandu
     };
+    public string MyName;
+    public int MyTeam;
+    public int MyCharNumb;
+
     #region 캐릭터 정보
     [SerializeField]
     public float Char_Max_HP;
@@ -94,7 +110,15 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터키값
     // 이동키
     private float Key_H = 0.0f;             //키동기 필요
+    public float keyh
+    {
+        get { return Key_H; }
+    }
     private float Key_V = 0.0f;
+    public float keyv
+    {
+        get { return Key_V; }
+    }
     // 공격키
     private bool Click_Left = false;        // 개별동기
     private bool Click_Right = false;
@@ -119,7 +143,7 @@ public class CharacterMgr : MonoBehaviour
     public CloseAttack m_SpecialAttack;
     #endregion
     // 캐릭터를 만들기 위해 아이디를 받는다.
-    void Start()
+    public void Start()
     {
         // 캐릭터 받아오기 세팅
         Player_tr = GetComponent<Transform>();
@@ -129,10 +153,12 @@ public class CharacterMgr : MonoBehaviour
 
         //캐릭터별 UI 세팅
         Dubu = GameObject.Find("Dubu").GetComponent<Image>();
+        Dubu_dead = GameObject.Find("Dubu_dead").GetComponent<Image>();
         Dubu_Special = GameObject.Find("Dubu_Special").GetComponent<Image>();
         Dubu_Right = GameObject.Find("Dubu_Right").GetComponent<Image>();
 
         Mandu = GameObject.Find("Mandu").GetComponent<Image>();
+        Mandu_dead = GameObject.Find("Mandu_dead").GetComponent<Image>();
         Mandu_Special = GameObject.Find("Mandu_Special").GetComponent<Image>();
         Mandu_Right = GameObject.Find("Mandu_Right").GetComponent<Image>();
 
@@ -140,7 +166,7 @@ public class CharacterMgr : MonoBehaviour
         {
             config = new ConfigClass();
         }
-
+        //
         Screen.lockCursor = true;
         // 캐릭터 생성
         switch (Character_ID)
@@ -153,10 +179,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<DubuAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
-                ////UI
-                //Dubu.enabled = true;
-                //Dubu_Special.enabled = true;
-                //Dubu_Right.enabled = true;
                 break;
             case Chacracter_Type.Mandu:
                 thisCharacter = new ManduCharacter();
@@ -166,10 +188,6 @@ public class CharacterMgr : MonoBehaviour
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
-                ////UI
-                //Mandu.enabled = true;
-                //Mandu_Special.enabled = true;
-                //Mandu_Right.enabled = true;
                 break;
             default:
 
@@ -192,7 +210,7 @@ public class CharacterMgr : MonoBehaviour
 
         thisCharacter.CreateBullet(config.StatusConfigs[CharType]["Cartridge"], tempBullet);
         thisCharacter.SetBulletObject(tempBullet);
-
+        thisAnim.SetMgr(this);
         // 임시
         thisCharacter.SetEffect(Effect);
         thisCharacter.SetEffectPosition(Effectposition);
@@ -207,19 +225,21 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
         // 캐릭터 마스터 스테이터스,
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
+        MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
+        //UI
         if (_networkView.isMine)
         {
             switch (Character_ID)
             {
                 case Chacracter_Type.Dubu:
-                    //UI
                     Dubu.enabled = true;
+                    Dubu_dead.enabled = true;
                     Dubu_Special.enabled = true;
                     Dubu_Right.enabled = true;
                     break;
                 case Chacracter_Type.Mandu:
-                    //UI
                     Mandu.enabled = true;
+                    Mandu_dead.enabled = true;
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
                     break;
@@ -247,13 +267,33 @@ public class CharacterMgr : MonoBehaviour
         {
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("Started", RPCMode.AllBuffered, null);
         }
-
     }
     [RPC]
     void Started()
     {
-        Debug.Log("게임 시작0");
         IsInGameSetting = true;
+        if (_networkView.isMine)
+        {
+            Player_rb.useGravity = true;
+            // 메니저에 플레이어들을 세팅 시킨다.
+            MyMgr.StartGetGamePlayerInfo();
+            // 자신의 정보를 네트워크를 통해 넘긴다.
+            StartSetMyInfo();
+        }
+    }
+    private void StartSetMyInfo()
+    {
+        // 자신의 정보를 모든 Client를 향해 던진다.
+        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb % 2);
+    }
+    [RPC]
+    public void SetMyInfo(string Name, int CharNumb, int TeamNumb)
+    {
+        MyName = Name;
+        MyTeam = TeamNumb;
+        MyCharNumb = CharNumb;
+        // 각자 알아서 자신의 정보를 세팅한다.
+        MyMgr.AddPlayer(_networkView.viewID, MyName, MyTeam, MyCharNumb);
     }
     void Update()
     {
@@ -264,18 +304,31 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Show_UI();
-            //InputControll();
-            // 키를 적용해준다.
-            //thisCharacter.SetCharacterMove(Key_H, Key_V);
         }
-
-        // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
-        if (IsInGameSetting && !IsGameLoaded && IsInGameSetting)
+        else
         {
-            Debug.Log("세팅이 끝났고 게임이 시작되어도 좋다.");
+            // PC가 아닌 캐릭터들의 이동 및 회전 선형보간
+            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f 
+                ? 1.0f : ((Time.time - LerpPosStartTime) * LerpSpeed);
+            Player_tr.position = Vector3.Lerp(
+                Player_tr.position,
+                LerpPos,
+                LerpPosT
+                );
+
+            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f 
+                ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
+            Player_tr.rotation = Quaternion.Lerp(
+                Player_tr.rotation,
+                LerpRot,
+                LerpRotT
+                );
+        }
+        // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
+        if (IsInGameSetting && !IsGameLoaded)
+        {
             IsGameLoaded = true;
             thisCharacter.CanControll = true;
-            //Debug.Log(thisCharacter.GetComponent<Transform>().name + "캐릭터가 움직일수 있다" + thisCharacter.CanControll);
         }
         /*
         else
@@ -320,7 +373,7 @@ public class CharacterMgr : MonoBehaviour
         //공격
         Current_Bullet = thisCharacter.m_Current_Bullet;
         Max_Bullet = thisCharacter.m_Max_Bullet;
-        Bullet_count.text = Current_Bullet + "/" + Max_Bullet + ToString();
+        Bullet_count.text = Current_Bullet + "/" + Max_Bullet;
         //강공격
         StrongAttackCoolTime = Mathf.Floor(StrongAttackCoolTime * 10) / 10;
         Right_Black.fillAmount = StrongAttackCoolTime / config.StatusConfigs[CharType]["StrongAttack_CoolTime"];
@@ -380,6 +433,12 @@ public class CharacterMgr : MonoBehaviour
     {
         thisCharacter.SpecialAttack();
     }
+    //도발
+    [RPC]
+    public void SetCharacterTaunt(int tnumb)
+    {
+        thisCharacter.Taunt(tnumb);
+    }
     // 마우스 올림
     [RPC]
     public void SetMouseUp()
@@ -391,24 +450,29 @@ public class CharacterMgr : MonoBehaviour
     {
         if (_networkView.isMine)
         {
+            // 만약 같은 팀이라면 쏘지 않는다.
+            if (MyMgr.GetTeam(_networkView.viewID) == MyMgr.GetTeam(Player.viewID))
+            {
+                Debug.Log("같은 팀을 쏘고 있다.");
+                return;
+            }
             Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de);
         }
     }
     void FixedUpdate()
     {
-        if (Char_Current_HP <= 0)
+        if (_networkView.isMine && !thisCharacter.Is_Dead && Char_Current_HP <= 0)
         {
-            thisCharacter.Is_Dead = true;
-            thisAnim.PlayAnimation();
+            StartDead();
+            thisCharacter.CanControll = false;
+            thisCharacter.coroutine.StartRespawn();
             return;
         }
-
         thisCharacter.CharacterUpdate();
-        thisCharacter.SetCharacterMove(Key_H, Key_V);
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
-            //Debug.Log("입력을 하로 왔다." + thisCharacter.CanControll);
+            thisCharacter.SetCharacterMove(Key_H, Key_V);
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -421,10 +485,34 @@ public class CharacterMgr : MonoBehaviour
             }
             InputControll();
             thisCharacter.Turn();
-            //Debug.Log("입력이 진행되고 있다.");
         }
     }
-
+    public void StartDead()
+    {
+        _networkView.RPC("StartDeadRPC", RPCMode.AllBuffered, null);
+    }
+    [RPC]
+    public void StartDeadRPC()
+    {
+        thisCharacter.Is_Dead = true;
+        thisAnim.PlayAnimation();
+    }
+    public void StartRespawn()
+    {
+        _networkView.RPC("Respawn", RPCMode.AllBuffered, null);
+    }
+    [RPC]
+    public void Respawn()
+    {
+        Debug.Log("캐릭터 리스폰 시작");
+        thisCharacter.Is_Dead = false;
+        thisCharacter.Long_Falling = false;
+        Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
+        Start();
+        // 애니매이터 시작시켜준다.
+        thisCharacter.CanControll = true;
+        Debug.Log("리스폰 끝");
+    }
     public void InputControll()
     {
         Key_H = Input.GetAxis("Horizontal");
@@ -464,13 +552,25 @@ public class CharacterMgr : MonoBehaviour
         Key_Space = Input.GetKey(KeyCode.R);
         if (Input.GetKey(KeyCode.R))
         {
-            _networkView.RPC("SetCharacterReload", RPCMode.AllBuffered, null);
+            CharacterReLoad();
         }
-
+        Click_Left = Input.GetKeyDown(KeyCode.Alpha1);
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, 1);
+        }
+        Click_Left = Input.GetKeyDown(KeyCode.Alpha2);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _networkView.RPC("SetCharacterTaunt", RPCMode.AllBuffered, 2);
+        }
+    }
+    public void CharacterReLoad()
+    {
+        _networkView.RPC("SetCharacterReload", RPCMode.AllBuffered, null);
     }
     public void PlayAnimation()
     {
-        // 이동 애니매이션
         thisAnim.PlayMove();
         // 공격 애니매이션
 
@@ -494,6 +594,7 @@ public class CharacterMgr : MonoBehaviour
     #region 네트워크 콜백
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
+        //if (thisCharacter == null) return;
         if (stream.isWriting)
         {
             // 임시 각자의 코드 값 세팅
@@ -546,10 +647,24 @@ public class CharacterMgr : MonoBehaviour
             // 플레이어 코드 업데이트
             //thisCharacter.SetPlayerCode(CodeTemp);
 
-            Player_tr.position = revPos;
-            Player_tr.rotation = revRot;
+            //Player_tr.position = revPos;
+            //Player_tr.rotation = revRot;
+            // 네트워크에서 들어온값이 내가 가진값과 차이가 난다.
+            float PosDistance = Vector3.Distance(LerpPos, revPos);
+            if (PosDistance > Mathf.Epsilon)
+            {
+                //값을 초기화 하고 러프를 시작한다.
+                LerpPos = revPos;
+                LerpPosStartTime = Time.time;
+            }
+            if(revRot != LerpRot)
+            {
+                LerpRot = revRot;
+                LerpRotStartTime = Time.time;
+            }
             Key_H = recvh;
             Key_V = recvv;
+            if (thisCharacter == null) return;
             thisCharacter.SetRun(recvshift);
         }
     }

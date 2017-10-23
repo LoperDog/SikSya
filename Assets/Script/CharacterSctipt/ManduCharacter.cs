@@ -36,15 +36,19 @@ public class ManduCharacter : CharacterSuper
     //강공격 시작
     public override void StrongAttack()
     {
-        if (!IsStrongAttack && GetIsGroud() && mgr.StrongAttackCoolTime == 0)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
+        if (!IsStrongAttack && GetIsGroud() /*&& mgr.StrongAttackCoolTime == 0*/)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
         {
             coroutine.StartStrongAttckSetting();
+            Transform temp = Instantiate(effect[3], effectPosition[1].position, Player_tr.rotation);//이팩트 생성
+            temp.SetParent(Player_tr);//캐릭터 하위로 이동
+            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];//0.3초후 제거
+            mgr.RoundAttack[0].SetActive(true);//판정
         }
     }
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!IsSpecialAttack && GetIsGroud() && !IsAttack)
+        if (!IsSpecialAttack && GetIsGroud()/* && !IsAttack && mgr.SpecialAttackCoolTime == 0*/)
         {
             coroutine.StartSpecialAttackSetting();
         }

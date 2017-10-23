@@ -93,7 +93,6 @@ public class BulletSuper : MonoBehaviour
             Debug.DrawLine(transform.position, transform.position + transform.forward * 10f, Color.magenta);
             // 총알이 살아 있는 동안 할행동
             m_CurrentLifeTime += Time.deltaTime;
-            // 만약 총알이 존재할 시간을 지났다면
             if (m_CurrentLifeTime > m_MaxLifeTime)
             {
                 SetBulletEnalbed();

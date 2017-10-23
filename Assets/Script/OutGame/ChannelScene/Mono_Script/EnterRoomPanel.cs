@@ -37,8 +37,10 @@ public class EnterRoomPanel : MonoBehaviour {
 
     void Update()
     {
+
         if (CheckState.GetCurState() == State.ClientEnterSpecialRoom)
         {
+            
             if ("" == mInputRoomNumberComponent.text)
             {
                 mEnterButtonComponent.interactable = false;
@@ -52,15 +54,40 @@ public class EnterRoomPanel : MonoBehaviour {
             {
                 if ("" == mInputRoomPWComponent.text)
                 {
+                    mInputRoomPWComponent.ActivateInputField();
                     mEnterButtonComponent.interactable = false;
                 }
                 else
                 {
                     mEnterButtonComponent.interactable = true;
                 }
+            }else
+            {
+                mInputRoomNumberComponent.ActivateInputField();
+            }
+
+            if(mEnterButtonComponent.interactable)
+            {
+                if (Input.GetKeyUp("return") || Input.GetKeyUp(KeyCode.KeypadEnter))
+                {
+                    EnterRoom();
+                }
+            }
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp("escape"))
+            {
+                CancleEnterRoom();
             }
 
         }
+
+        if (CheckState.GetCurState() == State.ClientFailEnterRoom)
+        {
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp("escape") || Input.GetKeyUp("return") || Input.GetKeyUp(KeyCode.KeypadEnter))
+            {
+                CheckFailEnterRoom();
+            }
+        }
+
     }
 
     public void SetPrivateORPublicRoom()
@@ -79,6 +106,7 @@ public class EnterRoomPanel : MonoBehaviour {
 
     public void EnterRoom()
     {
+        Debug.Log("EnterRoom() 호출 됨.");
         string number = mInputRoomNumberComponent.text;
         if (number == "" || number == null)
         {

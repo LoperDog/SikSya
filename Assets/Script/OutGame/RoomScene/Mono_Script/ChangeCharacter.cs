@@ -8,12 +8,15 @@ public class ChangeCharacter : MonoBehaviour {
 
     CSender mSender;
     Chatting ChatScript;
-    
+    [SerializeField]
+    Sprite[] mSelectCharacterInfoSprite = new Sprite[3];
+    Image mSelectCharacterInfo;
 
     // Use this for initialization
     void Awake () {
         mSender = CSender.GetInstance();
         ChatScript = GameObject.FindGameObjectWithTag("ChatPanel").GetComponent<Chatting>();
+        mSelectCharacterInfo = GameObject.FindGameObjectWithTag("TagInfoSelectCharacter").GetComponent<Image>();
     }
 	
 
@@ -62,6 +65,7 @@ public class ChangeCharacter : MonoBehaviour {
             DataPacketInfo dataInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.ChangeCharacter, (int)characterIndex, null);
             mSender.Sendn(ref dataInfo);
             CheckState.ChangeState(State.ClientRequestCharacterChange);
+            mSelectCharacterInfo.sprite = mSelectCharacterInfoSprite[(int)characterIndex];
         }
     }
 

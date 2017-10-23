@@ -112,7 +112,6 @@ public class CharacterSuper : MonoBehaviour
         Check_Ground();
         Move();
         Run();
-        Taunt();
     }
     // 생성자.
     public void SetCharacterSuper()
@@ -198,7 +197,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void UpAttack()
     {
-
+        
     }
     public virtual void ReLoad()
     {
@@ -238,14 +237,14 @@ public class CharacterSuper : MonoBehaviour
         Debug.Log("상속전 캐릭터 재장전 끝");
     }
     //도발
-    public virtual void Taunt()
+    public virtual void Taunt(int tauntnumb)
     {
-        if (!Is_Taunt1 && Input.GetKeyDown(KeyCode.Alpha1))//1번 도발
+        if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 1)//1번 도발
         {
             Is_Taunt1 = true;
             coroutine.StartTaunt1();
         }
-        else if (!Is_Taunt2 && Input.GetKeyDown(KeyCode.Alpha2))//2번 도발
+        else if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 2)//2번 도발
         {
             Is_Taunt2 = true;
             coroutine.StartTaunt2();
@@ -357,7 +356,6 @@ public class CharacterSuper : MonoBehaviour
     public virtual void SetRun(bool KeyShift) { Is_Run = KeyShift; }
     public virtual void SetMoveH(float KeyH) { m_Move_H = KeyH; }
     public virtual void SetMoveV(float KeyV) { m_Move_V = KeyV; }
-
     #endregion
     #region 캐릭터 상태값 가져오기
     public virtual bool GetAttackorReload() { return IsAttack || IsReLoad; }

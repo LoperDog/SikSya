@@ -31,7 +31,7 @@ public class Cam : MonoBehaviour
         if (Player)
         {
             // 길이 제기
-            Dist -= .5f * Input.mouseScrollDelta.y;
+            //Dist -= .5f * Input.mouseScrollDelta.y;
             Dist = Dist < 0.5f ? 1.0f : Dist;
             Dist = Dist >= 10.0f ? 10.0f : Dist;
 

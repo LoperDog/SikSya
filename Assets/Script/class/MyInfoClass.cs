@@ -10,7 +10,6 @@ public class MyInfoClass
     public int MyCharNumb = ConstValue.WrongValue;
     public int MyGameNumb = ConstValue.WrongValue;
     public string MyName = null;
-    //public const int PlayerLimit = 6;
     public DataRoomInfo MyRoomInfo = null; // room정보 PlayerLimit 여기 포함
     public NetworkMgr MyNetwork;
     
@@ -29,11 +28,9 @@ public class MyInfoClass
             && (MyInfoClass.GetInstance().MyGameNumb != ConstValue.WrongValue)
             && (MyInfoClass.GetInstance().MyName != null))
         {
-            //Debug.Log("MyCharaNum = " + MyInfoClass.GetInstance().MyCharNumb);
-            //Debug.Log("MyGameNumb = " + MyInfoClass.GetInstance().MyGameNumb);
-            //Debug.Log("MyName = " + MyInfoClass.GetInstance().MyName);
             return true;
-        }else
+        }
+        else
         {
             return false;
         }
