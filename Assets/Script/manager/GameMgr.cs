@@ -158,14 +158,12 @@ public class GameMgr : MonoBehaviour
         GameObject [] Players = GameObject.FindGameObjectsWithTag("PLAYER");
         Debug.Log("Test Get GamePlayers : " + Players.Length);
         PlayersID = new NetworkViewID[Players.Length];
-        for(int i = 0; i < Players.Length; i++)
-        {
-            PlayersID[i] = Players[i].GetComponent<NetworkView>().viewID;
-        }
+
     }
     // 플레이어들이 각자 정보를 자신의 캐릭터에 저장하고 그 정보들을 네트워크 상에 다른 캐릭터에 전달한 후 각자의 게임메니저에 정보를 넣는다.
     public void AddPlayer(NetworkViewID ID, string Name, int TeamNumb, int CharNumb)
     {
+        PlayersID[TeamNumb] = ID;
         PlayersName[ID] = Name;
         PlayersChar[ID] = CharNumb;
         PlayersTeam[ID] = TeamNumb;
@@ -189,5 +187,5 @@ public class GameMgr : MonoBehaviour
     public void SetPlayerCode(int Code) { PlayerCode = Code; }
     public int GetPlayerCode() { return PlayerCode; }
     // 플레이어들의 팀정보를 받아온다.
-    public int GetTeam(NetworkViewID ID) { return PlayersTeam[ID]; }
+    public int GetTeam(NetworkViewID ID) { return PlayersTeam[ID]%2; }
 }
