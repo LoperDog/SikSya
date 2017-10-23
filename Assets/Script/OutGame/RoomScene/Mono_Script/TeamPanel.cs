@@ -144,15 +144,15 @@ public class TeamPanel : MonoBehaviour {
     {
         Debug.Log("변경 위치 = " + tagIndex);
         Transform targetTr = SearchTargetPlayerImage(ConstValue.ProtocolCharacterTagIndexImage[(int)tagIndex]);
-        if(targetTr != null)
+        if (targetTr != null)
         {
             int index = 0;
-            foreach(string name in ConstValue.ProtocolCharacterImageName)
+            foreach (string name in ConstValue.ProtocolCharacterImageName)
             {   // 서버에서 받은 캐릭터이미지(imageProtocol)와 프로토콜 이름(name)이 일치하고 배열 범위를 벗어나지 않으면 
                 if (imageProtocol == name && ((mCharacterTextureArray.Length - 1) >= index))
                 {
                     targetTr.GetComponent<RawImage>().texture = mCharacterTextureArray[index];
-                    if(isMy)
+                    if (isMy)
                     {
                         mMyInfo.MyGameNumb = (int)tagIndex;   // 내 위치 0 == red01 / 1 == blue01 ...
                         mMyInfo.MyCharNumb = index;           // 내 캐릭터 정보 0 == 두부 / 1 == 만두 // 2 == 탕수육
@@ -169,6 +169,7 @@ public class TeamPanel : MonoBehaviour {
 
         return false;
     }
+
 
     void UpdateName(ProtocolCharacterTagIndex tagIndex, string name, bool isMy = false)
     {
