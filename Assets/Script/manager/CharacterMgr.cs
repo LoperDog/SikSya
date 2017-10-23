@@ -286,7 +286,7 @@ public class CharacterMgr : MonoBehaviour
     private void StartSetMyInfo()
     {
         // 자신의 정보를 모든 Client를 향해 던진다.
-        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb % 2);
+        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb);
     }
     [RPC]
     public void SetMyInfo(string Name, int CharNumb, int TeamNumb)
