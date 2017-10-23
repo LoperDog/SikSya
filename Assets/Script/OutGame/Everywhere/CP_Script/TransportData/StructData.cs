@@ -163,21 +163,6 @@ public class DataRoomInfo
         RoomNumber = roomNumber;
     }
 
-    public string GetTeamInfoString()
-    {
-        switch(TeamAmount)
-        {
-            case ProtocolTeamAmount.OneTeam:
-                return "1 VS 1";
-            case ProtocolTeamAmount.TwoTeam:
-                return "2 VS 2";
-            case ProtocolTeamAmount.ThreeTeam:
-                return "3 VS 3";
-            default:
-                return "???";
-        }
-    }
-
     public int GetPlayerLimit()
     {
         switch (TeamAmount)
@@ -193,19 +178,7 @@ public class DataRoomInfo
         }
     }
 
-    public string GetPublicRoomString()
-    {
-        switch(IsPublicRoom)
-        {
-            case ProtocolRoomPrivatePublic.Private:
-                return "비공개방";
-            case ProtocolRoomPrivatePublic.Public:
-                return "공개방";
-            default:
-                return "???";
-        }
-    }
-
+   
 }
 
 // 채팅

@@ -210,7 +210,7 @@ public class CheckState : MonoBehaviour {
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonReady] = GameObject.FindGameObjectWithTag("TagRoomReadyButton");
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockCharacter] = mMapCharacterPanel.GetComponentInChildren<Transform>().FindChild("ButtonLockCharacter").gameObject;
         mRoomSceneObjs[(int)ProtocolRoomSceneObj.ButtonLockExit] = mRoomSceneObjs[(int)ProtocolRoomSceneObj.Room].GetComponentInChildren<Transform>().FindChild("ButtonLockExit").gameObject;
-        mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoText] = GameObject.FindGameObjectWithTag("TagRoomInfoText");
+        mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel] = mRoomSceneObjs[(int)ProtocolRoomSceneObj.Room].GetComponentInChildren<Transform>().FindChild("RoomInfoPanel").gameObject;
     }
 
     void RoomSceneInfoSet()
@@ -220,10 +220,13 @@ public class CheckState : MonoBehaviour {
             DataPacketInfo requestMyRoomInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.RequestRoomInfo, (int)ProtocolTagNull.Null, null);
             CSender.GetInstance().Sendn(ref requestMyRoomInfo);
         }
-        string roomInfo = MyInfoClass.GetInstance().MyRoomInfo.RoomNumber + "         "
-                        + MyInfoClass.GetInstance().MyRoomInfo.GetPublicRoomString() + "         "
-                        + MyInfoClass.GetInstance().MyRoomInfo.GetTeamInfoString();
-        mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoText].GetComponent<Text>().text = roomInfo;
+
+        Image roomTeamAmount = mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel].GetComponentInChildren<Transform>().FindChild("RoomInfoTeamAmount").gameObject.GetComponent<Image>();
+        Image roomPublicPrivate = mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel].GetComponentInChildren<Transform>().FindChild("RoomInfoPublicPrivate").gameObject.GetComponent<Image>();
+        Text roomNumber = mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel].GetComponentInChildren<Transform>().FindChild("RoomInfoNumber").gameObject.GetComponent<Text>();
+        roomNumber.text = "방" + ConstValue.IntToAlphabet(int.Parse(MyInfoClass.GetInstance().MyRoomInfo.RoomNumber), 3);
+        roomTeamAmount.sprite = mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel].GetComponent<RoomInfo>().GetTeamAmountSprite(MyInfoClass.GetInstance().MyRoomInfo.TeamAmount);
+        roomPublicPrivate.sprite = mRoomSceneObjs[(int)ProtocolRoomSceneObj.RoomInfoPanel].GetComponent<RoomInfo>().GetRoomPrivatePublicSprite(MyInfoClass.GetInstance().MyRoomInfo.IsPublicRoom);
     }
 
     void RoomInit(bool ready)

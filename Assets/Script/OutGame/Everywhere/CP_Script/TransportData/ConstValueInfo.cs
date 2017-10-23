@@ -105,7 +105,8 @@ namespace ConstValueInfo
 
     public enum ProtocolRoomSceneObj
     {
-        Room, ButtonTofu, ButtonMandu, ButtonTangsuyuk, ButtonBack, ButtonReady, ButtonLockCharacter, ButtonLockExit, RoomInfoText
+        Room, ButtonTofu, ButtonMandu, ButtonTangsuyuk, ButtonBack, ButtonReady, ButtonLockCharacter, ButtonLockExit,
+        RoomInfoPanel
     }
 
     public enum ProtocolTeamAmount
@@ -157,6 +158,7 @@ namespace ConstValueInfo
         public static readonly string[] ProtocolCharacterTagIndexImage = { "RedImage01", "BlueImage01", "RedImage02", "BlueImage02", "RedImage03", "BlueImage03" };
         public static readonly string[] ProtocolCharacterTagIndexName = { "RedName01", "BlueName01", "RedName02", "BlueName02", "RedName03", "BlueName03" };
         public static readonly string[] ProtocolCharacterTagIndexReady = { "RedReadyImage01", "BlueReadyImage01", "RedReadyImage02", "BlueReadyImage02", "RedReadyImage03", "BlueReadyImage03" };
+        public static readonly string[] ProtocolCharacterTagIndexNameImage = { "RedNameImage01", "BlueNameImage01", "RedNameImage02", "BlueNameImage02", "RedNameImage03", "BlueNameImage03" };
         public static readonly string[] ProtocolMessageTag = { "TextView" };
         public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "Main" };
         //public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "TestScene" };
@@ -167,5 +169,58 @@ namespace ConstValueInfo
         public static readonly string[] InfoPWText = { "공개방 상태이기 때문에 입력하실 수 없습니다.", "영어,숫자 15글자" };
         public const string RoomPWNone = "None";
         public const int WrongValue = -1;
+
+        // 몇자리 숫자인지 구하기
+        public static int CalcCipher(int number)
+        {
+            if (0 > number)
+                return ConstValue.WrongValue;
+
+            int result = 0;
+            while (number > 0)
+            {
+                number /= 10;
+                ++result;
+            }
+            return result;
+        }
+
+        public static string IntToAlphabet(int number, int maxCipher)
+        {
+            int numberCipher = 0;
+            char[] result = new char[10];
+            numberCipher = CalcCipher(number);
+            if (WrongValue == numberCipher)
+            {
+                return "";
+            }
+            if (maxCipher < numberCipher)
+            {
+                return "";
+            }
+            int zeroCount = maxCipher - numberCipher; // '0'이 채워지는 갯수
+            int validCount = maxCipher - zeroCount; // 유효 숫자가 채워지는 갯수
+            string temp = "";
+            for (int cipher = 0; cipher < zeroCount; ++cipher)
+            {
+                result[cipher] = '0';
+            }
+            temp = number.ToString();
+            if (validCount > temp.Length)
+                return "";
+            int tempIndex = 0;
+            for (int cipher = zeroCount; cipher < maxCipher; ++cipher)
+            {
+                result[cipher] = temp[tempIndex];
+                ++tempIndex;
+            }
+            result[maxCipher] = '\0';
+            return new string(result);
+        }
     }
+
+
+
+
+
 }

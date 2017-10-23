@@ -10,7 +10,8 @@ public class TeamPanel : MonoBehaviour {
     public Texture mTofu;
     public Texture mMandu;
     public Texture mTangsuyuk;
-    public Sprite mReady;
+    public Sprite mReadyRed;
+    public Sprite mReadyBlue;
     public Sprite mNotReady;
     CListener mListener;
 
@@ -18,6 +19,7 @@ public class TeamPanel : MonoBehaviour {
     List<Transform> mPlayerImageInfoList;
     List<Transform> mPlayerNameInfoList;
     List<Transform> mPlayerReadyInfoList;
+    List<Transform> mPlayerNameImageList;
     Texture[] mCharacterTextureArray; // 캐릭터 이미지 텍스쳐 보관
     MyInfoClass mMyInfo;
 
@@ -34,6 +36,7 @@ public class TeamPanel : MonoBehaviour {
         mPlayerImageInfoList = new List<Transform>();
         mPlayerNameInfoList = new List<Transform>();
         mPlayerReadyInfoList = new List<Transform>();
+        mPlayerNameImageList = new List<Transform>();
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerInfo"))
         {
             mPlayerInfo.Add(g);
@@ -43,6 +46,7 @@ public class TeamPanel : MonoBehaviour {
             mPlayerImageInfoList.Add(g.transform.FindChild("Image"));
             mPlayerNameInfoList.Add(g.transform.FindChild("Name"));
             mPlayerReadyInfoList.Add(g.transform.FindChild("ReadyImage"));
+            mPlayerNameImageList.Add(g.transform.FindChild("NameImage"));
         }
     }
 
@@ -123,19 +127,32 @@ public class TeamPanel : MonoBehaviour {
         return null;
     }
 
+    Transform SearchTargetPlayerNameImage(string tag)
+    {
+        foreach (Transform tr in mPlayerNameImageList)
+        {
+            if (tag == tr.tag)
+            {
+                return tr;
+            }
+        }
+        Debug.Log("tag = " + tag + " 와 일치하는 Player Ready 객체 못 찾음");
+        return null;
+    }
+
     bool UpdateImage(ProtocolCharacterTagIndex tagIndex, string imageProtocol, bool isMy = false)
     {
         Debug.Log("변경 위치 = " + tagIndex);
         Transform targetTr = SearchTargetPlayerImage(ConstValue.ProtocolCharacterTagIndexImage[(int)tagIndex]);
-        if(targetTr != null)
+        if (targetTr != null)
         {
             int index = 0;
-            foreach(string name in ConstValue.ProtocolCharacterImageName)
+            foreach (string name in ConstValue.ProtocolCharacterImageName)
             {   // 서버에서 받은 캐릭터이미지(imageProtocol)와 프로토콜 이름(name)이 일치하고 배열 범위를 벗어나지 않으면 
                 if (imageProtocol == name && ((mCharacterTextureArray.Length - 1) >= index))
                 {
                     targetTr.GetComponent<RawImage>().texture = mCharacterTextureArray[index];
-                    if(isMy)
+                    if (isMy)
                     {
                         mMyInfo.MyGameNumb = (int)tagIndex;   // 내 위치 0 == red01 / 1 == blue01 ...
                         mMyInfo.MyCharNumb = index;           // 내 캐릭터 정보 0 == 두부 / 1 == 만두 // 2 == 탕수육
@@ -153,12 +170,19 @@ public class TeamPanel : MonoBehaviour {
         return false;
     }
 
+
     void UpdateName(ProtocolCharacterTagIndex tagIndex, string name, bool isMy = false)
     {
         Transform targetTr = SearchTargetPlayerName(ConstValue.ProtocolCharacterTagIndexName[(int)tagIndex]);
         if(targetTr != null)
         {
-            Debug.Log("이름 변경 = " + name);
+            Transform readyMark = SearchTargetPlayerReady(ConstValue.ProtocolCharacterTagIndexReady[(int)tagIndex]);
+            Transform nameImageMark = SearchTargetPlayerNameImage(ConstValue.ProtocolCharacterTagIndexNameImage[(int)tagIndex]);
+            Transform characterMark = SearchTargetPlayerImage(ConstValue.ProtocolCharacterTagIndexImage[(int)tagIndex]);
+            characterMark.GetComponent<RawImage>().enabled = true;
+            readyMark.GetComponent<Image>().enabled = true;
+            nameImageMark.GetComponent<Image>().enabled = true;
+            //Debug.Log("이름 변경 = " + name);
             if(isMy)
             {
                 mMyInfo.MyName = name;            // 내 이름 저장
@@ -176,9 +200,17 @@ public class TeamPanel : MonoBehaviour {
         Transform targetTr = SearchTargetPlayerReady(ConstValue.ProtocolCharacterTagIndexReady[(int)tagIndex]);
         if (targetTr != null)
         {
-            if(0 == "Ready".CompareTo(isReady))
+            targetTr.GetComponent<Image>().enabled = true;
+            if (0 == "Ready".CompareTo(isReady))
             {
-                targetTr.GetComponent<Image>().sprite = mReady;
+                if((int)tagIndex % 2 == 0)
+                {
+                    targetTr.GetComponent<Image>().sprite = mReadyRed;
+                }
+                else
+                {
+                    targetTr.GetComponent<Image>().sprite = mReadyBlue;
+                }
             }
             else
             {
@@ -204,11 +236,15 @@ public class TeamPanel : MonoBehaviour {
         Transform targetTrName = SearchTargetPlayerName(ConstValue.ProtocolCharacterTagIndexName[(int)tagIndex]);
         Transform targetTrImage = SearchTargetPlayerImage(ConstValue.ProtocolCharacterTagIndexImage[(int)tagIndex]);
         Transform targetTrReady = SearchTargetPlayerReady(ConstValue.ProtocolCharacterTagIndexReady[(int)tagIndex]);
+        Transform nameImageMark = SearchTargetPlayerNameImage(ConstValue.ProtocolCharacterTagIndexNameImage[(int)tagIndex]);
         if (targetTrName != null && targetTrImage != null && targetTrReady != null)
         {
             targetTrName.GetComponent<Text>().text = "";
             targetTrImage.GetComponent<RawImage>().texture = null;
+            targetTrImage.GetComponent<RawImage>().enabled = false;
             targetTrReady.GetComponent<Image>().sprite = mNotReady;
+            targetTrReady.GetComponent<Image>().enabled = false;
+            nameImageMark.GetComponent<Image>().enabled = false;
         }
         else
         {
