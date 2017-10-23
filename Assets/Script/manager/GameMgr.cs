@@ -13,18 +13,9 @@ public class GameMgr : MonoBehaviour
     //탭키
     public GameObject Tab;
     public bool Tab_Open= false;
-    public Text Red1_ID;
-    public Text Red1_KD;
-    public Text Red2_ID;
-    public Text Red2_KD;
-    public Text Red3_ID;
-    public Text Red3_KD;
-    public Text Blue1_ID;
-    public Text Blue1_KD;
-    public Text Blue2_ID;
-    public Text Blue2_KD;
-    public Text Blue3_ID;
-    public Text Blue3_KD;
+
+    public Text [] Team_ID;
+    public Text [] Team_KD;
 
     public int PlayerCode;
     public ConfigClass.GameState ThisGameState;
@@ -35,30 +26,42 @@ public class GameMgr : MonoBehaviour
     // 킬데스 기록 앞이 순서 뒤가 기록 이다.
     public Dictionary<int,Dictionary<NetworkViewID, NetworkViewID>> GameKillDeathLog = new Dictionary<int, Dictionary<NetworkViewID, NetworkViewID>>();
     // 플레이어들의 이름, 팀번호, 캐릭터 번호, 킬, 데스
-    public Dictionary<NetworkViewID, string> PlayersName = new Dictionary<NetworkViewID, string>();
-    public Dictionary<NetworkViewID, int> PlayersTeam = new Dictionary<NetworkViewID, int>();
-    public Dictionary<NetworkViewID, int> PlayersChar = new Dictionary<NetworkViewID, int>();
-    public Dictionary<NetworkViewID, int> PlayersKill = new Dictionary<NetworkViewID, int>();
-    public Dictionary<NetworkViewID, int> PlayersDeath = new Dictionary<NetworkViewID, int>();
+    public Dictionary<NetworkViewID, string> PlayersName;
+    public Dictionary<NetworkViewID, int> PlayersTeam;
+    public Dictionary<NetworkViewID, int> PlayersChar;
+    public Dictionary<NetworkViewID, int> PlayersKill;
+    public Dictionary<NetworkViewID, int> PlayersDeath;
 
+    // UI에 세팅된 플레이어의 수를 체크한다.
+    public int SettingUIPlayer;
     void Start ()
     {
+        SettingUIPlayer = 0;
+        PlayersName = new Dictionary<NetworkViewID, string>();
+        PlayersTeam = new Dictionary<NetworkViewID, int>();
+        PlayersChar = new Dictionary<NetworkViewID, int>();
+        PlayersKill = new Dictionary<NetworkViewID, int>();
+        PlayersDeath = new Dictionary<NetworkViewID, int>();
+        
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
 
         Tab = GameObject.Find("Tab").GetComponent<Transform>().gameObject;
-        Red1_ID = GameObject.Find("Red1_ID").GetComponent<Text>();
-        Red1_KD = GameObject.Find("Red1_KD").GetComponent<Text>();
-        Red2_ID = GameObject.Find("Red2_ID").GetComponent<Text>();
-        Red2_KD = GameObject.Find("Red2_KD").GetComponent<Text>();
-        Red3_ID = GameObject.Find("Red3_ID").GetComponent<Text>();
-        Red3_KD = GameObject.Find("Red3_KD").GetComponent<Text>();
-        Blue1_ID = GameObject.Find("Blue1_ID").GetComponent<Text>();
-        Blue1_KD = GameObject.Find("Blue1_KD").GetComponent<Text>();
-        Blue2_ID = GameObject.Find("Blue2_ID").GetComponent<Text>();
-        Blue2_KD = GameObject.Find("Blue2_KD").GetComponent<Text>();
-        Blue3_ID = GameObject.Find("Blue3_ID").GetComponent<Text>();
-        Blue3_KD = GameObject.Find("Blue3_KD").GetComponent<Text>();
+        Team_ID = new Text[6];
+        Team_KD = new Text[6];
+        Team_ID[0] = GameObject.Find("Red1_ID").GetComponent<Text>();//아이디
+        Team_ID[2] = GameObject.Find("Red2_ID").GetComponent<Text>();
+        Team_ID[4] = GameObject.Find("Red3_ID").GetComponent<Text>();
+        Team_ID[1] = GameObject.Find("Blue1_ID").GetComponent<Text>();
+        Team_ID[3] = GameObject.Find("Blue2_ID").GetComponent<Text>();
+        Team_ID[5] = GameObject.Find("Blue3_ID").GetComponent<Text>();
+
+        Team_KD[0] = GameObject.Find("Red1_KD").GetComponent<Text>();//킬뎃
+        Team_KD[2] = GameObject.Find("Red2_KD").GetComponent<Text>();
+        Team_KD[4] = GameObject.Find("Red3_KD").GetComponent<Text>();
+        Team_KD[1] = GameObject.Find("Blue1_KD").GetComponent<Text>();
+        Team_KD[3] = GameObject.Find("Blue2_KD").GetComponent<Text>();
+        Team_KD[5] = GameObject.Find("Blue3_KD").GetComponent<Text>();
         
         ThisGameState = ConfigClass.GameState.NoSession;
         BeforeGameStete = ConfigClass.GameState.NotStart;
@@ -86,25 +89,8 @@ public class GameMgr : MonoBehaviour
 
                 case ConfigClass.GameState.InGame:
                     break;
-
                 /*case ConfigClass.GameState.Matching:
                     break;*/
-            }
-
-            if (PlayersID != null)
-            {
-                for (int i = 0; i < PlayersID.Length; i++)
-                {
-                    NetworkViewID temp = PlayersID[0];
-                    if (PlayersTeam[temp] == 0)//레드팀
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                }
             }
         }
         switch (this.ThisGameState)
@@ -120,7 +106,6 @@ public class GameMgr : MonoBehaviour
 
             /*case ConfigClass.GameState.Matching:
                 break;*/
-
         }
     }
     void Tab_State()
@@ -156,29 +141,50 @@ public class GameMgr : MonoBehaviour
     public void StartGetGamePlayerInfo()
     {
         GameObject [] Players = GameObject.FindGameObjectsWithTag("PLAYER");
-        Debug.Log("Test Get GamePlayers : " + Players.Length);
         PlayersID = new NetworkViewID[Players.Length];
-
     }
     // 플레이어들이 각자 정보를 자신의 캐릭터에 저장하고 그 정보들을 네트워크 상에 다른 캐릭터에 전달한 후 각자의 게임메니저에 정보를 넣는다.
     public void AddPlayer(NetworkViewID ID, string Name, int TeamNumb, int CharNumb)
     {
+        if (PlayersID == null)
+        {
+            StartGetGamePlayerInfo();
+        }
         PlayersID[TeamNumb] = ID;
-        PlayersName[ID] = Name;
-        PlayersChar[ID] = CharNumb;
-        PlayersTeam[ID] = TeamNumb;
-        PlayersKill[ID] = 0;
-        PlayersDeath[ID] = 0;
+        PlayersName[PlayersID[TeamNumb]] = Name;
+        PlayersChar[PlayersID[TeamNumb]] = CharNumb;
+        PlayersTeam[PlayersID[TeamNumb]] = TeamNumb;
+        PlayersKill[PlayersID[TeamNumb]] = 0;
+        PlayersDeath[PlayersID[TeamNumb]] = 0;
+
+        SettingUIPlayer++;
+        Debug.Log("ID! : " + ID);
+        Debug.Log("inID! : " + ID);
+        Debug.Log("Name! : " + Name);
+        Debug.Log("Inname! : " + PlayersName[PlayersID[TeamNumb]]);
+        if (SettingUIPlayer == PlayersID.Length)
+        {
+            int PlayersLength = PlayersID.Length;
+            Debug.Log("플레이어의 수는 : " + PlayersLength);
+            for (int i = 0; i < PlayersLength; i++)
+            {
+                Debug.Log("플레이어의 정보를 세팅중이다. : " + i);
+                Debug.Log("뭔데 : " + PlayersID[i]);
+                Debug.Log("뭔데wekgmwe : " + PlayersName[PlayersID[0]]);
+                Team_ID[i].text = PlayersName[PlayersID[i]];
+                Team_KD[PlayersTeam[PlayersID[i]]].text = "0/0";
+                Debug.Log("정보 세팅이 완료 되었다.");
+            }
+        }
     }
     // 누군가 누굴 죽였다.
     public void PKPD(NetworkViewID PK, NetworkViewID PD)
     {
         PlayersKill[PK] += 1;
         PlayersDeath[PD] += 1;
-        Debug.Log(PlayersName[PK] + "가 " + PlayersName[PD] + "를 죽였다.");
-        Debug.Log(PlayersName[PK] + "의 킬 : " + PlayersKill[PK]);
-        Debug.Log(PlayersName[PD] + "의 데스 : " + PlayersDeath[PD]);
-     }
+        Team_KD[PlayersTeam[PK]].text = PlayersKill[PK].ToString() + "/" + PlayersDeath[PK].ToString();
+        Team_KD[PlayersTeam[PD]].text = PlayersKill[PD].ToString() + "/" + PlayersDeath[PD].ToString();
+    }
 
     #region preProcess in GameState
         #endregion

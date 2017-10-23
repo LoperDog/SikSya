@@ -56,6 +56,7 @@ public class CloseAttack : MonoBehaviour {
                 }
             }
             Target_NetworkView[tempIndex] = tempTransForm.GetComponent<NetworkView>();
+
             AttackPlayer(Target_NetworkView[tempIndex]);
         }
     }

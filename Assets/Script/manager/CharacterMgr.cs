@@ -50,7 +50,7 @@ public class CharacterMgr : MonoBehaviour
     // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
     private Vector3 LerpPos;
     private Quaternion LerpRot;
-    private float LerpSpeed = 5.0f;
+    private float LerpSpeed = 1.0f;
     private float LerpPosStartTime = 0.0f;
     private float LerpRotStartTime = 0.0f;
 
@@ -278,7 +278,7 @@ public class CharacterMgr : MonoBehaviour
         {
             Player_rb.useGravity = true;
             // 메니저에 플레이어들을 세팅 시킨다.
-            MyMgr.StartGetGamePlayerInfo();
+            //MyMgr.StartGetGamePlayerInfo();
             // 자신의 정보를 네트워크를 통해 넘긴다.
             StartSetMyInfo();
         }
@@ -605,7 +605,8 @@ public class CharacterMgr : MonoBehaviour
     #region 네트워크 콜백
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
-        //if (thisCharacter == null) return;
+        if (!IsCharacterLoaded) return;
+
         if (stream.isWriting)
         {
             // 임시 각자의 코드 값 세팅
@@ -675,7 +676,7 @@ public class CharacterMgr : MonoBehaviour
             }
             Key_H = recvh;
             Key_V = recvv;
-            if (thisCharacter == null) return;
+            //if (thisCharacter == null) return;
             thisCharacter.SetRun(recvshift);
         }
     }

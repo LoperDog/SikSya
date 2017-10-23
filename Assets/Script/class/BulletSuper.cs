@@ -53,6 +53,7 @@ public class BulletSuper : MonoBehaviour
     {
         // 각도 계산 필요.
         Vector3 qu = transform.position - col.transform.position;
+
         Transform effect = Instantiate(Effect, transform.position, Quaternion.LookRotation(qu));
 
         IsLift = false;
