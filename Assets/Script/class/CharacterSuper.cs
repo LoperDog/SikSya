@@ -27,7 +27,7 @@ public class CharacterSuper : MonoBehaviour
     public bool Is_Jump = false;
     public bool IsStrongAttack = false;
     public bool IsSpecialAttack = false;
-    protected bool Is_Ground = true;
+    protected bool Is_Ground = false;
     protected bool Is_Run = false;
     public bool Is_Taunt1 = false;
     public bool Is_Taunt2 = false;
