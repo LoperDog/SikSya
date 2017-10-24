@@ -23,8 +23,8 @@ public class DubuCharacter : CharacterSuper
             }
             else
             {
-                Transform temp = Instantiate(effect[1], effectPosition[0].position, effectPosition[1].rotation * effect[1].rotation);
-                temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+                Transform temp = Instantiate(effect[1], effectPosition[0].position, effectPosition[0].rotation * effect[0].rotation);
+                temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
             }
             ShotBullet();
             AttackIsLeft = !AttackIsLeft;

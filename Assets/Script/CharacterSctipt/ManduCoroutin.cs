@@ -33,6 +33,10 @@ public class ManduCoroutin : CoroutinClass
     }
     public override IEnumerator SetStrongAttack()
     {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
         thisCharacterScript.IsStrongAttack = true;
         StartCoroutine(SetStrongAttackShoot());
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);

@@ -50,7 +50,7 @@ public class CharacterMgr : MonoBehaviour
     // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
     private Vector3 LerpPos;
     private Quaternion LerpRot;
-    private float LerpSpeed = 5.0f;
+    private float LerpSpeed = 1.0f;
     private float LerpPosStartTime = 0.0f;
     private float LerpRotStartTime = 0.0f;
 
