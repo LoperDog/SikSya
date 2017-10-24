@@ -186,7 +186,11 @@ public class NetworkMgr : MonoBehaviour
     void CreatePlayer()
     {
         Vector3 pos = PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
-        Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb], pos, Quaternion.identity, 0);
+        int CheckTeam = (MyInfoClass.GetInstance().MyGameNumb % 2) == 0 ? 0 : 2;
+        Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
+            , pos,
+            Quaternion.identity,
+            0);
     }
 
     // 모든 플레이어가 로드 되었다.
