@@ -33,21 +33,27 @@ public class BulletSuper : MonoBehaviour
         PlayerCode = code;
         IsLift = true;
     }
-    /*
     // 충돌처리
-    protected virtual void OnTriggerEnter(Collider col)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("In Bullet Trigging Sumthing : " + PlayerCode);
         // 각도 계산 필요.
-        Transform effect = Instantiate(Effect, transform.position, Quaternion.identity);
-        //Destroy(effect, 0.3f);
+        Vector3 qu = transform.position - other.transform.position;
+
+        Transform effect = Instantiate(Effect, transform.position, Quaternion.LookRotation(qu));
+
         IsLift = false;
-        if(col.tag == "PLAYER" && PlayerCode == Mgr.GetPlayerCode())
+        if (other.transform.tag == "PLAYER")
         {
-            //Debug.Log("PlayerGetYa!");
-            SetBulletEnalbed();
+            if(config == null)
+            {
+                config = new ConfigClass();
+            }
+            Player_tr.GetComponent<CharacterMgr>().ShotPlayer(other.transform.GetComponent<NetworkView>(),config.StatusConfigs["Dubu"]["Attack"]);
+            Debug.Log("맞은 친구" + other.transform.name + " 뷰 아이디 : " + other.transform.GetComponent<NetworkView>().viewID);
         }
-    }*/
+        SetBulletEnalbed();
+    }
+    /*
     // 현제는 두개다 만들어 둔다.
     protected virtual void OnCollisionEnter(Collision col)
     {
@@ -67,7 +73,7 @@ public class BulletSuper : MonoBehaviour
             Debug.Log("맞은 친구" + col.transform.name + " 뷰 아이디 : " + col.transform.GetComponent<NetworkView>().viewID);
         }
         SetBulletEnalbed();
-    }
+    }*/
 
     // 생성 당시에 플레이어 코드를 
     protected void SetCode(int Code) { PlayerCode = Code; }

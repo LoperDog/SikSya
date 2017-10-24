@@ -6,6 +6,7 @@ using UnityEngine;
 using ConstValueInfo;
 using System;
 using UnityEngine.UI;
+
 public class GameMgr : MonoBehaviour
 {
     //시간
@@ -19,7 +20,9 @@ public class GameMgr : MonoBehaviour
 
     public Text [] Team_ID;
     public Text [] Team_KD;
-    
+
+    public Image Game_Result;
+
     public ConfigClass.GameState ThisGameState;
     public ConfigClass.GameState BeforeGameStete;
 
@@ -69,6 +72,9 @@ public class GameMgr : MonoBehaviour
         BeforeGameStete = ConfigClass.GameState.NotStart;
         StartCoroutine("Game_Timer");
         Tab.gameObject.SetActive(false);
+        //결과
+        Game_Result = GameObject.Find("Game_Result").GetComponent<Image>();
+        Game_Result.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -125,7 +131,7 @@ public class GameMgr : MonoBehaviour
     }
     IEnumerator Game_Timer()
     {
-        for (Game_Time = 60.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
+        for (Game_Time = 300.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
         {
             Game_Time_M.text = "0" + (int)(Game_Time / 60) + " :";
             if ((int)(Game_Time % 60) < 10)
@@ -159,25 +165,30 @@ public class GameMgr : MonoBehaviour
                 blueKill += PlayersKill[PlayersID[i]];
         }
 
-        if(redKill > blueKill)
+        if(redKill > blueKill && MyTeam ==0)
         {
             // 레드팀이 이겼다.
-        }else if(blueKill < redKill)
+            Game_Result = GameObject.Find("Win").GetComponent<Image>();
+            Game_Result.enabled = true;
+            Debug.Log("이겼어");
+        }
+        else
         {
             // 블루팀이 이겼다
-        }else
-        {
-            // 비겼다.
+            Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result.enabled = true;
+            Debug.Log("졌어");
         }
-
         yield return new WaitForSeconds(5.0f);
-        if(Network.isServer)
+        Game_Result.enabled = false;
+        if (Network.isServer)
             GameOver();
     }
     public void GameOver()
     {
         CSender tempSender = CSender.GetInstance();
         DataPacketInfo gameOverPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutMainGameScene, (int)ProtocolTagNull.Null, null);
+        Screen.lockCursor = false;
         tempSender.Sendn(ref gameOverPacket);
     }
     // 플레이어 정보를 세팅하기 위해 기본적으로 아이디 들을 가지고 있는다. 그냥 캐싱.

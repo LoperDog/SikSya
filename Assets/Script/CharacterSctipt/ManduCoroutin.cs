@@ -5,7 +5,7 @@ using UnityEngine;
 public class ManduCoroutin : CoroutinClass
 {
     public ManduCharacter ManduChar;
-
+    
     public override void SetCharacterScript(CharacterSuper CharacterClass)
     {
         base.SetCharacterScript(CharacterClass);
@@ -18,6 +18,7 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
+        
         thisMgr.StrongAttackCoolTime = config.StatusConfigs["Mandu"]["StrongAttack_CoolTime"];
         base.StartStrongAttckSetting();
     }
@@ -29,6 +30,27 @@ public class ManduCoroutin : CoroutinClass
         }
         thisMgr.SpecialAttackCoolTime = config.StatusConfigs["Mandu"]["SpecialAttack_CoolTime"];
         base.StartSpecialAttackSetting();
+    }
+    public override IEnumerator SetStrongAttack()
+    {
+        thisCharacterScript.IsStrongAttack = true;
+        StartCoroutine(SetStrongAttackShoot());
+        yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
+        thisCharacterScript.IsStrongAttack = false;
+    }
+    public IEnumerator SetStrongAttackShoot()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        // 키고 끈다.
+        ManduChar.StrongAttackShootStart();
+        ManduChar.StrongAttackReady();
+        yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["StongAttackTime"]);
+        ManduChar.StrongAttackEnd();
+        thisMgr.m_StrongAttack.ReSetAttack();
+        ManduChar.StrongAttackShootEnd();
     }
     public override IEnumerator SetSpecialAttack()
     {

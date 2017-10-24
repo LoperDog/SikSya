@@ -147,6 +147,8 @@ public class CharacterMgr : MonoBehaviour
     // 캐릭터를 만들기 위해 아이디를 받는다.
     public void Start()
     {
+        Screen.lockCursor = true;
+
         // 캐릭터 받아오기 세팅
         Player_tr = GetComponent<Transform>();
         Player_rb = GetComponent<Rigidbody>();
@@ -168,8 +170,6 @@ public class CharacterMgr : MonoBehaviour
         {
             config = new ConfigClass();
         }
-        //
-        Screen.lockCursor = true;
         // 캐릭터 생성
         switch (Character_ID)
         {
@@ -191,6 +191,7 @@ public class CharacterMgr : MonoBehaviour
                 thisCharacter.SetCoroutine(gameObject.AddComponent<ManduCoroutin>());
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
+                m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
                 break;
             default:
@@ -443,6 +444,7 @@ public class CharacterMgr : MonoBehaviour
     [RPC]
     public void SetCharacterStAttack()
     {
+        Debug.Log(_networkView.viewID + "우클릭 요청을 받았다.");
         thisCharacter.StrongAttack();
     }
     // 특수기
@@ -557,6 +559,7 @@ public class CharacterMgr : MonoBehaviour
         Click_Right = Input.GetMouseButton(1);
         if (Input.GetMouseButton(1))
         {
+            Debug.Log("우클릭을 보냈다.");
             _networkView.RPC("SetCharacterStAttack", RPCMode.AllBuffered, null);
         }
         Key_Special = Input.GetKey(KeyCode.Q);

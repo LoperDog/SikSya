@@ -9,7 +9,7 @@ public class CloseAttack : MonoBehaviour {
     protected NetworkView[] Target_NetworkView = new NetworkView[6];
     protected float Damege;
 
-    private Transform effect;
+    protected Transform effect;
 
     public virtual Transform Player
     {
@@ -74,7 +74,6 @@ public class CloseAttack : MonoBehaviour {
     // 공격을 멈추고 돌아간다.
     public virtual void ReSetAttack()
     {
-        Debug.Log("일단 근접공격이 끝났다.");
         Target_NetworkView = new NetworkView[6];
         gameObject.SetActive(false);
     }

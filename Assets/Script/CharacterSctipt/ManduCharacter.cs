@@ -36,19 +36,40 @@ public class ManduCharacter : CharacterSuper
     //강공격 시작
     public override void StrongAttack()
     {
-        if (!IsStrongAttack && GetIsGroud() /*&& mgr.StrongAttackCoolTime == 0*/)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
+        if (!IsStrongAttack && !IsAttack && GetIsGroud() && m_Current_Bullet > 1 && mgr.StrongAttackCoolTime == 0)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
         {
+            Debug.Log("만두 강공격을 하고있다.");
             coroutine.StartStrongAttckSetting();
-            Transform temp = Instantiate(effect[3], effectPosition[1].position, Player_tr.rotation);//이팩트 생성
+            Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);//이팩트 생성
             temp.SetParent(Player_tr);//캐릭터 하위로 이동
             temp.GetComponent<DestroyMe1>().Target = effectPosition[1];//0.3초후 제거
             mgr.RoundAttack[0].SetActive(true);//판정
+            m_Current_Bullet -= 2;
+        } else if (m_Current_Bullet <= 1)
+        {
+            ReLoad();
         }
+    }
+    public void StrongAttackReady()
+    {
+        CharAnim.SetStrongAttackReady();
+    }
+    public void StrongAttackEnd()
+    {
+        CharAnim.SetStrongAttackEnd();
+    }
+    public void StrongAttackShootStart()
+    {
+        mgr.RoundAttack[0].SetActive(true);
+    }
+    public void StrongAttackShootEnd()
+    {
+
     }
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!IsSpecialAttack && GetIsGroud()/* && !IsAttack && mgr.SpecialAttackCoolTime == 0*/)
+        if (!IsSpecialAttack && GetIsGroud() && !IsAttack && mgr.SpecialAttackCoolTime == 0)
         {
             coroutine.StartSpecialAttackSetting();
         }
