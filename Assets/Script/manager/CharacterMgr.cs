@@ -493,6 +493,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             thisCharacter.SetCharacterMove(Key_H, Key_V);
+            thisCharacter.Check_Ground();
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -638,7 +639,7 @@ public class CharacterMgr : MonoBehaviour
             float H = Key_H;
             float V = Key_V;
             bool Shift = Key_Shift;
-
+            bool check = thisCharacter.GetIsGroud();
             // 키 동기화
             Key_Shift = thisCharacter.GetIsRun();
 
@@ -650,6 +651,7 @@ public class CharacterMgr : MonoBehaviour
             stream.Serialize(ref H);
             stream.Serialize(ref V);
             stream.Serialize(ref Shift);
+            stream.Serialize(ref check);
         }
         else
         {
@@ -662,7 +664,7 @@ public class CharacterMgr : MonoBehaviour
             float recvh = 0.0f;
             float recvv = 0.0f;
             bool recvshift = false;
-
+            bool check = false;
             // 캐릭터 코드 수신.
             //stream.Serialize(ref CodeTemp);
 
@@ -674,7 +676,7 @@ public class CharacterMgr : MonoBehaviour
             stream.Serialize(ref recvh);
             stream.Serialize(ref recvv);
             stream.Serialize(ref recvshift);
-
+            stream.Serialize(ref check);
             // 플레이어 코드 업데이트
             //thisCharacter.SetPlayerCode(CodeTemp);
 
@@ -695,6 +697,7 @@ public class CharacterMgr : MonoBehaviour
             }
             Key_H = recvh;
             Key_V = recvv;
+            thisCharacter.SetCheckGround(check);
             //if (thisCharacter == null) return;
             thisCharacter.SetRun(recvshift);
         }

@@ -38,7 +38,7 @@ public class ManduCharacter : CharacterSuper
     {
         if (!IsStrongAttack && !IsAttack && GetIsGroud() && m_Current_Bullet > 1 && mgr.StrongAttackCoolTime == 0)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
         {
-            Debug.Log("만두 강공격을 하고있다.");
+            //Debug.Log("만두 강공격을 하고있다.");
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);//이팩트 생성
             temp.SetParent(Player_tr);//캐릭터 하위로 이동
