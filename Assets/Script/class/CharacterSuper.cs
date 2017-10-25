@@ -27,7 +27,7 @@ public class CharacterSuper : MonoBehaviour
     public bool Is_Jump = false;
     public bool IsStrongAttack = false;
     public bool IsSpecialAttack = false;
-    protected bool Is_Ground = true;
+    protected bool Is_Ground = false;
     protected bool Is_Run = false;
     public bool Is_Taunt1 = false;
     public bool Is_Taunt2 = false;
@@ -109,7 +109,6 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void CharacterUpdate()
     {
-        Check_Ground();
         Move();
         Run();
     }
@@ -163,9 +162,10 @@ public class CharacterSuper : MonoBehaviour
     public virtual void Check_Ground()
     {
         RaycastHit hit;
-        Debug.DrawRay(Player_tr.position, Vector3.down * 0.2f, Color.red);
-        if (Physics.Raycast(Player_tr.position, Vector3.down, out hit, 0.2f))
+        //Debug.DrawRay(Player_tr.position, Vector3.down * 0.2f, Color.red);
+        if (Physics.Raycast(Player_tr.position, Vector3.down, out hit, 0.3f))
         {
+            //Debug.Log("땅에 닿아 있다.");
             if (Long_Falling && hit.collider.tag == "GROUND")
             {
                 Long_Falling = false;
@@ -327,6 +327,10 @@ public class CharacterSuper : MonoBehaviour
     public virtual void SetEffect(Transform[] ef)
     {
         effect = ef;
+    }
+    public virtual void SetCheckGround(bool b)
+    {
+        Is_Ground = b;
     }
     #endregion
     #region 아이템 영역

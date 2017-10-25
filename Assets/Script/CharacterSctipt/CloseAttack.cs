@@ -9,6 +9,8 @@ public class CloseAttack : MonoBehaviour {
     protected NetworkView[] Target_NetworkView = new NetworkView[6];
     protected float Damege;
 
+    protected Transform effect;
+
     public virtual Transform Player
     {
         get
@@ -55,6 +57,9 @@ public class CloseAttack : MonoBehaviour {
                     return;
                 }
             }
+
+             Instantiate(effect, tempTransForm.position, Quaternion.identity);
+
             Target_NetworkView[tempIndex] = tempTransForm.GetComponent<NetworkView>();
             AttackPlayer(Target_NetworkView[tempIndex]);
         }
@@ -69,8 +74,11 @@ public class CloseAttack : MonoBehaviour {
     // 공격을 멈추고 돌아간다.
     public virtual void ReSetAttack()
     {
-        Debug.Log("일단 근접공격이 끝났다.");
         Target_NetworkView = new NetworkView[6];
         gameObject.SetActive(false);
+    }
+    public virtual void SetEffect(Transform e)
+    {
+        effect = e;
     }
 }

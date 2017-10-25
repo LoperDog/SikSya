@@ -50,7 +50,7 @@ public class CharacterMgr : MonoBehaviour
     // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
     private Vector3 LerpPos;
     private Quaternion LerpRot;
-    private float LerpSpeed = 5.0f;
+    private float LerpSpeed = 1.0f;
     private float LerpPosStartTime = 0.0f;
     private float LerpRotStartTime = 0.0f;
 
@@ -65,6 +65,8 @@ public class CharacterMgr : MonoBehaviour
     public int MyTeam;
     public int MyCharNumb;
 
+    // 마지막으로 날 공격한 놈의 네트워크 뷰 아이디
+    public NetworkViewID LastAttacker;
     #region 캐릭터 정보
     [SerializeField]
     public float Char_Max_HP;
@@ -145,6 +147,8 @@ public class CharacterMgr : MonoBehaviour
     // 캐릭터를 만들기 위해 아이디를 받는다.
     public void Start()
     {
+        Screen.lockCursor = true;
+
         // 캐릭터 받아오기 세팅
         Player_tr = GetComponent<Transform>();
         Player_rb = GetComponent<Rigidbody>();
@@ -166,8 +170,6 @@ public class CharacterMgr : MonoBehaviour
         {
             config = new ConfigClass();
         }
-        //
-        Screen.lockCursor = true;
         // 캐릭터 생성
         switch (Character_ID)
         {
@@ -178,7 +180,9 @@ public class CharacterMgr : MonoBehaviour
                 thisCharacter.SetCoroutine(gameObject.AddComponent<DubuCoroutin>());
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<DubuAttack>();
+                m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
+                m_SpecialAttack.SetEffect(Effect[8]);
                 break;
             case Chacracter_Type.Mandu:
                 thisCharacter = new ManduCharacter();
@@ -187,6 +191,7 @@ public class CharacterMgr : MonoBehaviour
                 thisCharacter.SetCoroutine(gameObject.AddComponent<ManduCoroutin>());
                 //특수기
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
+                m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
                 break;
             default:
@@ -276,7 +281,7 @@ public class CharacterMgr : MonoBehaviour
         {
             Player_rb.useGravity = true;
             // 메니저에 플레이어들을 세팅 시킨다.
-            MyMgr.StartGetGamePlayerInfo();
+            //MyMgr.StartGetGamePlayerInfo();
             // 자신의 정보를 네트워크를 통해 넘긴다.
             StartSetMyInfo();
         }
@@ -284,7 +289,7 @@ public class CharacterMgr : MonoBehaviour
     private void StartSetMyInfo()
     {
         // 자신의 정보를 모든 Client를 향해 던진다.
-        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb % 2);
+        _networkView.RPC("SetMyInfo", RPCMode.AllBuffered, MyInfoClass.GetInstance().MyName, MyInfoClass.GetInstance().MyCharNumb, MyInfoClass.GetInstance().MyGameNumb);
     }
     [RPC]
     public void SetMyInfo(string Name, int CharNumb, int TeamNumb)
@@ -294,6 +299,20 @@ public class CharacterMgr : MonoBehaviour
         MyCharNumb = CharNumb;
         // 각자 알아서 자신의 정보를 세팅한다.
         MyMgr.AddPlayer(_networkView.viewID, MyName, MyTeam, MyCharNumb);
+    }
+    public void SetGameEnd()
+    {
+        GameObject[] AllPlayer = GameObject.FindGameObjectsWithTag("PLAYER");
+        for (int i = 0; i < AllPlayer.Length; i++)
+        {
+            AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("GameEnd", RPCMode.AllBuffered, null);
+        }
+    }
+    [RPC]
+    public void GameEnd()
+    {
+        MyMgr.MgrGameEnd();
+        thisCharacter.CanControll = false;
     }
     void Update()
     {
@@ -308,7 +327,7 @@ public class CharacterMgr : MonoBehaviour
         else
         {
             // PC가 아닌 캐릭터들의 이동 및 회전 선형보간
-            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f 
+            float LerpPosT = ((Time.time - LerpPosStartTime) * LerpSpeed) > 1.0f
                 ? 1.0f : ((Time.time - LerpPosStartTime) * LerpSpeed);
             Player_tr.position = Vector3.Lerp(
                 Player_tr.position,
@@ -316,7 +335,7 @@ public class CharacterMgr : MonoBehaviour
                 LerpPosT
                 );
 
-            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f 
+            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f
                 ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
             Player_tr.rotation = Quaternion.Lerp(
                 Player_tr.rotation,
@@ -416,15 +435,16 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.ReLoad();
     }
     [RPC]
-    public void GetDamage(float de)
+    public void GetDamage(float de, NetworkViewID Attacker)
     {
-        //Debug.Log("맞은 아이디 : " + _networkView.viewID + " 남은 채력 : " + Char_Current_HP);
+        LastAttacker = Attacker;
         Char_Current_HP -= de;
     }
     // 강공격
     [RPC]
     public void SetCharacterStAttack()
     {
+        Debug.Log(_networkView.viewID + "우클릭 요청을 받았다.");
         thisCharacter.StrongAttack();
     }
     // 특수기
@@ -453,19 +473,19 @@ public class CharacterMgr : MonoBehaviour
             // 만약 같은 팀이라면 쏘지 않는다.
             if (MyMgr.GetTeam(_networkView.viewID) == MyMgr.GetTeam(Player.viewID))
             {
-                Debug.Log("같은 팀을 쏘고 있다.");
                 return;
             }
-            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de);
+            Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
         }
     }
     void FixedUpdate()
     {
         if (_networkView.isMine && !thisCharacter.Is_Dead && Char_Current_HP <= 0)
         {
-            StartDead();
             thisCharacter.CanControll = false;
             thisCharacter.coroutine.StartRespawn();
+            StartDead();
+            SendKD();
             return;
         }
         thisCharacter.CharacterUpdate();
@@ -473,6 +493,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             thisCharacter.SetCharacterMove(Key_H, Key_V);
+            thisCharacter.Check_Ground();
             if (!thisCharacter.CanControll)
             {
                 Key_H = 0f;
@@ -486,6 +507,15 @@ public class CharacterMgr : MonoBehaviour
             InputControll();
             thisCharacter.Turn();
         }
+    }
+    public void SendKD()
+    {
+        _networkView.RPC("SetKD", RPCMode.AllBuffered, LastAttacker, _networkView.viewID);
+    }
+    [RPC]
+    public void SetKD(NetworkViewID PK, NetworkViewID PD)
+    {
+        MyMgr.PKPD(PK, PD);
     }
     public void StartDead()
     {
@@ -530,6 +560,7 @@ public class CharacterMgr : MonoBehaviour
         Click_Right = Input.GetMouseButton(1);
         if (Input.GetMouseButton(1))
         {
+            Debug.Log("우클릭을 보냈다.");
             _networkView.RPC("SetCharacterStAttack", RPCMode.AllBuffered, null);
         }
         Key_Special = Input.GetKey(KeyCode.Q);
@@ -594,7 +625,8 @@ public class CharacterMgr : MonoBehaviour
     #region 네트워크 콜백
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
-        //if (thisCharacter == null) return;
+        if (!IsCharacterLoaded) return;
+
         if (stream.isWriting)
         {
             // 임시 각자의 코드 값 세팅
@@ -607,7 +639,7 @@ public class CharacterMgr : MonoBehaviour
             float H = Key_H;
             float V = Key_V;
             bool Shift = Key_Shift;
-
+            bool check = thisCharacter.GetIsGroud();
             // 키 동기화
             Key_Shift = thisCharacter.GetIsRun();
 
@@ -619,6 +651,7 @@ public class CharacterMgr : MonoBehaviour
             stream.Serialize(ref H);
             stream.Serialize(ref V);
             stream.Serialize(ref Shift);
+            stream.Serialize(ref check);
         }
         else
         {
@@ -631,7 +664,7 @@ public class CharacterMgr : MonoBehaviour
             float recvh = 0.0f;
             float recvv = 0.0f;
             bool recvshift = false;
-
+            bool check = false;
             // 캐릭터 코드 수신.
             //stream.Serialize(ref CodeTemp);
 
@@ -643,7 +676,7 @@ public class CharacterMgr : MonoBehaviour
             stream.Serialize(ref recvh);
             stream.Serialize(ref recvv);
             stream.Serialize(ref recvshift);
-
+            stream.Serialize(ref check);
             // 플레이어 코드 업데이트
             //thisCharacter.SetPlayerCode(CodeTemp);
 
@@ -664,7 +697,8 @@ public class CharacterMgr : MonoBehaviour
             }
             Key_H = recvh;
             Key_V = recvv;
-            if (thisCharacter == null) return;
+            thisCharacter.SetCheckGround(check);
+            //if (thisCharacter == null) return;
             thisCharacter.SetRun(recvshift);
         }
     }

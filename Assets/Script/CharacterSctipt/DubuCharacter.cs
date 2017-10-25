@@ -23,8 +23,8 @@ public class DubuCharacter : CharacterSuper
             }
             else
             {
-                Transform temp = Instantiate(effect[1], effectPosition[1].position, effectPosition[1].rotation * effect[1].rotation);
-                temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+                Transform temp = Instantiate(effect[1], effectPosition[0].position, effectPosition[0].rotation * effect[0].rotation);
+                temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
             }
             ShotBullet();
             AttackIsLeft = !AttackIsLeft;
@@ -49,7 +49,11 @@ public class DubuCharacter : CharacterSuper
     {
         if (!IsStrongAttack && GetIsGroud() && mgr.StrongAttackCoolTime == 0)
         {
+            Debug.Log("두부의 강공격을 시작한다.");
             coroutine.StartStrongAttckSetting();
+            Transform temp = Instantiate(effect[5], Player_tr.position, Player_tr.rotation);
+            temp.SetParent(Player_tr);
+            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
         }
     }
     public void StrongAttackReady()
@@ -60,6 +64,9 @@ public class DubuCharacter : CharacterSuper
     // 이팩트 생성, 애니매이션 재생. 
     public void StrongAttackDash()
     {
+        Transform temp = Instantiate(effect[6], Player_tr.position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
         mgr.RoundAttack[0].SetActive(true);
         CharAnim.SetStrongAttackDash();
         Player_rb.AddForce(Player_tr.forward * 20000f);

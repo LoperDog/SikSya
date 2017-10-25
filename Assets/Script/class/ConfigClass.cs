@@ -36,11 +36,12 @@ public class ConfigClass {
         ManduStatus["Cartridge"] = 7f;//장탄수 수정
         ManduStatus["ReLoadTime"] = 3.14f;
 
-        ManduStatus["Attack"] = 50f;//공격력
+        ManduStatus["Attack"] = 50.0f;//공격력
         ManduStatus["AtttackSpeed"] = 1.9f;
 
-        ManduStatus["StrongAttack"] = 50f;//우클릭 공격력
+        ManduStatus["StrongAttack"] = 150f;//우클릭 공격력
         ManduStatus["StrongAttack_CoolTime"] = 10.0f;//우클릭 쿨타임
+        ManduStatus["StongAttackTime"] = 0.5f;
 
         ManduStatus["SpecialAttack"] = 100.0f;//Q스킬 공격력
         ManduStatus["SpecialAttack_CoolTime"] = 30.0f;// Q스킬 쿨타임

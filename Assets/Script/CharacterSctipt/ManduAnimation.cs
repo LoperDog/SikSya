@@ -17,7 +17,7 @@ public class ManduAnimation : AnimationSuper
     //강공격
     public void SetStrongAttackReady()
     {
-
+        m_Anim.SetBool("Is_StrongAttackReady", true);
     }
     public void SetStrongAttackDash()
     {
@@ -25,7 +25,7 @@ public class ManduAnimation : AnimationSuper
     }
     public void SetStrongAttackEnd()
     {
-
+        m_Anim.SetBool("Is_StrongAttackReady", false);
     }
     //특수기
     public void SetSpecialAttackReady()
