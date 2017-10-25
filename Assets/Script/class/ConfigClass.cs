@@ -69,8 +69,8 @@ public class ConfigClass {
         DubuStatus["StrongAttack"] = 30f;//우클릭 공격력
         DubuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
         DubuStatus["StongAttackReady"] = 0.26f;
-        DubuStatus["StongAttackTime"] = 0.46f;
-        DubuStatus["StongAttackEnd"] = 0.9f;
+        DubuStatus["StongAttackTime"] = 0.23f;
+        DubuStatus["StongAttackEnd"] = 0.57f;
 
         DubuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
         DubuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임

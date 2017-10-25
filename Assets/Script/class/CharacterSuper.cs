@@ -21,12 +21,12 @@ public class CharacterSuper : MonoBehaviour
     public Transform[] effectPosition;
     public Transform[] effect;
 
-    public bool IsAttack = false;
-    public bool IsReLoad = false;
+    public bool Is_Attack = false;
+    public bool Is_ReLoad = false;
     public bool Is_Dead = false;
     public bool Is_Jump = false;
-    public bool IsStrongAttack = false;
-    public bool IsSpecialAttack = false;
+    public bool Is_StrongAttack = false;
+    public bool Is_SpecialAttack = false;
     protected bool Is_Ground = false;
     protected bool Is_Run = false;
     public bool Is_Taunt1 = false;
@@ -136,7 +136,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void Run()
     {
-        if (Is_Run && (m_Move_V > 0.1) && Is_Ground && m_Current_Speed <= m_Run_Speed && !GetIsReload() && !IsAttack && (m_Move_H == 0))
+        if (Is_Run && (m_Move_V > 0.1) && Is_Ground && m_Current_Speed <= m_Run_Speed && !GetIsReload() && !Is_Attack && (m_Move_H == 0))
         {
             m_Current_Speed += 5.0f * Time.deltaTime;
         }
@@ -180,6 +180,10 @@ public class CharacterSuper : MonoBehaviour
         }
         Is_Ground = false;
     }
+    public void StartFalling()
+    {
+        coroutine.StartFalling();
+    }
     // 기본공격
     public virtual void Attack()
     {
@@ -201,9 +205,9 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void ReLoad()
     {
-        if ((!IsReLoad) && (m_Current_Bullet != m_Max_Bullet) && !IsAttack)  //재장전이 아니고 총알이 최대가 아니며 R키를 누를 때 재장전
+        if ((!Is_ReLoad) && (m_Current_Bullet != m_Max_Bullet) && !Is_Attack && !Is_StrongAttack && !Is_SpecialAttack && !Is_Taunt1 && !Is_Taunt2)
         {
-            IsReLoad = true;
+            Is_ReLoad = true;
             coroutine.StartReLoad();
         }
     }
@@ -239,12 +243,12 @@ public class CharacterSuper : MonoBehaviour
     //도발
     public virtual void Taunt(int tauntnumb)
     {
-        if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 1)//1번 도발
+        if (!Is_Attack&&!Is_ReLoad&&!Is_StrongAttack && !Is_SpecialAttack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && tauntnumb == 1)//1번 도발
         {
             Is_Taunt1 = true;
             coroutine.StartTaunt1();
         }
-        else if (!Is_Taunt1 && !Is_Taunt2 && !Is_Jump && tauntnumb == 2)//2번 도발
+        else if (!Is_Attack && !Is_ReLoad && !Is_StrongAttack && !Is_SpecialAttack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && tauntnumb == 2)//2번 도발
         {
             Is_Taunt2 = true;
             coroutine.StartTaunt2();
@@ -362,9 +366,9 @@ public class CharacterSuper : MonoBehaviour
     public virtual void SetMoveV(float KeyV) { m_Move_V = KeyV; }
     #endregion
     #region 캐릭터 상태값 가져오기
-    public virtual bool GetAttackorReload() { return IsAttack || IsReLoad; }
-    public virtual bool GetIsAttack() { return IsAttack; }
-    public virtual bool GetIsReload() { return IsReLoad; }
+    public virtual bool GetAttackorReload() { return Is_Attack || Is_ReLoad; }
+    public virtual bool GetIsAttack() { return Is_Attack; }
+    public virtual bool GetIsReload() { return Is_ReLoad; }
     public virtual float GetMoveH() { return m_Move_H; }
     public virtual float GetMoveV() { return m_Move_V; }
     public virtual float GetSpeed() { return m_Current_Speed; }
@@ -372,8 +376,8 @@ public class CharacterSuper : MonoBehaviour
     public virtual bool GetIsJump() { return Is_Jump; }
     public virtual bool GetIsGroud() { return Is_Ground; }
     public virtual bool GetIsDead() { return Is_Dead; }
-    public virtual bool GetIsStrongAttack() { return IsStrongAttack; }
-    public virtual bool GetIsSpecialAttack() { return IsSpecialAttack; }
+    public virtual bool GetIsStrongAttack() { return Is_StrongAttack; }
+    public virtual bool GetIsSpecialAttack() { return Is_SpecialAttack; }
     public virtual bool GetIsLong_Falling() { return Long_Falling; }
     public virtual bool GetIsTaunt1() { return Is_Taunt1; }
     public virtual bool GetIsTaunt2() { return Is_Taunt2; }

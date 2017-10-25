@@ -37,10 +37,10 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.IsStrongAttack = true;
+        thisCharacterScript.Is_StrongAttack = true;
         StartCoroutine(SetStrongAttackShoot());
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
-        thisCharacterScript.IsStrongAttack = false;
+        thisCharacterScript.Is_StrongAttack = false;
     }
     public IEnumerator SetStrongAttackShoot()
     {
@@ -67,7 +67,7 @@ public class ManduCoroutin : CoroutinClass
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
         ManduChar.SpecialAttackEnd();
         thisCharacterScript.CanControll = true;
-        thisCharacterScript.IsSpecialAttack = false;
+        thisCharacterScript.Is_SpecialAttack = false;
     }
     public override IEnumerator SetTaunt1()
     {

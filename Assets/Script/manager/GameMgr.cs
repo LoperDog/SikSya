@@ -170,14 +170,12 @@ public class GameMgr : MonoBehaviour
             // 레드팀이 이겼다.
             Game_Result = GameObject.Find("Win").GetComponent<Image>();
             Game_Result.enabled = true;
-            Debug.Log("이겼어");
         }
         else
         {
             // 블루팀이 이겼다
             Game_Result = GameObject.Find("Lose").GetComponent<Image>();
             Game_Result.enabled = true;
-            Debug.Log("졌어");
         }
         yield return new WaitForSeconds(5.0f);
         Game_Result.enabled = false;

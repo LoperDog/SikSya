@@ -19,31 +19,24 @@ public class DubuAnimation : AnimationSuper
     //강공격
     public void SetStrongAttackReady()
     {
-        m_Anim.SetBool("Is_StrongAttackReady", true);
-        m_Anim.SetBool("Is_StrongAttackEnd", false);
-        m_Anim.SetBool("Strong_A_End", false);
+        m_Anim.SetBool("Is_StrongAttack", true);
     }
     public void SetStrongAttackDash()
     {
-        m_Anim.SetBool("Is_StrongAttackDash", true);
-        m_Anim.SetBool("Is_StrongAttackReady", false);
+
     }
     public void SetStrongAttackEnd()
     {
-        m_Anim.SetBool("Strong_A_End", true);
-        m_Anim.SetBool("Is_StrongAttackDash", false);
-        m_Anim.SetBool("Is_StrongAttackEnd", true);
+        m_Anim.SetBool("Is_StrongAttack", false);
     }
     //특수기
     public void SetSpecialAttackReady()
     {
-        m_Anim.SetBool("Is_SpecialAttackReady", true);
-        m_Anim.SetBool("Is_SpecialAttackEnd", false);
+        m_Anim.SetBool("Is_SpecialAttack", true);
     }
     public void SetSpecialAttackEnd()
     {
-        m_Anim.SetBool("Is_SpecialAttackReady", false);
-        m_Anim.SetBool("Is_SpecialAttackEnd", true);
+        m_Anim.SetBool("Is_SpecialAttack", false);
     }
 }
 

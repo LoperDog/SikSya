@@ -280,6 +280,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Player_rb.useGravity = true;
+            thisCharacter.StartFalling();
             // 메니저에 플레이어들을 세팅 시킨다.
             //MyMgr.StartGetGamePlayerInfo();
             // 자신의 정보를 네트워크를 통해 넘긴다.
@@ -347,7 +348,6 @@ public class CharacterMgr : MonoBehaviour
         if (IsInGameSetting && !IsGameLoaded)
         {
             IsGameLoaded = true;
-            thisCharacter.CanControll = true;
         }
         /*
         else

@@ -49,6 +49,10 @@ public class CoroutinClass : MonoBehaviour
     {
         StartCoroutine(SetRespawn());
     }
+    public void StartFalling()
+    {
+        StartCoroutine(SetFalling());
+    }
     public virtual void StartBuffSetting(float time, CharacterSuper.ItemCode code, float value)
     {
         switch (code)
@@ -79,23 +83,23 @@ public class CoroutinClass : MonoBehaviour
     public virtual IEnumerator SetAttackState()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentAttack);
-        thisCharacterScript.IsAttack = false;
+        thisCharacterScript.Is_Attack = false;
     }
     public virtual IEnumerator SetStrongAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
-        thisCharacterScript.IsStrongAttack = false;
+        thisCharacterScript.Is_StrongAttack = false;
     }
     public virtual IEnumerator SetSpecialAttack()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentSpecialAttack);
-        thisCharacterScript.IsSpecialAttack = false;
+        thisCharacterScript.Is_SpecialAttack = false;
     }
     public virtual IEnumerator SetReLoad()
     {
         yield return new WaitForSeconds(thisCharacterScript.m_TimeReload);
         thisCharacterScript.SetBullet(thisCharacterScript.m_Max_Bullet);
-        thisCharacterScript.IsReLoad = false;
+        thisCharacterScript.Is_ReLoad = false;
     }
     public virtual IEnumerator SetTaunt1()
     {
@@ -106,6 +110,12 @@ public class CoroutinClass : MonoBehaviour
     {
         yield return new WaitForSeconds(thisCharacterScript.m_Time_Taunt);
         thisCharacterScript.Is_Taunt2 = false;
+    }
+    public IEnumerator SetFalling()
+    {
+        thisCharacterScript.CanControll = false;
+        yield return new WaitForSeconds(2.8f);
+        thisCharacterScript.CanControll = true;
     }
     // 아직은 작업 중.
     public virtual IEnumerator SetWhileBuff(float time)
