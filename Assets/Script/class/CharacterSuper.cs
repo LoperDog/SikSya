@@ -163,7 +163,7 @@ public class CharacterSuper : MonoBehaviour
     {
         RaycastHit hit;
         //Debug.DrawRay(Player_tr.position, Vector3.down * 0.2f, Color.red);
-        if (Physics.Raycast(Player_tr.position, Vector3.down, out hit, 0.3f))
+        if (Physics.Raycast(Player_tr.position, Vector3.down, out hit, 0.2f))
         {
             //Debug.Log("땅에 닿아 있다.");
             if (Long_Falling && hit.collider.tag == "GROUND")
