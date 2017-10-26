@@ -26,6 +26,7 @@ public class TeamPanel : MonoBehaviour {
 
     void Awake()
     {
+        Screen.lockCursor = false;
         mListener = CListener.GetInstance();
         mMyInfo = MyInfoClass.GetInstance();
         mCharacterTextureArray = new Texture[ConstValue.CharacterKind];
