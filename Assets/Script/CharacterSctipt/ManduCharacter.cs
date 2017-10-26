@@ -45,7 +45,7 @@ public class ManduCharacter : CharacterSuper
             mgr.RoundAttack[0].SetActive(true);
             m_Current_Bullet -= 2;
         }
-        else if (m_Current_Bullet <= 1)
+        else if (m_Current_Bullet <= 0)
         {
             ReLoad();
         }

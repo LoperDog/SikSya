@@ -135,7 +135,7 @@ public class NetworkMgr : MonoBehaviour
     private void StartConnect()
     {
         // 네트워크를 끊고 시작한다.
-        Network.Disconnect();
+       // Network.Disconnect();
         Debug.Log("연결된 네트워크를 끊고 연결을 시작한다.");
 
         NetworkConnectionError errorCode = NetworkConnectionError.ConnectionFailed;

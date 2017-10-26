@@ -205,7 +205,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void ReLoad()
     {
-        if ((!Is_ReLoad) && (m_Current_Bullet != m_Max_Bullet) && !Is_Attack && !Is_StrongAttack && !Is_SpecialAttack && !Is_Taunt1 && !Is_Taunt2)
+        if ((!Is_ReLoad) && (m_Current_Bullet != m_Max_Bullet) && !Is_Attack && !Is_SpecialAttack && !Is_Taunt1 && !Is_Taunt2)
         {
             Is_ReLoad = true;
             coroutine.StartReLoad();
@@ -243,7 +243,7 @@ public class CharacterSuper : MonoBehaviour
     //도발
     public virtual void Taunt(int tauntnumb)
     {
-        if (!Is_Attack&&!Is_ReLoad&&!Is_StrongAttack && !Is_SpecialAttack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && tauntnumb == 1)//1번 도발
+        if (!Is_Attack && !Is_ReLoad && !Is_StrongAttack && !Is_SpecialAttack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && tauntnumb == 1)//1번 도발
         {
             Is_Taunt1 = true;
             coroutine.StartTaunt1();

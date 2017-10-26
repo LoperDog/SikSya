@@ -114,7 +114,7 @@ public class CoroutinClass : MonoBehaviour
     public IEnumerator SetFalling()
     {
         thisCharacterScript.CanControll = false;
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(2.7f);
         thisCharacterScript.CanControll = true;
     }
     // 아직은 작업 중.

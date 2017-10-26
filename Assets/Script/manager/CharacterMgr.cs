@@ -539,8 +539,7 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.Long_Falling = false;
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
         Start();
-        // 애니매이터 시작시켜준다.
-        thisCharacter.CanControll = true;
+        thisCharacter.StartFalling();
         Debug.Log("리스폰 끝");
     }
     public void InputControll()

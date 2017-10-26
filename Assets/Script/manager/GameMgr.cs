@@ -131,7 +131,7 @@ public class GameMgr : MonoBehaviour
     }
     IEnumerator Game_Timer()
     {
-        for (Game_Time = 300.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
+        for (Game_Time = 60.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
         {
             Game_Time_M.text = "0" + (int)(Game_Time / 60) + " :";
             if ((int)(Game_Time % 60) < 10)
@@ -186,8 +186,8 @@ public class GameMgr : MonoBehaviour
     {
         CSender tempSender = CSender.GetInstance();
         DataPacketInfo gameOverPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutMainGameScene, (int)ProtocolTagNull.Null, null);
-        Screen.lockCursor = false;
         tempSender.Sendn(ref gameOverPacket);
+        Screen.lockCursor = false;
     }
     // 플레이어 정보를 세팅하기 위해 기본적으로 아이디 들을 가지고 있는다. 그냥 캐싱.
     public void StartGetGamePlayerInfo()

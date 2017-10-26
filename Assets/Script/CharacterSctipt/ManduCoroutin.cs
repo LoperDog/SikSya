@@ -37,10 +37,8 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.Is_StrongAttack = true;
         StartCoroutine(SetStrongAttackShoot());
         yield return new WaitForSeconds(thisCharacterScript.CurrentStrongAttack);
-        thisCharacterScript.Is_StrongAttack = false;
     }
     public IEnumerator SetStrongAttackShoot()
     {
