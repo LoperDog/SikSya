@@ -172,7 +172,7 @@ public class NetworkMgr : MonoBehaviour
             //ReadyToInitializeServer = false;
         }
         Debug.Log("연결 결과 에러 로그 : " + errorCode);
-         ReadyToInitializeServer = false;
+        ReadyToInitializeServer = false;
     }
 
 

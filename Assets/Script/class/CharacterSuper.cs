@@ -54,6 +54,13 @@ public class CharacterSuper : MonoBehaviour
     public float m_Max_Bullet;
     public float m_Time_Taunt;
 
+    private string CharType;
+
+    public string CharacterTypeString
+    {
+        get { return CharType; }
+        set { CharType = value; }
+    }
     public float CurrentAttack
     {
         get { return m_CurrentAttack; }
@@ -308,7 +315,10 @@ public class CharacterSuper : MonoBehaviour
          */
         // 총알 인스턴스의 고유 값을 가져온다.
         int poolkey = Object.GetInstanceID();
-
+        if(config == null)
+        {
+            config = new ConfigClass();
+        }
         // 이미 총알 풀에 그값이 있는지 없는지 검사 한다. 없어야 넣는다.
         if (!BulletPool.ContainsKey(poolkey))
         {
@@ -319,6 +329,7 @@ public class CharacterSuper : MonoBehaviour
                 GameObject newBullet = Instantiate(Object) as GameObject;
                 newBullet.SetActive(false);
                 newBullet.GetComponent<BulletSuper>().Player_tr = Player_tr;
+                newBullet.GetComponent<BulletSuper>().SetBulletDam(config.StatusConfigs[CharacterTypeString]["Attack"]);
                 BulletPool[poolkey].Enqueue(newBullet);
             }
         }

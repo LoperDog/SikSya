@@ -200,6 +200,7 @@ public class CharacterMgr : MonoBehaviour
         }
         // 세팅
         thisCharacter.SetPlayerOb(gameObject);
+        thisCharacter.CharacterTypeString = CharType;
         // 특수기 세팅 
         m_StrongAttack.Player = gameObject.GetComponent<Transform>();
         m_SpecialAttack.Player = gameObject.GetComponent<Transform>();
