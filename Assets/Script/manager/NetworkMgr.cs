@@ -94,7 +94,8 @@ public class NetworkMgr : MonoBehaviour
     public void SetPlayer(GameObject Player)
     {
         MyPlayer = Player;
-    }/*
+    }
+    /*
     void OnGUI()
     {
          //싱글플레이시 여길 연다
@@ -133,6 +134,10 @@ public class NetworkMgr : MonoBehaviour
     }
     private void StartConnect()
     {
+        // 네트워크를 끊고 시작한다.
+        Network.Disconnect();
+        Debug.Log("연결된 네트워크를 끊고 연결을 시작한다.");
+
         NetworkConnectionError errorCode = NetworkConnectionError.ConnectionFailed;
         // 내가 호스트가 아닐경우
         if (OtherIP != MyIP)
@@ -166,6 +171,7 @@ public class NetworkMgr : MonoBehaviour
             //}
             //ReadyToInitializeServer = false;
         }
+        Debug.Log("연결 결과 에러 로그 : " + errorCode);
          ReadyToInitializeServer = false;
     }
 
