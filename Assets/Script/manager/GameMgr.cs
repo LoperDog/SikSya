@@ -44,6 +44,12 @@ public class GameMgr : MonoBehaviour
     private int LateUpdateCnt;
     // UI에 세팅된 플레이어의 수를 체크한다.
     public int SettingUIPlayer;
+    private CharacterMgr mycharactermgr;
+    public CharacterMgr MyCharMgr
+    {
+        get { return mycharactermgr; }
+        set { mycharactermgr = value; }
+    }
     void Start ()
     {
         //점수
@@ -177,7 +183,7 @@ public class GameMgr : MonoBehaviour
             }
             yield return null;
         }
-        // 끝나면 실행되겠지?
+        // 게임이 끝난다.
         GameObject.FindGameObjectWithTag("PLAYER").GetComponent<CharacterMgr>().SetGameEnd();
     }
     public void MgrGameEnd()
@@ -210,7 +216,10 @@ public class GameMgr : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         Game_Result.enabled = false;
         if (Network.isServer)
+        {
+            MyCharMgr.DisConnectInClient();
             GameOver();
+        }
     }
     public void GameOver()
     {

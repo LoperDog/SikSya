@@ -93,8 +93,8 @@ public class CharacterSuper : MonoBehaviour
 
     public bool CanControll
     {
-        get{ return cancontroll; }
-        set{ cancontroll = value; }
+        get { return cancontroll; }
+        set { cancontroll = value; }
     }
 
     protected Dictionary<int, Queue<GameObject>> BulletPool = new Dictionary<int, Queue<GameObject>>();
@@ -208,7 +208,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void UpAttack()
     {
-        
+
     }
     public virtual void ReLoad()
     {
@@ -315,7 +315,7 @@ public class CharacterSuper : MonoBehaviour
          */
         // 총알 인스턴스의 고유 값을 가져온다.
         int poolkey = Object.GetInstanceID();
-        if(config == null)
+        if (config == null)
         {
             config = new ConfigClass();
         }
@@ -395,7 +395,6 @@ public class CharacterSuper : MonoBehaviour
     // 0 이라면 트루
     public virtual bool GetEmptyBullet() { return m_Current_Bullet == 0; }
     #endregion
-
     // 소멸
     ~CharacterSuper()
     {

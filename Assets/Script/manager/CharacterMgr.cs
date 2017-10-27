@@ -263,6 +263,7 @@ public class CharacterMgr : MonoBehaviour
             Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
             mainCamera = Camera.main;
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
+            GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
         }
         IsCharacterLoaded = true;
     }
@@ -609,6 +610,24 @@ public class CharacterMgr : MonoBehaviour
     }
 
     public void SetCharID(Chacracter_Type Code) { Character_ID = Code; }
+
+    // 게임을 끝내로 왔다.
+    public void DisConnectInClient()
+    {
+        GameObject[] AllPlayer = GameObject.FindGameObjectsWithTag("PLAYER");
+        for (int i = 0; i < AllPlayer.Length; i++)
+        {
+            if (AllPlayer[i] == gameObject) continue;
+            AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+        }
+        _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+    }
+    [RPC]
+    public void ClientDisconnect()
+    {
+        Network.Disconnect();
+        MasterServer.UnregisterHost();
+    }
     #region RPC함수
     // 플레이어의 타겟이 맞았을때
     [RPC]

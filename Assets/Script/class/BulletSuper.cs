@@ -56,8 +56,8 @@ public class BulletSuper : MonoBehaviour
         }
         SetBulletEnalbed();
     }
-    /*
-    // 현제는 두개다 만들어 둔다.
+    /* 
+    // 현재는 두개다 만들어 둔다.
     protected virtual void OnCollisionEnter(Collision col)
     {
         // 각도 계산 필요.
