@@ -339,7 +339,7 @@ public class CharacterMgr : MonoBehaviour
             if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.2f))
             {
                 if (!Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
-
+                
                 CamScript.Dist -= CamScript.Dist > 0.5f ? 0.05f : 0.0f;
             }
             else
