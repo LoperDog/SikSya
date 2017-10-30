@@ -332,17 +332,19 @@ public class CharacterMgr : MonoBehaviour
         {
             Show_UI();
 
-            Vector3 ToCamera = Camera_tr.position - Player_tr.position;
+            Vector3 tempPlayerPosision = Player_tr.position;
+            tempPlayerPosision.y += 0.5f;
+            Vector3 ToCamera = Camera_tr.position - tempPlayerPosision;
             Cam CamScript = Camera_tr.GetComponent<Cam>();
-            if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.2f))
+            if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.2f))
             {
-                if (!Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
+                if (!Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
 
                 CamScript.Dist -= CamScript.Dist > 0.5f ? 0.05f : 0.0f;
             }
             else
             {
-                if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.25f) || CamScript.Dist >= 4.0f) return;
+                if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.25f) || CamScript.Dist >= 4.0f) return;
 
                 CamScript.Dist += CamScript.Dist < 4f ? 0.05f : 0.0f;
             }
