@@ -342,7 +342,7 @@ public class CharacterMgr : MonoBehaviour
             }
             else
             {
-                if (!Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.25f)) return;
+                if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.25f)) return;
 
                 CamScript.Dist += CamScript.Dist < 2.9f ? 0.05f : 0.0f;
             }
