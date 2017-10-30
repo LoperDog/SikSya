@@ -32,8 +32,6 @@ public class Cam : MonoBehaviour
         {
             // 길이 제기
             //Dist -= .5f * Input.mouseScrollDelta.y;
-            Dist = Dist < 0.5f ? 1.0f : Dist;
-            Dist = Dist >= 10.0f ? 10.0f : Dist;
 
             x += Input.GetAxis("Mouse X") * mouse_y_speed * 0.02f;
             y += -Input.GetAxis("Mouse Y") * mouse_y_speed * 0.02f;
@@ -41,8 +39,22 @@ public class Cam : MonoBehaviour
             y = y < -40 ? -40 : y;
             y = y > 40 ? 40 : y;
             //y = ClamAngle(y);
+            RaycastHit hit;
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+            if (Physics.Raycast(ray, out hit, 10.0f))
+            {
+                Dist -= .2f;
+            }
+            else
+            {
+                Dist += .2f;
+            }
+            Dist = Dist < 0.5f ? 1.0f : Dist;
+            Dist = Dist >= 10.0f ? 10.0f : Dist;
+
             Quaternion rotation = Quaternion.Euler(y, x, 0);
             Vector3 position = rotation * new Vector3(ViewRight, Height, -Dist) + Player.position + new Vector3(0.0f, 0.0f, 0.0f);
+
 
             tr.rotation = rotation;
             tr.position = position;
