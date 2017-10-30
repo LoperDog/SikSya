@@ -39,16 +39,6 @@ public class Cam : MonoBehaviour
             y = y < -40 ? -40 : y;
             y = y > 40 ? 40 : y;
             //y = ClamAngle(y);
-            RaycastHit hit;
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-            if (Physics.Raycast(ray, out hit, Dist - 0.03f))
-            {
-                Dist -= Dist > 0.5f ? 0.1f : 0f;
-            }
-            else
-            {
-                Dist += Dist <= 2.8f ? 0.1f : 0f;
-            }
 
             Quaternion rotation = Quaternion.Euler(y, x, 0);
             Vector3 position = rotation * new Vector3(ViewRight, Height, -Dist) + Player.position + new Vector3(0.0f, 0.0f, 0.0f);

@@ -331,6 +331,17 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Show_UI();
+
+            Vector3 ToCamera = Camera_tr.position - Player_tr.position;
+            Cam CamScript = Camera_tr.GetComponent<Cam>();
+            if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist))
+            {
+                CamScript.Dist -= CamScript.Dist > 0.4f ? 0.1f : 0.0f;
+            }
+            else
+            {
+                CamScript.Dist += CamScript.Dist < 2.8f ? 0.1f : 0.0f;
+            }
         }
         else
         {
