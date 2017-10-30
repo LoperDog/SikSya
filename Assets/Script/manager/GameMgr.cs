@@ -20,7 +20,9 @@ public class GameMgr : MonoBehaviour
 
     //탭키
     public GameObject Tab;
+    public GameObject F1;
     public bool Tab_Open= false;
+    public bool F1_Open = false;
     public Text [] Team_ID = new Text[6];
     public Text [] Team_KD = new Text[6];
     public Image Game_Result;
@@ -66,6 +68,7 @@ public class GameMgr : MonoBehaviour
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
         //탭 정보창
+        F1 = GameObject.Find("F1").GetComponent<Transform>().gameObject;
         Tab = GameObject.Find("Tab").GetComponent<Transform>().gameObject;
         //아이디
         Team_ID[0] = GameObject.Find("Red1_ID").GetComponent<Text>();
@@ -89,6 +92,7 @@ public class GameMgr : MonoBehaviour
         BeforeGameStete = ConfigClass.GameState.NotStart;
         StartCoroutine("Game_Timer");
         Tab.gameObject.SetActive(false);
+        F1.gameObject.SetActive(false);
         LateUpdateCnt = 0 ;
     }
 	
@@ -166,6 +170,16 @@ public class GameMgr : MonoBehaviour
         {
             Tab.gameObject.SetActive(false);
             Tab_Open = false;
+        }
+        else if (!F1_Open && Input.GetKey(KeyCode.F1))
+        {
+            F1.gameObject.SetActive(true);
+            F1_Open = true;
+        }
+        else if (F1_Open && Input.GetKeyUp(KeyCode.F1))
+        {
+            F1.gameObject.SetActive(false);
+            F1_Open = false;
         }
     }
     IEnumerator Game_Timer()
