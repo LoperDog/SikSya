@@ -69,7 +69,7 @@ public class ManduCharacter : CharacterSuper
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && mgr.SpecialAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.SpecialAttackCoolTime == 0*/)
         {
             coroutine.StartSpecialAttackSetting();
         }
