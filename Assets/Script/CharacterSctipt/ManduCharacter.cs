@@ -78,6 +78,13 @@ public class ManduCharacter : CharacterSuper
     {
         CharAnim.SetSpecialAttackReady();
     }
+    public void SpecialAttack_ing()
+    {
+        Transform temp = Instantiate(effect[4], Player_tr.position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
+        mgr.RoundAttack[0].SetActive(true);
+    }
     public void SpecialAttackEnd()
     {
         CharAnim.SetSpecialAttackEnd();
