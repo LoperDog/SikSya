@@ -150,9 +150,10 @@ ModelImporter:
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\n\t'Bip001 Spine2' has translation animation
-      that will be discarded.\n\t'Bip001 Spine2' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+      might lower retargeting quality:\n\t'Bip001 Spine1' has translation animation
+      that will be discarded.\n\t'Bip001 Spine2' has translation animation that will
+      be discarded.\n\t'Bip001 Spine2' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
@@ -185,7 +186,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.07106599
+        functionName: AttackOnPlay
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 60f3cce167d58a04ab01c0b4e6e57265,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.56500804
+        functionName: AttackOnPlay
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 60f3cce167d58a04ab01c0b4e6e57265,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
