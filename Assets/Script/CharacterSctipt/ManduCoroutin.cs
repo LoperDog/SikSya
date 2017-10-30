@@ -11,7 +11,7 @@ public class ManduCoroutin : CoroutinClass
         base.SetCharacterScript(CharacterClass);
         ManduChar = (ManduCharacter)CharacterClass;
     }
-
+    //강공격
     public override void StartStrongAttckSetting()
     {
         if (config == null)
@@ -21,15 +21,6 @@ public class ManduCoroutin : CoroutinClass
         
         thisMgr.StrongAttackCoolTime = config.StatusConfigs["Mandu"]["StrongAttack_CoolTime"];
         base.StartStrongAttckSetting();
-    }
-    public override void StartSpecialAttackSetting()
-    {
-        if (config == null)
-        {
-            config = new ConfigClass();
-        }
-        thisMgr.SpecialAttackCoolTime = config.StatusConfigs["Mandu"]["SpecialAttack_CoolTime"];
-        base.StartSpecialAttackSetting();
     }
     public override IEnumerator SetStrongAttack()
     {
@@ -46,7 +37,6 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        // 키고 끈다.
         ManduChar.StrongAttackShootStart();
         ManduChar.StrongAttackReady();
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["StongAttackTime"]);
@@ -54,18 +44,33 @@ public class ManduCoroutin : CoroutinClass
         thisMgr.m_StrongAttack.ReSetAttack();
         ManduChar.StrongAttackShootEnd();
     }
+    //특수기
+    public override void StartSpecialAttackSetting()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        thisMgr.SpecialAttackCoolTime = config.StatusConfigs["Mandu"]["SpecialAttack_CoolTime"];
+        base.StartSpecialAttackSetting();
+    }
     public override IEnumerator SetSpecialAttack()
     {
         if (config == null)
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.CanControll = false;
-        ManduChar.SpecialAttackReady();
+        thisCharacterScript.CanControll = false;//제어불가
+        ManduChar.SpecialAttackReady();//애니메이션
+        yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackReady"]);
+        StartCoroutine(SetSpecialAttackEnd());//다음 코루틴
+    }
+    public IEnumerator SetSpecialAttackEnd()
+    {
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
-        ManduChar.SpecialAttackEnd();
-        thisCharacterScript.CanControll = true;
-        thisCharacterScript.Is_SpecialAttack = false;
+        ManduChar.SpecialAttackEnd();//애니메이션
+        thisCharacterScript.CanControll = true;//제어가능
+        thisCharacterScript.Is_SpecialAttack = false;//상태
     }
     public override IEnumerator SetTaunt1()
     {

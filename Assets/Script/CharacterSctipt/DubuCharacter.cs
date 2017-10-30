@@ -45,7 +45,7 @@ public class DubuCharacter : CharacterSuper
     // 강공격을 시작한다.
     public override void StrongAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && mgr.StrongAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.StrongAttackCoolTime == 0*/)
         {
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[5], Player_tr.position, Player_tr.rotation);

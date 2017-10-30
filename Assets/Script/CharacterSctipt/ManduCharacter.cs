@@ -36,7 +36,7 @@ public class ManduCharacter : CharacterSuper
     //강공격 시작
     public override void StrongAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && m_Current_Bullet > 1 && !Is_Taunt1 && !Is_Taunt2 && mgr.StrongAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && !Is_ReLoad && Is_Ground && m_Current_Bullet > 1 && !Is_Taunt1 && !Is_Taunt2 && mgr.StrongAttackCoolTime == 0)
         {
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);
