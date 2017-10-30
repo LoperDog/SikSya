@@ -336,15 +336,15 @@ public class CharacterMgr : MonoBehaviour
             Cam CamScript = Camera_tr.GetComponent<Cam>();
             if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.2f))
             {
-                if (!Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.15f)) return;
+                if (!Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
 
-                CamScript.Dist -= CamScript.Dist > 0.4f ? 0.05f : 0.0f;
+                CamScript.Dist -= CamScript.Dist > 0.5f ? 0.05f : 0.0f;
             }
             else
             {
-                if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.25f)) return;
+                if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.25f) || CamScript.Dist >= 4.0f) return;
 
-                CamScript.Dist += CamScript.Dist < 2.9f ? 0.05f : 0.0f;
+                CamScript.Dist += CamScript.Dist < 4f ? 0.05f : 0.0f;
             }
         }
         else
