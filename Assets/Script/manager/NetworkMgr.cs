@@ -135,9 +135,7 @@ public class NetworkMgr : MonoBehaviour
     private void StartConnect()
     {
         // 네트워크를 끊고 시작한다.
-       // Network.Disconnect();
         Debug.Log("연결된 네트워크를 끊고 연결을 시작한다.");
-
         NetworkConnectionError errorCode = NetworkConnectionError.ConnectionFailed;
         // 내가 호스트가 아닐경우
         if (OtherIP != MyIP)
@@ -196,16 +194,12 @@ public class NetworkMgr : MonoBehaviour
         if(CheckTeam == 0)//레드
         {
             Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
-            , pos.position,
-            pos.rotation,
-            0);
+            , pos.position, pos.rotation, 0);
         }
         else//블루
         {
             Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
-            , pos.position,
-            pos.rotation,
-            0);
+            , pos.position, pos.rotation, 0);
         }
     }
 

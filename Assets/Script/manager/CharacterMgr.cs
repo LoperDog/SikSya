@@ -260,8 +260,13 @@ public class CharacterMgr : MonoBehaviour
             Right_Black = GameObject.Find("Right_Button_Black").GetComponent<Image>();
             Right_Cool = GameObject.Find("Right_Cool").GetComponent<Text>();
             Special_Cool = GameObject.Find("Special_Cool").GetComponent<Text>();
-            Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
+
             mainCamera = Camera.main;
+            //if (MyInfoClass.GetInstance().MyCharNumb==1)
+            //{
+            //    Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            //}
+            Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
         }
@@ -620,7 +625,9 @@ public class CharacterMgr : MonoBehaviour
             if (AllPlayer[i] == gameObject) continue;
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("ClientDisconnect", RPCMode.AllBuffered, null);
         }
+        Debug.Log("ClientDisconnect 시작 전");
         _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+        Debug.Log("ClientDisconnect 시작 후");
     }
     [RPC]
     public void ClientDisconnect()

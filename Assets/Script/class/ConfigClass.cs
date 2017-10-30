@@ -36,7 +36,7 @@ public class ConfigClass {
         ManduStatus["Cartridge"] = 7f;//장탄수 수정
         ManduStatus["ReLoadTime"] = 3.14f;
 
-        ManduStatus["Attack"] = 50.0f;//공격력
+        ManduStatus["Attack"] = 50f;
         ManduStatus["AtttackSpeed"] = 1.9f;
 
         ManduStatus["StrongAttack"] = 150f;//우클릭 공격력

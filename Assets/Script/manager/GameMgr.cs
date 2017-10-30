@@ -203,14 +203,29 @@ public class GameMgr : MonoBehaviour
             else
                 blueKill += PlayersKill[PlayersID[i]];
         }
-        if (redKill > blueKill && MyTeam ==0)
+        if (redKill > blueKill && MyTeam ==0)//레드팀 승
         {
             Game_Result = GameObject.Find("Win").GetComponent<Image>();
             Game_Result.enabled = true;
         }
-        else
+        else if (redKill < blueKill && MyTeam == 0)//레드팀 패
         {
             Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result.enabled = true;
+        }
+        else if (redKill < blueKill && MyTeam == 1)//블루팀 승
+        {
+            Game_Result = GameObject.Find("Win").GetComponent<Image>();
+            Game_Result.enabled = true;
+        }
+        else if (redKill > blueKill && MyTeam == 1)//블루팀 패
+        {
+            Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result.enabled = true;
+        }
+        else
+        {
+            Game_Result = GameObject.Find("Draw").GetComponent<Image>();
             Game_Result.enabled = true;
         }
         yield return new WaitForSeconds(5.0f);
