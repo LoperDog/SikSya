@@ -261,6 +261,7 @@
     <None Include="Assets\BackGround\LightingBox\VolumetricLight\Shaders\VolumetricLight.shader" />
     <None Include="Assets\BackGround\floor\Tile.shader" />
     <None Include="Assets\EF(NEW)\Attack\E_Hit\Rim.shader" />
+    <None Include="Assets\EF(NEW)\Resource\S\01.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\T_Slash.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\add.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\water.shader" />
