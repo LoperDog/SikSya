@@ -334,13 +334,13 @@ public class CharacterMgr : MonoBehaviour
 
             Vector3 ToCamera = Camera_tr.position - Player_tr.position;
             Cam CamScript = Camera_tr.GetComponent<Cam>();
-            if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist))
+            if (Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.2f))
             {
-                CamScript.Dist -= CamScript.Dist > 0.4f ? 0.1f : 0.0f;
+                CamScript.Dist -= CamScript.Dist > 0.4f ? 0.05f : 0.0f;
             }
             else
             {
-                CamScript.Dist += CamScript.Dist < 2.8f ? 0.1f : 0.0f;
+                CamScript.Dist += CamScript.Dist < 2.8f ? 0.05f : 0.0f;
             }
         }
         else
