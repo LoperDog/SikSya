@@ -85,7 +85,7 @@ public class Chatting : MonoBehaviour {
             mInputComponent.ActivateInputField(); // 활성화 유지
         }
     }
-
+    // 메세지 추가
     public void AddDialogue(string message)
     {
         mRectTransform.anchoredPosition = new Vector2(0, 0);
@@ -98,7 +98,7 @@ public class Chatting : MonoBehaviour {
         DialogueRecord.Add(message);
         MessageUpdate();
     }
-
+    // 실제 메세지가 채팅창에 보여짐
     void MessageUpdate()
     {
         StringBuilder setDialogue = new StringBuilder(); ; // 문자열 더하고 빼는데 이용함
