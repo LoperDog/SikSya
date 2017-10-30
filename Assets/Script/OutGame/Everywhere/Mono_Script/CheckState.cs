@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CheckState : MonoBehaviour {
-
     static ProtocolSceneName mCurrentSceneState;
     static State mCurrentState;
     static GameObject mChannelMasterPanel;
@@ -185,6 +184,12 @@ public class CheckState : MonoBehaviour {
         }
         GameObject matchingPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("MatchingPanel").gameObject;
         matchingPanel.SetActive(matching);
+        RotateImage mRoImage;
+        if (matchingPanel.activeSelf)
+        {
+            mRoImage = GameObject.FindGameObjectWithTag("TagUIHoldOn").GetComponent<RotateImage>();
+            mRoImage.StartRotate();
+        }
         GameObject makeRoomPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("MakeRoomPanel").gameObject;
         makeRoomPanel.SetActive(makeRoom);
         GameObject enterRoomPanel = mChannelMasterPanel.GetComponentInChildren<Transform>().FindChild("EnterRoomPanel").gameObject;

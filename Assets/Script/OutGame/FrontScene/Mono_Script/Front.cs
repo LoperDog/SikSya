@@ -9,7 +9,7 @@ public class Front : MonoBehaviour
 {
 
     CSender mSender;
-    CListener mListener;
+    //CListener mListener;
 
     //GameObject mInputID;
     //GameObject mInputPW;
@@ -24,7 +24,7 @@ public class Front : MonoBehaviour
     void Awake()
     {
         mSender = CSender.GetInstance();
-        mListener = CListener.GetInstance();
+        //mListener = CListener.GetInstance();
         mInputGuestID = GameObject.FindGameObjectWithTag("TagInputGuestID");
         mSelectLoginButton = GameObject.FindGameObjectWithTag("TagSelectLoginButton");
         mSelectLoginButton.GetComponent<Button>().interactable = false;

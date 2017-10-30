@@ -8,6 +8,7 @@ public class Channel : MonoBehaviour {
 
     //GameObject mMatchingPanel;
     CSender mSender;
+
     // Use this for initialization
     void Awake () {
         //mMatchingPanel = GameObject.FindGameObjectWithTag("MatchingPanel");
