@@ -41,7 +41,7 @@ public class ManduCharacter : CharacterSuper
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);
             temp.SetParent(Player_tr);
-            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
             mgr.RoundAttack[0].SetActive(true);
             m_Current_Bullet -= 2;
         }
@@ -60,7 +60,7 @@ public class ManduCharacter : CharacterSuper
     }
     public void StrongAttackShootStart()
     {
-        mgr.RoundAttack[0].SetActive(true);
+
     }
     public void StrongAttackShootEnd()
     {
@@ -82,8 +82,8 @@ public class ManduCharacter : CharacterSuper
     {
         Transform temp = Instantiate(effect[4], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
-        temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
-        mgr.RoundAttack[0].SetActive(true);
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[0].position);
+        mgr.RoundAttack[1].SetActive(true);
     }
     public void SpecialAttackEnd()
     {

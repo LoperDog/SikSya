@@ -71,6 +71,7 @@ public class ManduCoroutin : CoroutinClass
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
         ManduChar.SpecialAttackEnd();
         thisCharacterScript.CanControll = true;
+        thisMgr.m_SpecialAttack.ReSetAttack();
         thisCharacterScript.Is_SpecialAttack = false;
     }
     public override IEnumerator SetTaunt1()

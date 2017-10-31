@@ -50,7 +50,7 @@ public class DubuCharacter : CharacterSuper
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[5], Player_tr.position, Player_tr.rotation);
             temp.SetParent(Player_tr);
-            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         }
     }
     public void StrongAttackReady()
@@ -63,7 +63,7 @@ public class DubuCharacter : CharacterSuper
     {
         Transform temp = Instantiate(effect[6], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
-        temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         mgr.RoundAttack[0].SetActive(true);
         CharAnim.SetStrongAttackDash();
     }

@@ -43,10 +43,10 @@ public class ConfigClass {
         ManduStatus["StrongAttack_CoolTime"] = 10.0f;//우클릭 쿨타임
         ManduStatus["StongAttackTime"] = 0.5f;
 
-        ManduStatus["SpecialAttack"] = 100.0f;//Q스킬 공격력
+        ManduStatus["SpecialAttack"] = 200.0f;//Q스킬 공격력
         ManduStatus["SpecialAttack_CoolTime"] = 30.0f;// Q스킬 쿨타임
-        ManduStatus["SpecialAttackReady"] = 1.3f;
-        ManduStatus["SpecialAttackTime"] = 2.1f;
+        ManduStatus["SpecialAttackReady"] = 1.5f;
+        ManduStatus["SpecialAttackTime"] = 1.9f;
 
         ManduStatus["Taunt1"] = 3.2f;
         ManduStatus["Taunt2"] = 3.83f;

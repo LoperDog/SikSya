@@ -193,6 +193,7 @@ public class CharacterMgr : MonoBehaviour
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
                 m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
+                m_SpecialAttack.SetEffect(Effect[7]);
                 break;
             default:
 
@@ -338,24 +339,12 @@ public class CharacterMgr : MonoBehaviour
             Cam CamScript = Camera_tr.GetComponent<Cam>();
             if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.2f))
             {
-<<<<<<< HEAD
-                if (!Physics.Raycast(Player_tr.position, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
-
-                CamScript.Dist -= CamScript.Dist > 0.6f ? 0.05f : 0.0f;
-=======
                 if (!Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
-                
->>>>>>> 2c0646b749af326ab2ca1be75927bed4af4b980e
                 CamScript.Dist -= CamScript.Dist > 0.5f ? 0.05f : 0.0f;
             }
             else
             {
                 if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.25f) || CamScript.Dist >= 4.0f) return;
-
-<<<<<<< HEAD
-                CamScript.Dist += CamScript.Dist < 4.0f ? 0.05f : 0.0f;
-=======
->>>>>>> 2c0646b749af326ab2ca1be75927bed4af4b980e
                 CamScript.Dist += CamScript.Dist < 4f ? 0.05f : 0.0f;
             }
         }
