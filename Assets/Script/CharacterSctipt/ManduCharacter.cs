@@ -9,13 +9,13 @@ public class ManduCharacter : CharacterSuper
     override public void Attack()
     {
         // 공격중이 아닌데 공격 이 시작된다면 - 공격 가능
-        if (!IsAttack && !IsReLoad && m_Current_Bullet > 0)
+        if (!Is_Attack && !Is_ReLoad && m_Current_Bullet > 0)
         {
             m_Current_Bullet--;
-            IsAttack = true;
+            Is_Attack = true;
             ShotBullet();
         }
-        else if (!IsAttack && !IsReLoad && m_Current_Bullet == 0)
+        else if (!Is_Attack && !Is_ReLoad && m_Current_Bullet == 0)
         {
             ReLoad();
         }
@@ -36,16 +36,16 @@ public class ManduCharacter : CharacterSuper
     //강공격 시작
     public override void StrongAttack()
     {
-        if (!IsStrongAttack && !IsAttack && GetIsGroud() && m_Current_Bullet > 1 && mgr.StrongAttackCoolTime == 0)//강공격이 아니고 땅에 있고 쿨타임이 0초일때
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && !Is_ReLoad && Is_Ground && m_Current_Bullet > 1 && !Is_Taunt1 && !Is_Taunt2 && mgr.StrongAttackCoolTime == 0)
         {
-            //Debug.Log("만두 강공격을 하고있다.");
             coroutine.StartStrongAttckSetting();
-            Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);//이팩트 생성
-            temp.SetParent(Player_tr);//캐릭터 하위로 이동
-            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];//0.3초후 제거
-            mgr.RoundAttack[0].SetActive(true);//판정
+            Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);
+            temp.SetParent(Player_tr);
+            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
+            mgr.RoundAttack[0].SetActive(true);
             m_Current_Bullet -= 2;
-        } else if (m_Current_Bullet <= 1)
+        }
+        else if (m_Current_Bullet <= 0)
         {
             ReLoad();
         }
@@ -60,7 +60,7 @@ public class ManduCharacter : CharacterSuper
     }
     public void StrongAttackShootStart()
     {
-        mgr.RoundAttack[0].SetActive(true);
+
     }
     public void StrongAttackShootEnd()
     {
@@ -69,7 +69,7 @@ public class ManduCharacter : CharacterSuper
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!IsSpecialAttack && GetIsGroud() && !IsAttack && mgr.SpecialAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.SpecialAttackCoolTime == 0*/)
         {
             coroutine.StartSpecialAttackSetting();
         }
@@ -77,6 +77,13 @@ public class ManduCharacter : CharacterSuper
     public void SpecialAttackReady()
     {
         CharAnim.SetSpecialAttackReady();
+    }
+    public void SpecialAttack_ing()
+    {
+        Transform temp = Instantiate(effect[4], Player_tr.position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[0].position);
+        mgr.RoundAttack[1].SetActive(true);
     }
     public void SpecialAttackEnd()
     {

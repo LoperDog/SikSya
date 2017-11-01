@@ -244,7 +244,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.034029003
+        functionName: AttackOnPlay
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 69cfb21ed05e2ed4796c34fc4fe50cac,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

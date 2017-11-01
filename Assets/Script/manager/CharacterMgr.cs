@@ -50,7 +50,7 @@ public class CharacterMgr : MonoBehaviour
     // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
     private Vector3 LerpPos;
     private Quaternion LerpRot;
-    private float LerpSpeed = 1.0f;
+    private float LerpSpeed = 3.0f;
     private float LerpPosStartTime = 0.0f;
     private float LerpRotStartTime = 0.0f;
 
@@ -193,6 +193,7 @@ public class CharacterMgr : MonoBehaviour
                 m_StrongAttack = RoundAttack[0].GetComponent<ManduAttack>();
                 m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
+                m_SpecialAttack.SetEffect(Effect[7]);
                 break;
             default:
 
@@ -200,6 +201,7 @@ public class CharacterMgr : MonoBehaviour
         }
         // 세팅
         thisCharacter.SetPlayerOb(gameObject);
+        thisCharacter.CharacterTypeString = CharType;
         // 특수기 세팅 
         m_StrongAttack.Player = gameObject.GetComponent<Transform>();
         m_SpecialAttack.Player = gameObject.GetComponent<Transform>();
@@ -259,9 +261,15 @@ public class CharacterMgr : MonoBehaviour
             Right_Black = GameObject.Find("Right_Button_Black").GetComponent<Image>();
             Right_Cool = GameObject.Find("Right_Cool").GetComponent<Text>();
             Special_Cool = GameObject.Find("Special_Cool").GetComponent<Text>();
-            Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
+
             mainCamera = Camera.main;
+            //if (MyInfoClass.GetInstance().MyCharNumb==1)
+            //{
+            //    Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            //}
+            Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
+            GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
         }
         IsCharacterLoaded = true;
     }
@@ -280,6 +288,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Player_rb.useGravity = true;
+            thisCharacter.StartFalling();
             // 메니저에 플레이어들을 세팅 시킨다.
             //MyMgr.StartGetGamePlayerInfo();
             // 자신의 정보를 네트워크를 통해 넘긴다.
@@ -323,6 +332,21 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             Show_UI();
+
+            Vector3 tempPlayerPosision = Player_tr.position;
+            tempPlayerPosision.y += 0.5f;
+            Vector3 ToCamera = Camera_tr.position - tempPlayerPosision;
+            Cam CamScript = Camera_tr.GetComponent<Cam>();
+            if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.2f))
+            {
+                if (!Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.15f) || CamScript.Dist <= 0.5f) return;
+                CamScript.Dist -= CamScript.Dist > 0.5f ? 0.05f : 0.0f;
+            }
+            else
+            {
+                if (Physics.Raycast(tempPlayerPosision, ToCamera, CamScript.Dist + 0.25f) || CamScript.Dist >= 4.0f) return;
+                CamScript.Dist += CamScript.Dist < 4f ? 0.05f : 0.0f;
+            }
         }
         else
         {
@@ -347,7 +371,6 @@ public class CharacterMgr : MonoBehaviour
         if (IsInGameSetting && !IsGameLoaded)
         {
             IsGameLoaded = true;
-            thisCharacter.CanControll = true;
         }
         /*
         else
@@ -537,10 +560,9 @@ public class CharacterMgr : MonoBehaviour
         Debug.Log("캐릭터 리스폰 시작");
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
-        Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
+        Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
         Start();
-        // 애니매이터 시작시켜준다.
-        thisCharacter.CanControll = true;
+        thisCharacter.StartFalling();
         Debug.Log("리스폰 끝");
     }
     public void InputControll()
@@ -609,6 +631,26 @@ public class CharacterMgr : MonoBehaviour
     }
 
     public void SetCharID(Chacracter_Type Code) { Character_ID = Code; }
+
+    // 게임을 끝내로 왔다.
+    public void DisConnectInClient()
+    {
+        GameObject[] AllPlayer = GameObject.FindGameObjectsWithTag("PLAYER");
+        for (int i = 0; i < AllPlayer.Length; i++)
+        {
+            if (AllPlayer[i] == gameObject) continue;
+            AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+        }
+        Debug.Log("ClientDisconnect 시작 전");
+        _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+        Debug.Log("ClientDisconnect 시작 후");
+    }
+    [RPC]
+    public void ClientDisconnect()
+    {
+        Network.Disconnect();
+        MasterServer.UnregisterHost();
+    }
     #region RPC함수
     // 플레이어의 타겟이 맞았을때
     [RPC]

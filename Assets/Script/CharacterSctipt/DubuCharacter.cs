@@ -11,20 +11,18 @@ public class DubuCharacter : CharacterSuper
     override public void Attack()
     { 
         // 공격중이 아닌데 공격 이 시작된다면 - 공격 가능
-        if (!IsAttack && !IsReLoad && m_Current_Bullet > 0)
+        if (!Is_Attack && !Is_ReLoad && m_Current_Bullet > 0)
         {
             m_Current_Bullet--;
-            IsAttack = true;
+            Is_Attack = true;
             // 왼쪽공격이라면
             if (AttackIsLeft)
             {
-                Transform temp = Instantiate(effect[0], effectPosition[0].position, effectPosition[0].rotation * effect[0].rotation);
-                temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
+
             }
             else
             {
-                Transform temp = Instantiate(effect[1], effectPosition[0].position, effectPosition[0].rotation * effect[0].rotation);
-                temp.GetComponent<DestroyMe1>().Target = effectPosition[0];
+
             }
             ShotBullet();
             AttackIsLeft = !AttackIsLeft;
@@ -35,7 +33,7 @@ public class DubuCharacter : CharacterSuper
             }
         }
         // 공격이 시작될수 있는데 총알이 없다면 - 공격 불가 상태
-        else if (!IsAttack && !IsReLoad && m_Current_Bullet == 0)
+        else if (!Is_Attack && !Is_ReLoad && m_Current_Bullet == 0)
         {
             ReLoad();
         }
@@ -47,13 +45,12 @@ public class DubuCharacter : CharacterSuper
     // 강공격을 시작한다.
     public override void StrongAttack()
     {
-        if (!IsStrongAttack && GetIsGroud() && mgr.StrongAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.StrongAttackCoolTime == 0*/)
         {
-            Debug.Log("두부의 강공격을 시작한다.");
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[5], Player_tr.position, Player_tr.rotation);
             temp.SetParent(Player_tr);
-            temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         }
     }
     public void StrongAttackReady()
@@ -66,10 +63,9 @@ public class DubuCharacter : CharacterSuper
     {
         Transform temp = Instantiate(effect[6], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
-        temp.GetComponent<DestroyMe1>().Target = effectPosition[1];
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         mgr.RoundAttack[0].SetActive(true);
         CharAnim.SetStrongAttackDash();
-        Player_rb.AddForce(Player_tr.forward * 20000f);
     }
     // 강공격이 끝나는 부분.
     public void StrongAttackEnd()
@@ -79,7 +75,7 @@ public class DubuCharacter : CharacterSuper
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!IsSpecialAttack && GetIsGroud() && mgr.SpecialAttackCoolTime == 0)
+        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && mgr.SpecialAttackCoolTime == 0)
         {
             coroutine.StartSpecialAttackSetting();
         }

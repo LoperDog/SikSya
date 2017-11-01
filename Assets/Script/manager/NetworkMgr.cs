@@ -13,7 +13,7 @@ public class NetworkMgr : MonoBehaviour
     private string OtherIP = "";
 
     // 플레이어 번호에 맞는 생성위치를 잡아준다.
-    public Vector3[] PlayerCreatePosition = new Vector3[6];
+    public Transform[] PlayerCreatePosition = new Transform[6];
     //접속 IP
     //private const string ip = "192.168.30.64";
     //접속 Port
@@ -37,13 +37,13 @@ public class NetworkMgr : MonoBehaviour
     private void Start()
     {
         PlayerLimit = MyInfoClass.GetInstance().MyRoomInfo.GetPlayerLimit();
-        PlayerCreatePosition = new Vector3[6];
-        PlayerCreatePosition[0] = new Vector3(-12f, 10f, -42f);//Red
-        PlayerCreatePosition[2] = new Vector3(-1f, 10f, -42f);
-        PlayerCreatePosition[4] = new Vector3(10f, 10f, -42f);
-        PlayerCreatePosition[5] = new Vector3(-12f, 10f, 42f);//Blue
-        PlayerCreatePosition[3] = new Vector3(-1f, 10f, 42f);
-        PlayerCreatePosition[1] = new Vector3(8f, 10f, 42f);
+        PlayerCreatePosition = new Transform[6];
+        PlayerCreatePosition[0] = GameObject.Find("Red_1").GetComponent<Transform>();//Red
+        PlayerCreatePosition[2] = GameObject.Find("Red_2").GetComponent<Transform>();
+        PlayerCreatePosition[4] = GameObject.Find("Red_3").GetComponent<Transform>();
+        PlayerCreatePosition[5] = GameObject.Find("Blue_1").GetComponent<Transform>();//Blue
+        PlayerCreatePosition[3] = GameObject.Find("Blue_2").GetComponent<Transform>();
+        PlayerCreatePosition[1] = GameObject.Find("Blue_3").GetComponent<Transform>();
 
         // 싱글 플레이시에는 여기서 부터 스타트함수를 끝까지 주석한다.
         MyInfoClass.GetInstance().MyNetwork = this;
@@ -94,7 +94,8 @@ public class NetworkMgr : MonoBehaviour
     public void SetPlayer(GameObject Player)
     {
         MyPlayer = Player;
-    }/*
+    }
+    /*
     void OnGUI()
     {
          //싱글플레이시 여길 연다
@@ -133,6 +134,8 @@ public class NetworkMgr : MonoBehaviour
     }
     private void StartConnect()
     {
+        // 네트워크를 끊고 시작한다.
+        Debug.Log("연결된 네트워크를 끊고 연결을 시작한다.");
         NetworkConnectionError errorCode = NetworkConnectionError.ConnectionFailed;
         // 내가 호스트가 아닐경우
         if (OtherIP != MyIP)
@@ -166,7 +169,8 @@ public class NetworkMgr : MonoBehaviour
             //}
             //ReadyToInitializeServer = false;
         }
-         ReadyToInitializeServer = false;
+        Debug.Log("연결 결과 에러 로그 : " + errorCode);
+        ReadyToInitializeServer = false;
     }
 
 
@@ -185,12 +189,18 @@ public class NetworkMgr : MonoBehaviour
     // 플레이어를 생성하는 함수
     void CreatePlayer()
     {
-        Vector3 pos = PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
+        Transform pos = PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb];
         int CheckTeam = (MyInfoClass.GetInstance().MyGameNumb % 2) == 0 ? 0 : 2;
-        Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
-            , pos,
-            Quaternion.identity,
-            0);
+        if(CheckTeam == 0)//레드
+        {
+            Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
+            , pos.position, pos.rotation, 0);
+        }
+        else//블루
+        {
+            Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
+            , pos.position, pos.rotation, 0);
+        }
     }
 
     // 모든 플레이어가 로드 되었다.

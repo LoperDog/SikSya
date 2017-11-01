@@ -9,6 +9,10 @@ using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
+    //점수
+    public static Text Blue_Score;
+    public static Text Red_Score;
+
     //시간
     public static float Game_Time;
     public Text Game_Time_M;
@@ -16,12 +20,14 @@ public class GameMgr : MonoBehaviour
 
     //탭키
     public GameObject Tab;
+    public GameObject F1;
     public bool Tab_Open= false;
-
-    public Text [] Team_ID;
-    public Text [] Team_KD;
-
+    public bool F1_Open = false;
+    public Text [] Team_ID = new Text[6];
+    public Text [] Team_KD = new Text[6];
     public Image Game_Result;
+    public int Red_S = 0;
+    public int Blue_S = 0;
 
     public ConfigClass.GameState ThisGameState;
     public ConfigClass.GameState BeforeGameStete;
@@ -37,53 +43,64 @@ public class GameMgr : MonoBehaviour
     public Dictionary<NetworkViewID, int> PlayersKill;
     public Dictionary<NetworkViewID, int> PlayersDeath;
 
+    private int LateUpdateCnt;
     // UI에 세팅된 플레이어의 수를 체크한다.
     public int SettingUIPlayer;
+    private CharacterMgr mycharactermgr;
+    public CharacterMgr MyCharMgr
+    {
+        get { return mycharactermgr; }
+        set { mycharactermgr = value; }
+    }
     void Start ()
     {
+        //점수
+        Blue_Score = GameObject.Find("Blue_Score").GetComponent<Text>();
+        Red_Score = GameObject.Find("Red_Score").GetComponent<Text>();
+
         SettingUIPlayer = 0;
         PlayersName = new Dictionary<NetworkViewID, string>();
         PlayersTeam = new Dictionary<NetworkViewID, int>();
         PlayersChar = new Dictionary<NetworkViewID, int>();
         PlayersKill = new Dictionary<NetworkViewID, int>();
         PlayersDeath = new Dictionary<NetworkViewID, int>();
-        
+        //시간
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
-
+        //탭 정보창
+        F1 = GameObject.Find("F1").GetComponent<Transform>().gameObject;
         Tab = GameObject.Find("Tab").GetComponent<Transform>().gameObject;
-        Team_ID = new Text[6];
-        Team_KD = new Text[6];
-        Team_ID[0] = GameObject.Find("Red1_ID").GetComponent<Text>();//아이디
+        //아이디
+        Team_ID[0] = GameObject.Find("Red1_ID").GetComponent<Text>();
         Team_ID[2] = GameObject.Find("Red2_ID").GetComponent<Text>();
         Team_ID[4] = GameObject.Find("Red3_ID").GetComponent<Text>();
         Team_ID[1] = GameObject.Find("Blue1_ID").GetComponent<Text>();
         Team_ID[3] = GameObject.Find("Blue2_ID").GetComponent<Text>();
         Team_ID[5] = GameObject.Find("Blue3_ID").GetComponent<Text>();
-
-        Team_KD[0] = GameObject.Find("Red1_KD").GetComponent<Text>();//킬뎃
+        //킬뎃
+        Team_KD[0] = GameObject.Find("Red1_KD").GetComponent<Text>();
         Team_KD[2] = GameObject.Find("Red2_KD").GetComponent<Text>();
         Team_KD[4] = GameObject.Find("Red3_KD").GetComponent<Text>();
         Team_KD[1] = GameObject.Find("Blue1_KD").GetComponent<Text>();
         Team_KD[3] = GameObject.Find("Blue2_KD").GetComponent<Text>();
         Team_KD[5] = GameObject.Find("Blue3_KD").GetComponent<Text>();
-        
+        //결과
+        Game_Result = GameObject.Find("Game_Result").GetComponent<Image>();
+        Game_Result.enabled = false;
+
         ThisGameState = ConfigClass.GameState.NoSession;
         BeforeGameStete = ConfigClass.GameState.NotStart;
         StartCoroutine("Game_Timer");
         Tab.gameObject.SetActive(false);
-        //결과
-        Game_Result = GameObject.Find("Game_Result").GetComponent<Image>();
-        Game_Result.enabled = false;
+        F1.gameObject.SetActive(false);
+        LateUpdateCnt = 0 ;
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
         Tab_State();
         if (this.ThisGameState != this.BeforeGameStete)
         {
-
             switch (this.BeforeGameStete)
             {
                 case ConfigClass.GameState.NotStart:
@@ -115,6 +132,32 @@ public class GameMgr : MonoBehaviour
             /*case ConfigClass.GameState.Matching:
                 break;*/
         }
+        if (PlayersID != null)
+        {
+            if (LateUpdateCnt > 4)
+            {
+                Red_S = 0;
+                Blue_S = 0;
+                for (int i = 0; i < PlayersID.Length; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        Red_S += PlayersKill[PlayersID[i]];
+                        Red_Score.text = Red_S.ToString();
+                    }
+                    else
+                    {
+                        Blue_S += PlayersKill[PlayersID[i]];
+                        Blue_Score.text = Blue_S.ToString();
+                    }
+                }
+                LateUpdateCnt = 0;
+            }
+            else
+            {
+                LateUpdateCnt++;
+            }
+        }
     }
     void Tab_State()
     {
@@ -127,6 +170,16 @@ public class GameMgr : MonoBehaviour
         {
             Tab.gameObject.SetActive(false);
             Tab_Open = false;
+        }
+        else if (!F1_Open && Input.GetKey(KeyCode.F1))
+        {
+            F1.gameObject.SetActive(true);
+            F1_Open = true;
+        }
+        else if (F1_Open && Input.GetKeyUp(KeyCode.F1))
+        {
+            F1.gameObject.SetActive(false);
+            F1_Open = false;
         }
     }
     IEnumerator Game_Timer()
@@ -144,7 +197,7 @@ public class GameMgr : MonoBehaviour
             }
             yield return null;
         }
-        // 끝나면 실행되겠지?
+        // 게임이 끝난다.
         GameObject.FindGameObjectWithTag("PLAYER").GetComponent<CharacterMgr>().SetGameEnd();
     }
     public void MgrGameEnd()
@@ -164,31 +217,43 @@ public class GameMgr : MonoBehaviour
             else
                 blueKill += PlayersKill[PlayersID[i]];
         }
-
-        if(redKill > blueKill && MyTeam ==0)
+        if (redKill > blueKill && MyTeam ==0)//레드팀 승
         {
-            // 레드팀이 이겼다.
             Game_Result = GameObject.Find("Win").GetComponent<Image>();
             Game_Result.enabled = true;
-            Debug.Log("이겼어");
+        }
+        else if (redKill < blueKill && MyTeam == 0)//레드팀 패
+        {
+            Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result.enabled = true;
+        }
+        else if (redKill < blueKill && MyTeam == 1)//블루팀 승
+        {
+            Game_Result = GameObject.Find("Win").GetComponent<Image>();
+            Game_Result.enabled = true;
+        }
+        else if (redKill > blueKill && MyTeam == 1)//블루팀 패
+        {
+            Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result.enabled = true;
         }
         else
         {
-            // 블루팀이 이겼다
-            Game_Result = GameObject.Find("Lose").GetComponent<Image>();
+            Game_Result = GameObject.Find("Draw").GetComponent<Image>();
             Game_Result.enabled = true;
-            Debug.Log("졌어");
         }
         yield return new WaitForSeconds(5.0f);
         Game_Result.enabled = false;
         if (Network.isServer)
+        {
+            MyCharMgr.DisConnectInClient();
             GameOver();
+        }
     }
     public void GameOver()
     {
         CSender tempSender = CSender.GetInstance();
         DataPacketInfo gameOverPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutMainGameScene, (int)ProtocolTagNull.Null, null);
-        Screen.lockCursor = false;
         tempSender.Sendn(ref gameOverPacket);
     }
     // 플레이어 정보를 세팅하기 위해 기본적으로 아이디 들을 가지고 있는다. 그냥 캐싱.

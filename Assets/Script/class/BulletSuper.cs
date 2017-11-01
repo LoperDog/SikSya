@@ -22,6 +22,8 @@ public class BulletSuper : MonoBehaviour
     public GameMgr Mgr;
     static ConfigClass config;
 
+    private float BulletDam;
+
     public virtual void FireBullet(Vector3 position, Quaternion rotation, float FireSpeed, int code)
     {
         SetBullet(position, rotation);
@@ -48,13 +50,14 @@ public class BulletSuper : MonoBehaviour
             {
                 config = new ConfigClass();
             }
-            Player_tr.GetComponent<CharacterMgr>().ShotPlayer(other.transform.GetComponent<NetworkView>(),config.StatusConfigs["Dubu"]["Attack"]);
+            //Player_tr.GetComponent<CharacterMgr>().ShotPlayer(other.transform.GetComponent<NetworkView>(),config.StatusConfigs["Dubu"]["Attack"]);
+            Player_tr.GetComponent<CharacterMgr>().ShotPlayer(other.transform.GetComponent<NetworkView>(), BulletDam);
             Debug.Log("맞은 친구" + other.transform.name + " 뷰 아이디 : " + other.transform.GetComponent<NetworkView>().viewID);
         }
         SetBulletEnalbed();
     }
-    /*
-    // 현제는 두개다 만들어 둔다.
+    /* 
+    // 현재는 두개다 만들어 둔다.
     protected virtual void OnCollisionEnter(Collision col)
     {
         // 각도 계산 필요.
@@ -78,6 +81,8 @@ public class BulletSuper : MonoBehaviour
     // 생성 당시에 플레이어 코드를 
     protected void SetCode(int Code) { PlayerCode = Code; }
     protected void SetGameMgr(GameMgr gamemgr) { Mgr = gamemgr; }
+
+    public void SetBulletDam(float d) { BulletDam = d; }
 
     protected void SetBullet(Vector3 position, Quaternion rotation)
     {
