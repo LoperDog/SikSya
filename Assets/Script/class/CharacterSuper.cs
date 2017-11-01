@@ -55,7 +55,11 @@ public class CharacterSuper : MonoBehaviour
     public float m_Time_Taunt;
 
     private string CharType;
-
+    public float CharSpeed
+    {
+        get { return m_Move_Speed; }
+        set { m_Move_Speed = value; }
+    }
     public string CharacterTypeString
     {
         get { return CharType; }
@@ -76,7 +80,6 @@ public class CharacterSuper : MonoBehaviour
         get { return m_CurrentSpecialAttack; }
         set { m_CurrentSpecialAttack = value; }
     }
-
     public int PlayerCode;
     public CharacterMgr CharMgr;
     public CharacterMgr mgr
@@ -145,16 +148,16 @@ public class CharacterSuper : MonoBehaviour
     {
         if (Is_Run && (m_Move_V > 0.1) && Is_Ground && m_Current_Speed <= m_Run_Speed && !GetIsReload() && !Is_Attack && (m_Move_H == 0))
         {
-            m_Current_Speed += 5.0f * Time.deltaTime;
+            m_Current_Speed += 4.0f * Time.deltaTime;
         }
         else if ((m_Move_H != 0.0f || m_Move_V != 0.0f) && m_Current_Speed <= m_Move_Speed)
         {
-            m_Current_Speed += 5.0f * Time.deltaTime;
+            m_Current_Speed += 4.0f * Time.deltaTime;
         }
         else if (m_Current_Speed != 0)
         {
-            m_Current_Speed += (m_Current_Speed > 0) ? -5.0f * Time.deltaTime :
-                                                        5.0f * Time.deltaTime;
+            m_Current_Speed += (m_Current_Speed > 0) ? -4.0f * Time.deltaTime :
+                                                        4.0f * Time.deltaTime;
             m_Current_Speed = (m_Current_Speed >= -0.1f && m_Current_Speed <= 0.1f) ? 0.0f : m_Current_Speed;
         }
     }
@@ -172,7 +175,6 @@ public class CharacterSuper : MonoBehaviour
         //Debug.DrawRay(Player_tr.position, Vector3.down * 0.2f, Color.red);
         if (Physics.Raycast(Player_tr.position, Vector3.down, out hit, 0.2f))
         {
-            //Debug.Log("땅에 닿아 있다.");
             if (Long_Falling && hit.collider.tag == "GROUND")
             {
                 Long_Falling = false;

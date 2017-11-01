@@ -15,19 +15,19 @@ public class AnimationSuper
     }
     public virtual void PlayAnimation() // 애니매이션 플레이
     {
+        Long_Landing();
         PlayMove();
         PlayRun();
         PlayJump(); 
         PlayAttack();
         PlayReload();
-        Long_Landing();
         SetTaunt1();
         SetTaunt2();
         PlayDie();
     }
     public virtual void Long_Landing()
     {
-        m_Anim.SetBool("Long_Landing", m_Char_State.GetIsGroud());
+        m_Anim.SetBool("Long_Landing", !m_Char_State.Long_Falling);
     }
     public virtual void PlayMove()
     {

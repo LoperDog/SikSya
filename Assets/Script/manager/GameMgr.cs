@@ -23,6 +23,7 @@ public class GameMgr : MonoBehaviour
     public GameObject F1;
     public bool Tab_Open= false;
     public bool F1_Open = false;
+    public Image [] Team_Image = new Image[6];
     public Text [] Team_ID = new Text[6];
     public Text [] Team_KD = new Text[6];
     public Image Game_Result;
@@ -70,6 +71,13 @@ public class GameMgr : MonoBehaviour
         //탭 정보창
         F1 = GameObject.Find("F1").GetComponent<Transform>().gameObject;
         Tab = GameObject.Find("Tab").GetComponent<Transform>().gameObject;
+        //이미지
+        Team_Image[0] = GameObject.Find("Red1_IMG").GetComponent<Image>();
+        Team_Image[2] = GameObject.Find("Red2_IMG").GetComponent<Image>();
+        Team_Image[4] = GameObject.Find("Red3_IMG").GetComponent<Image>();
+        Team_Image[1] = GameObject.Find("Blue1_IMG").GetComponent<Image>();
+        Team_Image[3] = GameObject.Find("Blue2_IMG").GetComponent<Image>();
+        Team_Image[5] = GameObject.Find("Blue3_IMG").GetComponent<Image>();
         //아이디
         Team_ID[0] = GameObject.Find("Red1_ID").GetComponent<Text>();
         Team_ID[2] = GameObject.Find("Red2_ID").GetComponent<Text>();
@@ -91,8 +99,8 @@ public class GameMgr : MonoBehaviour
         ThisGameState = ConfigClass.GameState.NoSession;
         BeforeGameStete = ConfigClass.GameState.NotStart;
         StartCoroutine("Game_Timer");
-        Tab.gameObject.SetActive(false);
         F1.gameObject.SetActive(false);
+        Game_Result.enabled = false;
         LateUpdateCnt = 0 ;
     }
 	
@@ -237,13 +245,12 @@ public class GameMgr : MonoBehaviour
             Game_Result = GameObject.Find("Lose").GetComponent<Image>();
             Game_Result.enabled = true;
         }
-        else
+        else//무승부
         {
             Game_Result = GameObject.Find("Draw").GetComponent<Image>();
             Game_Result.enabled = true;
         }
         yield return new WaitForSeconds(5.0f);
-        Game_Result.enabled = false;
         if (Network.isServer)
         {
             MyCharMgr.DisConnectInClient();
@@ -287,11 +294,35 @@ public class GameMgr : MonoBehaviour
             Debug.Log("플레이어의 수는 : " + PlayersLength);
             for (int i = 0; i < PlayersLength; i++)
             {
-                Debug.Log("플레이어의 정보를 세팅중이다. : " + i);
-                Debug.Log("뭔데 : " + PlayersID[i]);
-                Debug.Log("뭔데wekgmwe : " + PlayersName[PlayersID[0]]);
+                if (GetTeam(PlayersID[i]) % 2 == 0)//레드팀
+                {
+                    if (PlayersChar[PlayersID[i]] == 0)//두부
+                    {
+                        Team_Image[i].sprite = GameObject.Find("Red_DubuLive").GetComponent<Image>().sprite;
+                        Team_Image[i].enabled = true;
+                    }
+                    else if (PlayersChar[PlayersID[i]] == 1)//만두
+                    {
+                        Team_Image[i].sprite = GameObject.Find("Red_ManduLive").GetComponent<Image>().sprite;
+                        Team_Image[i].enabled = true;
+                    }
+                }
+                else//블루팀
+                {
+                    if (PlayersChar[PlayersID[i]] == 0)//두부
+                    {
+                        Team_Image[i].sprite = GameObject.Find("Blue_DubuLive").GetComponent<Image>().sprite;
+                        Team_Image[i].enabled = true;
+                    }
+                    else if (PlayersChar[PlayersID[i]] == 1)//만두
+                    {
+                        Team_Image[i].sprite = GameObject.Find("Blue_ManduLive").GetComponent<Image>().sprite;
+                        Team_Image[i].enabled = true;
+                    }
+                }
                 Team_ID[i].text = PlayersName[PlayersID[i]];
                 Team_KD[PlayersTeam[PlayersID[i]]].text = "0/0";
+                Tab.gameObject.SetActive(false);
                 Debug.Log("정보 세팅이 완료 되었다.");
             }
         }
