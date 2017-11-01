@@ -134,6 +134,7 @@ public class MakeRoomPanel : MonoBehaviour {
                 RequestMakeRoom(ConstValue.RoomPWNone);
             }
             CheckState.ChangeState(State.ClientRequestMakeRoom);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
@@ -141,11 +142,13 @@ public class MakeRoomPanel : MonoBehaviour {
     {
         DataPacketInfo roomPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.MakeRoom, (int)mTeamAmount, pw);
         mSender.Sendn(ref roomPacket);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
     public void CancleMakeRoom()
     {
         CheckState.ChangeState(State.ClientChannelMenu);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
 }

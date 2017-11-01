@@ -18,6 +18,7 @@ public class CheckState : MonoBehaviour {
     Sprite[] mActiveCharacterSprite;
     [SerializeField]
     Sprite[] mCharacterSprite;
+    
     //static GameObject mSelectLoginPanel;     // FrontScene
     //static GameObject mSelectPanel;          // FrontScene
     static bool mIsSceneChangeStart;    // Scene 변경 예정
@@ -59,6 +60,8 @@ public class CheckState : MonoBehaviour {
     {
         return mCurrentSceneState;
     }
+
+
 
     void Update()
     {

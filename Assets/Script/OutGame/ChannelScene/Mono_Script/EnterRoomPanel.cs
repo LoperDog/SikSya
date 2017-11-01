@@ -102,14 +102,16 @@ public class EnterRoomPanel : MonoBehaviour {
     public void CancleEnterRoom()
     {
         CheckState.ChangeState(State.ClientChannelMenu);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
     public void EnterRoom()
     {
-        Debug.Log("EnterRoom() 호출 됨.");
+        Debug.Log("EnterRoom() 호출 됨." + CheckState.GetCurState());
         string number = mInputRoomNumberComponent.text;
         if (number == "" || number == null)
         {
+            Debug.Log("리턴");
             return;
         }
         bool isPrivateRoom = false;
@@ -118,6 +120,7 @@ public class EnterRoomPanel : MonoBehaviour {
         {
             if (pw == "" || pw == null)
             {
+                Debug.Log("리턴");
                 return;
             }
             isPrivateRoom = true;
@@ -128,11 +131,11 @@ public class EnterRoomPanel : MonoBehaviour {
         State curState = CheckState.GetCurState();
         if (State.ClientRequestSpecialEnterRoom != curState)
         {
+            CheckState.ChangeState(State.ClientRequestSpecialEnterRoom);
             number = number.Replace(" ", "");
             if (isPrivateRoom)
             {
                 pw = pw.Replace(" ", "");
-
             }
             else
             {
@@ -141,7 +144,6 @@ public class EnterRoomPanel : MonoBehaviour {
             string numberPw = number + '/' + pw;
             Debug.Log("numberPw = " + numberPw);
             RequestEnterRoom(numberPw);
-            CheckState.ChangeState(State.ClientRequestSpecialEnterRoom);
         }
     }
 
@@ -149,11 +151,13 @@ public class EnterRoomPanel : MonoBehaviour {
     {
         DataPacketInfo enterPacket = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.EnterSpecialRoom, (int)ProtocolTagNull.Null, pw);
         mSender.Sendn(ref enterPacket);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
     public void CheckFailEnterRoom()
     {
         CheckState.ChangeState(State.ClientEnterSpecialRoom);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
 }

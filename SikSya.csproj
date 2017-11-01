@@ -176,6 +176,7 @@
     <Compile Include="Assets\Script\OutGame\Everywhere\CP_Script\TransportData\StructData.cs" />
     <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\BackExit.cs" />
     <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\CheckState.cs" />
+    <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\OutSoundPlayer.cs" />
     <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\RotateImage.cs" />
     <Compile Include="Assets\Script\OutGame\Everywhere\Mono_Script\Start\Init.cs" />
     <Compile Include="Assets\Script\OutGame\FrontScene\Mono_Script\Front.cs" />
