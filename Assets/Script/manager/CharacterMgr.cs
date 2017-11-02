@@ -61,7 +61,7 @@ public class CharacterMgr : MonoBehaviour
 
     // 캐릭터 리스트가 필요하다.
 
-    public enum Chacracter_Type
+    public enum Character_Type
     {
         Dubu,
         Mandu,
@@ -103,7 +103,7 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터 내부 스크립트 혹은 클래스
     // 필요한 기능등 붙이기
     [SerializeField]
-    private Chacracter_Type Character_ID;
+    private Character_Type Character_ID;
 
     [SerializeField]
     private AnimationSuper thisAnim;
@@ -175,7 +175,7 @@ public class CharacterMgr : MonoBehaviour
         // 캐릭터 생성
         switch (Character_ID)
         {
-            case Chacracter_Type.Dubu:
+            case Character_Type.Dubu:
                 thisCharacter = new DubuCharacter();
                 thisAnim = new DubuAnimation();
                 CharType = config.DubuString;
@@ -186,7 +186,7 @@ public class CharacterMgr : MonoBehaviour
                 m_SpecialAttack = RoundAttack[1].GetComponent<DubuAttack>();
                 m_SpecialAttack.SetEffect(Effect[8]);
                 break;
-            case Chacracter_Type.Mandu:
+            case Character_Type.Mandu:
                 thisCharacter = new ManduCharacter();
                 thisAnim = new ManduAnimation();
                 CharType = config.ManduString;
@@ -196,6 +196,18 @@ public class CharacterMgr : MonoBehaviour
                 m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<ManduAttack>();
                 m_SpecialAttack.SetEffect(Effect[7]);
+                break;
+            case Character_Type.Tangsu:
+                thisCharacter = new TangsuCharacter();
+                thisAnim = new ManduAnimation();
+                CharType = config.TangsuString;
+                thisCharacter.SetCoroutine(gameObject.AddComponent<TangsuCoroutin>());
+                //특수기
+                m_StrongAttack = RoundAttack[0].GetComponent<TangsuAttack>();
+                m_StrongAttack.SetEffect(Effect[7]);
+                m_SpecialAttack = RoundAttack[1].GetComponent<TangsuAttack>();
+                m_SpecialAttack.SetEffect(Effect[7]);
+
                 break;
             default:
 
@@ -240,12 +252,12 @@ public class CharacterMgr : MonoBehaviour
         {
             switch (Character_ID)
             {
-                case Chacracter_Type.Dubu:
+                case Character_Type.Dubu:
 
                     Dubu_Special.enabled = true;
                     Dubu_Right.enabled = true;
                     break;
-                case Chacracter_Type.Mandu:
+                case Character_Type.Mandu:
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
                     break;
@@ -629,7 +641,7 @@ public class CharacterMgr : MonoBehaviour
         // 재장전 애니매이션
     }
 
-    public void SetCharID(Chacracter_Type Code) { Character_ID = Code; }
+    public void SetCharID(Character_Type Code) { Character_ID = Code; }
 
     // 게임을 끝내로 왔다.
     public void DisConnectInClient()
