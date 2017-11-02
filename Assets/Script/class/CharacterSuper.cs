@@ -57,8 +57,8 @@ public class CharacterSuper : MonoBehaviour
     private string CharType;
     public float CharSpeed
     {
-        get { return m_Move_Speed; }
-        set { m_Move_Speed = value; }
+        get { return m_Current_Speed; }
+        set { m_Current_Speed = value; }
     }
     public string CharacterTypeString
     {

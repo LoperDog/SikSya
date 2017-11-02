@@ -157,16 +157,40 @@ public class NetworkMgr : MonoBehaviour
         // 내가 호스트인경우
         else
         {
-            errorCode = Network.InitializeServer(32, port, _useNat);
-            // 만약 이미 연결된 서버가 있다면
-            //if (errorCode == NetworkConnectionError.AlreadyConnectedToAnotherServer ||
-            //    errorCode == NetworkConnectionError.AlreadyConnectedToServer)
-            //{
-            //    // 연결을 끊고 자기자신을 불러온다.
-            //    Network.Disconnect();
-            //    this.StartConnect();
-            //}
-            //ReadyToInitializeServer = false;
+            while (errorCode != NetworkConnectionError.NoError)
+            {
+                try
+                {
+                    errorCode = Network.InitializeServer(32, port, _useNat);
+
+                    if (errorCode == NetworkConnectionError.AlreadyConnectedToAnotherServer ||
+                        errorCode == NetworkConnectionError.AlreadyConnectedToServer)
+                    {
+                        Network.Disconnect();
+                    }
+                    else if (errorCode == NetworkConnectionError.ConnectionBanned)
+                    {
+                        Debug.Log("연결을 차단당했다.");
+                    }
+                    else
+                    {
+                        Debug.Log("뭔가를 더 할수가 없다.");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+                // 만약 이미 연결된 서버가 있다면
+                //if (errorCode == NetworkConnectionError.AlreadyConnectedToAnotherServer ||
+                //    errorCode == NetworkConnectionError.AlreadyConnectedToServer)
+                //{
+                //    // 연결을 끊고 자기자신을 불러온다.
+                //    Network.Disconnect();
+                //    this.StartConnect();
+                //}
+                //ReadyToInitializeServer = false;
+            }
         }
         Debug.Log("연결 결과 에러 로그 : " + errorCode);
         ReadyToInitializeServer = false;

@@ -297,13 +297,13 @@ public class CharacterMgr : MonoBehaviour
         IsInGameSetting = true;
         if (_networkView.isMine)
         {
-            Player_rb.useGravity = true;
             thisCharacter.StartFalling();
             // 메니저에 플레이어들을 세팅 시킨다.
             //MyMgr.StartGetGamePlayerInfo();
             // 자신의 정보를 네트워크를 통해 넘긴다.
             StartSetMyInfo();
         }
+        Player_rb.useGravity = true;
     }
     private void StartSetMyInfo()
     {
@@ -614,10 +614,10 @@ public class CharacterMgr : MonoBehaviour
         Key_Space = Input.GetKey(KeyCode.Space);
         if (Input.GetKey(KeyCode.Space))
         {
-            //thisCharacter.Jump();
-            _networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
+            thisCharacter.Jump();
+            //_networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
         }
-        Key_Space = Input.GetKey(KeyCode.R);
+        Key_R = Input.GetKey(KeyCode.R);
         if (Input.GetKey(KeyCode.R))
         {
             _networkView.RPC("SetCharacterReload", RPCMode.AllBuffered, null);
@@ -652,9 +652,6 @@ public class CharacterMgr : MonoBehaviour
             if (AllPlayer[i] == gameObject) continue;
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("ClientDisconnect", RPCMode.AllBuffered, null);
         }
-        Debug.Log("ClientDisconnect 시작 전");
-        _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
-        Debug.Log("ClientDisconnect 시작 후");
     }
     [RPC]
     public void ClientDisconnect()
@@ -740,7 +737,7 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
-            LerpPos = revPos;// + TempVel * PosSyncDelayTime;
+            LerpPos = revPos + TempVel * PosSyncDelayTime;
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
             if (PosDistance > 0)
