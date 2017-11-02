@@ -642,7 +642,7 @@ public class CharacterMgr : MonoBehaviour
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("ClientDisconnect", RPCMode.AllBuffered, null);
         }
         Debug.Log("ClientDisconnect 시작 전");
-        _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
+       // _networkView.RPC("ClientDisconnect", RPCMode.AllBuffered, null);
         Debug.Log("ClientDisconnect 시작 후");
     }
     [RPC]

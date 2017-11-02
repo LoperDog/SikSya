@@ -184,6 +184,7 @@
     <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\Chatting.cs" />
     <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\RoomInfo.cs" />
     <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\TeamPanel.cs" />
+    <Compile Include="Assets\Script\OutGame\StartMovie.cs" />
     <Compile Include="Assets\Script\TestScript\TestScript.cs" />
     <Compile Include="Assets\Script\TestScript\coroutinTestSuper.cs" />
     <Compile Include="Assets\Script\class\AnimationSuper.cs" />
