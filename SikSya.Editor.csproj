@@ -120,6 +120,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="SikSya.csproj">
+      <Project>{261CBBBA-C267-FA63-DA43-6C891481F402}</Project>
+      <Name>SikSya</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\BackGround\LightingBox\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
     <Compile Include="Assets\BackGround\LightingBox\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
     <Compile Include="Assets\BackGround\LightingBox\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
@@ -226,6 +232,7 @@
     <None Include="Assets\BackGround\floor\Tile.shader" />
     <None Include="Assets\EF(NEW)\Attack\E_Hit\Rim.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\01.shader" />
+    <None Include="Assets\EF(NEW)\Resource\S\02.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\T_Slash.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\add.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\refraction.shader" />
