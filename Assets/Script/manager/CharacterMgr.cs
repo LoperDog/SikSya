@@ -9,6 +9,8 @@ public class CharacterMgr : MonoBehaviour
 
     [SerializeField]
     public ConfigClass config;
+    [SerializeField]
+    public GameMgr MyMgr;
 
     public Transform Player_tr;
     private Rigidbody Player_rb;
@@ -23,11 +25,8 @@ public class CharacterMgr : MonoBehaviour
     Dictionary<string, GameObject> TempBulletPool;
     [SerializeField]
     List<GameObject> LoadChar;
-
     [SerializeField]
     public List<GameObject> LoadBullet;
-    [SerializeField]
-    public GameMgr MyMgr;
 
     //공용UI
     public Text Bullet_count;
@@ -65,7 +64,8 @@ public class CharacterMgr : MonoBehaviour
     public enum Chacracter_Type
     {
         Dubu,
-        Mandu
+        Mandu,
+        Tangsu
     };
     public string MyName;
     public int MyTeam;
@@ -323,9 +323,6 @@ public class CharacterMgr : MonoBehaviour
     }
     void Update()
     {
-        //캐릭터 업데이트
-        //thisCharacter.CharacterUpdate();
-
         //입력을 받고 저장한다.
         if (_networkView.isMine)
         {
@@ -467,10 +464,8 @@ public class CharacterMgr : MonoBehaviour
         LastAttacker = Attacker;
         Char_Current_HP -= de;
     }
-    // 강공격
     [RPC]
     public void SetCharacterStrongAttack() { thisCharacter.StrongAttack(); }
-    // 특수기
     [RPC]
     public void SetCharacterSpecialAttack() { thisCharacter.SpecialAttack(); }
     //도발
@@ -510,7 +505,7 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.PlayAnimation();
         if (_networkView.isMine)
         {
-            if (Player_rb.velocity.y >= 13)
+            if (Player_rb.velocity.y >= 15)
             {
                 Player_rb.velocity = new Vector3(Player_rb.velocity.x, 0.0f, Player_rb.velocity.z);
             }
@@ -555,13 +550,11 @@ public class CharacterMgr : MonoBehaviour
     [RPC]
     public void Respawn()
     {
-        Debug.Log("캐릭터 리스폰 시작");
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
         Start();
         thisCharacter.StartFalling();
-        Debug.Log("리스폰 끝");
     }
     public void InputControll()
     {

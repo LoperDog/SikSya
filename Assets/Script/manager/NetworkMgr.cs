@@ -12,7 +12,6 @@ public class NetworkMgr : MonoBehaviour
     private string MyIP = "";
     private string OtherIP = "";
 
-    // 플레이어 번호에 맞는 생성위치를 잡아준다.
     public Transform[] PlayerCreatePosition = new Transform[6];
     //접속 IP
     //private const string ip = "192.168.30.64";

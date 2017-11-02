@@ -214,7 +214,6 @@ public class GameMgr : MonoBehaviour
     }
     public IEnumerator EndGameTurm()
     {
-        // UI띄우기
         int MyTeam = MyInfoClass.GetInstance().MyGameNumb % 2;
         int redKill = 0 ;
         int blueKill = 0 ;
@@ -284,10 +283,6 @@ public class GameMgr : MonoBehaviour
         PlayersDeath[PlayersID[TeamNumb]] = 0;
 
         SettingUIPlayer++;
-        Debug.Log("ID! : " + ID);
-        Debug.Log("inID! : " + ID);
-        Debug.Log("Name! : " + Name);
-        Debug.Log("Inname! : " + PlayersName[PlayersID[TeamNumb]]);
         if (SettingUIPlayer == PlayersID.Length)
         {
             int PlayersLength = PlayersID.Length;
