@@ -355,6 +355,7 @@ public class CharacterMgr : MonoBehaviour
                 LerpPosT
                 );
                 */
+                /*
             PosSyncStartTime += Time.deltaTime;
             Player_tr.position = Vector3.Lerp(Player_tr.position, LerpPos, PosSyncStartTime / PosSyncDelayTime);
             float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f
@@ -363,7 +364,7 @@ public class CharacterMgr : MonoBehaviour
                 Player_tr.rotation,
                 LerpRot,
                 LerpRotT
-                );
+                );*/
         }
         // 게임이 시작었고 세팅요청이 왔다. 근데 내쪽에서 인게임 세팅이 안되어있다.-> 로딩이 끝나 게임 시작 요청을 처음 받았음.
         if (IsInGameSetting && !IsGameLoaded)
@@ -522,6 +523,18 @@ public class CharacterMgr : MonoBehaviour
             }
             InputControll();
             thisCharacter.Turn();
+        }
+        else
+        {
+            PosSyncStartTime += Time.deltaTime;
+            Player_tr.position = Vector3.Lerp(Player_tr.position, LerpPos, PosSyncStartTime / PosSyncDelayTime);
+            float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f
+                ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
+            Player_tr.rotation = Quaternion.Lerp(
+                Player_tr.rotation,
+                LerpRot,
+                LerpRotT
+                );
         }
     }
     public void SendKD()
@@ -715,7 +728,7 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
-            LerpPos = revPos + TempVel * PosSyncDelayTime;
+            LerpPos = revPos;// + TempVel * PosSyncDelayTime;
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
             if (PosDistance > 0)
