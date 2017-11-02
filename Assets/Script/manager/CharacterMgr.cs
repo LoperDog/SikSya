@@ -678,7 +678,11 @@ public class CharacterMgr : MonoBehaviour
             // 위치, 각도
             Vector3 pos = Player_tr.position;
             Quaternion rot = Player_tr.rotation;
-            TempVel = Player_rb.velocity;
+
+            float posx = Player_tr.position.x;
+            float posz = Player_tr.position.z;
+
+            TempVel = new Vector3(Player_rb.velocity.x,0.0f,Player_rb.velocity.z);
 
             float H = Key_H;
             float V = Key_V;
@@ -687,7 +691,9 @@ public class CharacterMgr : MonoBehaviour
             Key_Shift = thisCharacter.GetIsRun();
             Speed = thisCharacter.CharSpeed;
             // 위치 전송
-            stream.Serialize(ref pos);
+            //stream.Serialize(ref pos);
+            stream.Serialize(ref posx);
+            stream.Serialize(ref posz);
             stream.Serialize(ref rot);
             stream.Serialize(ref TempVel);
             // 키동기 -> 움직임등의 연속적인 것들만 동기화 시킨다.
@@ -704,6 +710,9 @@ public class CharacterMgr : MonoBehaviour
             Vector3 revPos = Vector3.zero;
             Quaternion revRot = Quaternion.identity;
 
+            float posx = 0.0f;
+            float posz = 0.0f;
+
             float recvh = 0.0f;
             float recvv = 0.0f;
             bool check = false;
@@ -711,7 +720,9 @@ public class CharacterMgr : MonoBehaviour
             //stream.Serialize(ref CodeTemp);
 
             // 데이터 수신
-            stream.Serialize(ref revPos);
+            //stream.Serialize(ref revPos);
+            stream.Serialize(ref posx);
+            stream.Serialize(ref posz);
             stream.Serialize(ref revRot);
             stream.Serialize(ref TempVel);
             // 이동키
@@ -728,7 +739,9 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
-            LerpPos = revPos;// + TempVel * PosSyncDelayTime;
+            LerpPos = new Vector3(posx, Player_tr.position.y, posz);
+            LerpPos = revPos + TempVel * PosSyncDelayTime;
+
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
             if (PosDistance > 0)
