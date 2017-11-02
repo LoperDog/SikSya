@@ -5,14 +5,16 @@ using UnityEngine;
 public class ManduAnimation : AnimationSuper
 {
     ManduCharacter CharacterScript;
-    public override void PlayAttack()
-    {
-        m_Anim.SetBool("Attack", m_Char_State.GetIsAttack());
-    }
+
     public override void SetChar(CharacterSuper CharScript)
     {
         base.SetChar(CharScript);
         CharacterScript = (ManduCharacter)CharScript;
+    }
+    //공격
+    public override void PlayAttack()
+    {
+        m_Anim.SetBool("Attack", m_Char_State.GetIsAttack());
     }
     //강공격
     public void SetStrongAttackReady()

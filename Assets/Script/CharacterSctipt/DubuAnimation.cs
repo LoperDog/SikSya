@@ -5,16 +5,18 @@ using UnityEngine;
 public class DubuAnimation : AnimationSuper
 {
     DubuCharacter CharacterScript;
+
+    public override void SetChar(CharacterSuper CharScript)
+    {
+        base.SetChar(CharScript);
+        CharacterScript = (DubuCharacter)CharScript;
+    }
+    //공격
     public override void PlayAttack()
     {
         m_Anim.SetBool("Is_Attack", m_Char_State.GetIsAttack());
         m_Anim.SetBool("LeftAttack", CharacterScript.AttackIsLeft);
         m_Anim.SetBool("RightAttack", !CharacterScript.AttackIsLeft);
-    }
-    public override void SetChar(CharacterSuper CharScript)
-    {
-        base.SetChar(CharScript);
-        CharacterScript = (DubuCharacter)CharScript;
     }
     //강공격
     public void SetStrongAttackReady()

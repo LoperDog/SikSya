@@ -125,7 +125,7 @@ public class DubuCharacter : CharacterSuper
         }
         CurrentAttack = config.StatusConfigs["Dubu"]["AtttackSpeed"];
     }
-    // 애니매이터 세팅을 바꿔준다. 여기에 온다면 분명 두부 애니매이션 일테니까
+
     public override void SetAnimator(AnimationSuper anim)
     {
         base.SetAnimator(anim);

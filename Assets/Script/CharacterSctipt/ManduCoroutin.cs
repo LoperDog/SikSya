@@ -11,6 +11,7 @@ public class ManduCoroutin : CoroutinClass
         base.SetCharacterScript(CharacterClass);
         ManduChar = (ManduCharacter)CharacterClass;
     }
+
     //강공격
     public override void StartStrongAttckSetting()
     {
