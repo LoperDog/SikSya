@@ -165,6 +165,7 @@
     <Compile Include="Assets\Script\CharacterSctipt\ManduCharacter.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\ManduCoroutin.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\TangsuAnimation.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\TangsuAttack.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\TangsuCharacter.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\TangsuCoroutin.cs" />
     <Compile Include="Assets\Script\EffectScript\DestroyMe.cs" />
