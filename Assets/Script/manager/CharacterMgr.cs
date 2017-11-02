@@ -748,8 +748,13 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
+<<<<<<< HEAD
             LerpPos = new Vector3(posx, Player_tr.position.y, posz);
             LerpPos = revPos + TempVel * PosSyncDelayTime;
+=======
+            LerpPos = new Vector3(posx, Player_tr.position.y, posz);// + TempVel * PosSyncDelayTime;
+            //LerpPos = revPos + TempVel * PosSyncDelayTime;
+>>>>>>> d1d236be4d882bc4e3770ad0d546f3571f3d5001
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
             if (PosDistance > 0)
