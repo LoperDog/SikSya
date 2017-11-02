@@ -32,13 +32,14 @@ public class AnimationSuper
     public virtual void PlayMove()
     {
         //m_Anim.SetFloat("H", m_Char_State.GetMoveH());
-        //m_Anim.SetFloat("V", m_Char_State.GetMoveV());
+        //m_Anim.SetFloat("V", m_Char_State.GetMfoveV());
         // 키이동 수정
         m_Anim.SetFloat("H", m_Mgr.keyh);
         m_Anim.SetFloat("V", m_Mgr.keyv);
     }
     public virtual void PlayRun()
     {
+
         m_Anim.SetFloat("Speed", m_Char_State.GetSpeed());
     }
     public virtual void PlayJump()
