@@ -614,8 +614,8 @@ public class CharacterMgr : MonoBehaviour
         Key_Space = Input.GetKey(KeyCode.Space);
         if (Input.GetKey(KeyCode.Space))
         {
-            thisCharacter.Jump();
-            //_networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
+            //thisCharacter.Jump();
+            _networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
         }
         Key_R = Input.GetKey(KeyCode.R);
         if (Input.GetKey(KeyCode.R))
