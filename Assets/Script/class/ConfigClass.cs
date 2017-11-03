@@ -35,7 +35,7 @@ public class ConfigClass {
 
         ManduStatus["MoveSpeed"] = 1.5f;
         ManduStatus["RunSpeed"] = 3.5f;
-        ManduStatus["JumpForce"] = 1500f;
+        ManduStatus["JumpForce"] = 13f;
 
         ManduStatus["Cartridge"] = 7f;//장탄수
         ManduStatus["ReLoadTime"] = 3.14f;
@@ -63,7 +63,7 @@ public class ConfigClass {
 
         DubuStatus["MoveSpeed"] = 2.0f;
         DubuStatus["RunSpeed"] = 6.0f;
-        DubuStatus["JumpForce"] = 1500;
+        DubuStatus["JumpForce"] = 10;
 
         DubuStatus["Cartridge"] = 50f;//장탄수
         DubuStatus["ReLoadTime"] = 1.7f;
@@ -73,12 +73,13 @@ public class ConfigClass {
 
         DubuStatus["StrongAttack"] = 30f;//우클릭 공격력
         DubuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
-        DubuStatus["StongAttackReady"] = 0.26f;
-        DubuStatus["StongAttackTime"] = 0.2f;
+
+        DubuStatus["StongAttackReady"] = 0.2f;
         DubuStatus["StongAttackEnd"] = 0.6f;
 
         DubuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
         DubuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
+
         DubuStatus["SpecialAttackReady"] = 0.86f;
         DubuStatus["SpecialAttackTime"] = 0.56f;
         DubuStatus["SpecialAttackEnd"] = 1.43f;

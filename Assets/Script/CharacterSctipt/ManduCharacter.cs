@@ -14,6 +14,10 @@ public class ManduCharacter : CharacterSuper
             m_Current_Bullet--;
             Is_Attack = true;
             ShotBullet();
+
+            Transform temp = Instantiate(effect[0], Player_tr.position, Player_tr.rotation);
+            temp.SetParent(Player_tr);
+            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[0].position);
         }
         else if (!Is_Attack && !Is_ReLoad && m_Current_Bullet == 0)
         {
@@ -36,16 +40,13 @@ public class ManduCharacter : CharacterSuper
     //강공격 시작
     public override void StrongAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && !Is_ReLoad && Is_Ground && m_Current_Bullet > 1 && !Is_Taunt1 && !Is_Taunt2 && mgr.StrongAttackCoolTime == 0)
-        {
-            coroutine.StartStrongAttckSetting();
-            Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);
-            temp.SetParent(Player_tr);
-            temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
-            mgr.RoundAttack[0].SetActive(true);
-            m_Current_Bullet -= 2;
-        }
-        else if (m_Current_Bullet <= 0)
+        coroutine.StartStrongAttckSetting();
+        Transform temp = Instantiate(effect[3], FirePoint.GetComponent<Transform>().position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
+        mgr.RoundAttack[0].SetActive(true);
+        m_Current_Bullet -= 2;
+        if (m_Current_Bullet <= 0)
         {
             ReLoad();
         }
@@ -69,10 +70,7 @@ public class ManduCharacter : CharacterSuper
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.SpecialAttackCoolTime == 0*/)
-        {
-            coroutine.StartSpecialAttackSetting();
-        }
+        coroutine.StartSpecialAttackSetting();
     }
     public void SpecialAttackReady()
     {

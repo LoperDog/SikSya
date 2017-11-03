@@ -28,8 +28,6 @@ public class DubuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.CanControll = false;
-        DubuChar.StrongAttackReady();//애니메이션
         StartCoroutine(SetStrongAttackDash());
         yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StrongAttack_CoolTime"]);
         thisCharacterScript.Is_StrongAttack = false;
@@ -40,8 +38,9 @@ public class DubuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackTime"]);
-        DubuChar.StrongAttackDash();//이팩트 킴
+        thisCharacterScript.CanControll = false;
+        DubuChar.StrongAttackReady();
+        yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackReady"]);
         StartCoroutine(SetStrongAttackEnd());
     }
     public IEnumerator SetStrongAttackEnd()
@@ -50,10 +49,11 @@ public class DubuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        thisMgr.m_StrongAttack.ReSetAttack();
+        DubuChar.StrongAttackDash();
         DubuChar.StrongAttackEnd();
         yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackEnd"]);
         thisCharacterScript.CanControll = true;
+        thisMgr.m_StrongAttack.ReSetAttack();
     }
     //특수기
     public override void StartSpecialAttackSetting()

@@ -163,11 +163,12 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void Jump()
     {
-        if (Is_Ground && !Is_Jump)
-        {
-            Player_rb.AddForce(0, m_Jump_Force, 0);
+        //if (Is_Ground && !Is_Jump)
+        //{
+        //Player_rb.AddForce(0, m_Jump_Force, 0);
+        Player_rb.velocity = new Vector3(Player_rb.velocity.x, m_Jump_Force, Player_rb.velocity.z);
             Is_Jump = true;
-        }
+        //}
     }
     public virtual void Check_Ground()
     {

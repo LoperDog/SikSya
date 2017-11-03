@@ -19,7 +19,6 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        
         thisMgr.StrongAttackCoolTime = config.StatusConfigs["Mandu"]["StrongAttack_CoolTime"];
         base.StartStrongAttckSetting();
     }

@@ -192,7 +192,7 @@ public class GameMgr : MonoBehaviour
     }
     IEnumerator Game_Timer()
     {
-        for (Game_Time = 6000.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
+        for (Game_Time = 180.0f; Game_Time >= 0.0f; Game_Time -= Time.deltaTime)
         {
             Game_Time_M.text = "0" + (int)(Game_Time / 60) + " :";
             if ((int)(Game_Time % 60) < 10)

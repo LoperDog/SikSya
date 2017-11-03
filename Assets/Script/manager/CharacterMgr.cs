@@ -539,7 +539,13 @@ public class CharacterMgr : MonoBehaviour
         else
         {
             PosSyncStartTime += Time.deltaTime;
-            Player_tr.position = Vector3.Lerp(Player_tr.position, LerpPos, PosSyncStartTime / PosSyncDelayTime);
+            if (Player_tr.position.y - LerpPos.y >= 0.2f &&
+                Player_tr.position.y - LerpPos.y <= -0.2f)
+            {
+                Player_tr.position = LerpPos;
+            }
+            float SyncPosCurrentTime = PosSyncStartTime / PosSyncDelayTime > 1f ? 1.0f : PosSyncStartTime / PosSyncDelayTime;
+            Player_tr.position = Vector3.Lerp(Player_tr.position, LerpPos, SyncPosCurrentTime);
             float LerpRotT = ((Time.time - LerpRotStartTime) * LerpSpeed) > 1.0f
                 ? 1.0f : ((Time.time - LerpRotStartTime) * LerpSpeed);
             Player_tr.rotation = Quaternion.Lerp(
@@ -598,12 +604,18 @@ public class CharacterMgr : MonoBehaviour
         Click_Right = Input.GetMouseButton(1);
         if (Input.GetMouseButton(1))
         {
-            _networkView.RPC("SetCharacterStrongAttack", RPCMode.AllBuffered, null);
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && StrongAttackCoolTime == 0)
+            {
+                _networkView.RPC("SetCharacterStrongAttack", RPCMode.AllBuffered, null);
+            }
         }
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
+            {
+                _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
+            }
         }
         Key_Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         if (Key_Shift && !Click_Left && !Click_Right && !thisCharacter.GetIsReload())
@@ -614,8 +626,10 @@ public class CharacterMgr : MonoBehaviour
         Key_Space = Input.GetKey(KeyCode.Space);
         if (Input.GetKey(KeyCode.Space))
         {
-            //thisCharacter.Jump();
-            _networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
+            if (thisCharacter.GetIsGroud() && !thisCharacter.Is_Jump)
+            {
+                _networkView.RPC("SetCharacterJump", RPCMode.AllBuffered, null);
+            }
         }
         Key_R = Input.GetKey(KeyCode.R);
         if (Input.GetKey(KeyCode.R))
@@ -748,7 +762,7 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
-            LerpPos = new Vector3(posx, Player_tr.position.y + Player_rb.velocity.y, posz);// + TempVel * PosSyncDelayTime;
+            LerpPos = new Vector3(posx, Player_tr.position.y, posz);// + TempVel * PosSyncDelayTime;
             //LerpPos = revPos + TempVel * PosSyncDelayTime;
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
