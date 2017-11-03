@@ -28,11 +28,11 @@ public class CheckState : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad(this.gameObject);
         mRoomSceneObjs = new GameObject[9];
-        mCurrentSceneState = ProtocolSceneName.FrontScene;
+        mCurrentSceneState = ProtocolSceneName.StartScene;
         mIsSceneChangeStart = false;
         mIsSceneChanged = false;
         mIsStateChanged = false;
-        ChangeState(State.ClientFrontMenu);
+        ChangeState(State.ClientStart);
     }
 
     public static void ChangeSceneState(ProtocolSceneName state)
@@ -69,6 +69,8 @@ public class CheckState : MonoBehaviour {
         {
             switch (mCurrentSceneState)
             {
+                case ProtocolSceneName.StartScene:
+                    break;
                 case ProtocolSceneName.FrontScene:
                     mFront = GameObject.FindGameObjectWithTag("TagFront");
                     ChangeState(State.ClientFrontMenu);
