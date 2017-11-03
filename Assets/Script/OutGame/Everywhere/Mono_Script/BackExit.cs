@@ -26,7 +26,8 @@ public class BackExit : MonoBehaviour {
                 case State.ClientNotAllReady:
                 case State.ClientNotReady:
                     dataInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutRoom, (int)State.ClientRequestBackExit, null);
-                    Debug.Log("나가기 요청 패킷 만듬");
+                    OutSoundPlayer.PlayClickSound(SoundClip.Click);
+                    //Debug.Log("나가기 요청 패킷 만듬");
                     break;
                 default:
                     break;
@@ -41,7 +42,6 @@ public class BackExit : MonoBehaviour {
         if (CheckState.GetCurScene() == ProtocolSceneName.RoomScene)
         {
             Chatting ChatScript = GameObject.FindGameObjectWithTag("ChatPanel").GetComponent<Chatting>();
-            ChatScript.AddDialogue(ConstValue.NoticeReadyNoBackExit);
             return;
         }
     }

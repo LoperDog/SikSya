@@ -95,7 +95,7 @@ namespace ConstValueInfo
 
     public enum ProtocolSceneName
     {
-        FrontScene, ChannelScene, RoomScene, MainScene
+        StartScene, FrontScene, ChannelScene, RoomScene, MainScene
     }
 
     //public enum ProtocolSceneName
@@ -117,6 +117,7 @@ namespace ConstValueInfo
 
     public enum State
     {
+        ClientStart,
         ClientNone, ClientFrontMenu/*front씬에서의 기본 상태*/,
         ClientLogin/*login을 선택한 상태*/, ClientJoin/*회원가입을 선택한 상태*/, ClientGuest/*guest 로그인 상태*/,
         ClientChannelMenu/*채널씬에서의 기본 상태*/,
@@ -134,6 +135,10 @@ namespace ConstValueInfo
         ClientFailEnterRoom
     }
 
+    public enum SoundClip
+    {
+        Click, RollOver
+    }
     //enum ProtocolTeam
     //{
     //    Red, Blue
@@ -161,7 +166,7 @@ namespace ConstValueInfo
         public static readonly string[] ProtocolCharacterTagIndexReady = { "RedReadyImage01", "BlueReadyImage01", "RedReadyImage02", "BlueReadyImage02", "RedReadyImage03", "BlueReadyImage03" };
         public static readonly string[] ProtocolCharacterTagIndexNameImage = { "RedNameImage01", "BlueNameImage01", "RedNameImage02", "BlueNameImage02", "RedNameImage03", "BlueNameImage03" };
         public static readonly string[] ProtocolMessageTag = { "TextView" };
-        public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "Main" };
+        public static readonly string[] ProtocolSceneName = { "StartScene", "FrontScene", "ChannelScene", "RoomScene", "Main" };
         //public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "TestScene" };
         public const int CharacterKind = 3;
         public const string NoticeReadyNoChangeCharacter = "이미 요청중이거나 준비 상태이므로 캐릭터를 변경할 수 없습니다. 먼저 준비를 풀어주세요.";

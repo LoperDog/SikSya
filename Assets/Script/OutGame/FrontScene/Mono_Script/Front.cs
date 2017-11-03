@@ -19,6 +19,8 @@ public class Front : MonoBehaviour
     InputField mInputGuestIDComponent;
     GameObject mSelectLoginButton;
     Button mGuestLoginButton;
+    [SerializeField]
+    AudioClip mClickClip;
 
     // Use this for initialization
     void Awake()
@@ -100,14 +102,16 @@ public class Front : MonoBehaviour
     public void SelectBackButton()
     {
         CheckState.ChangeState(State.ClientFrontMenu);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
     public void SelectGuestLoginButton()
     {
-        Debug.Log("SelectGuestLoginButton 호출");
+        //Debug.Log("SelectGuestLoginButton 호출");
         //DataPacketInfo dataGuestLogin = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.FrontMenu, (int)ProtocolFrontMenuTag.GuestMenu, null);
         //mSender.Sendn(ref dataGuestLogin);
         CheckState.ChangeState(State.ClientGuest);
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
     public void SendGuestID()
@@ -120,6 +124,7 @@ public class Front : MonoBehaviour
             DataPacketInfo dataIDPWString = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.FrontMenu, (int)ProtocolFrontMenuTag.GuestMenu, id);
             mSender.Sendn(ref dataIDPWString);
             mInputGuestIDComponent.text = "";
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 }

@@ -128,6 +128,7 @@ public class Chatting : MonoBehaviour {
         }
         //Debug.Log("결과 = " + setDialogue.ToString());
         mText.text = setDialogue.ToString(); // null 문자가 담긴 것이 들어가면 더 이상 문자열이 추가되지 않는다.
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
 

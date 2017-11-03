@@ -18,6 +18,7 @@ public class CheckState : MonoBehaviour {
     Sprite[] mActiveCharacterSprite;
     [SerializeField]
     Sprite[] mCharacterSprite;
+    
     //static GameObject mSelectLoginPanel;     // FrontScene
     //static GameObject mSelectPanel;          // FrontScene
     static bool mIsSceneChangeStart;    // Scene 변경 예정
@@ -27,11 +28,11 @@ public class CheckState : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad(this.gameObject);
         mRoomSceneObjs = new GameObject[9];
-        mCurrentSceneState = ProtocolSceneName.FrontScene;
+        mCurrentSceneState = ProtocolSceneName.StartScene;
         mIsSceneChangeStart = false;
         mIsSceneChanged = false;
         mIsStateChanged = false;
-        ChangeState(State.ClientFrontMenu);
+        ChangeState(State.ClientStart);
     }
 
     public static void ChangeSceneState(ProtocolSceneName state)
@@ -60,12 +61,16 @@ public class CheckState : MonoBehaviour {
         return mCurrentSceneState;
     }
 
+
+
     void Update()
     {
         if(mIsSceneChanged) // 씬이 바뀌고 난 후 처음 해주는 일 (한번만 함)
         {
             switch (mCurrentSceneState)
             {
+                case ProtocolSceneName.StartScene:
+                    break;
                 case ProtocolSceneName.FrontScene:
                     mFront = GameObject.FindGameObjectWithTag("TagFront");
                     ChangeState(State.ClientFrontMenu);

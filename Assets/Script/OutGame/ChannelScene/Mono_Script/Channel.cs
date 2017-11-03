@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ConstValueInfo;
-
+using UnityEngine.UI;
 
 public class Channel : MonoBehaviour {
 
     //GameObject mMatchingPanel;
     CSender mSender;
-
     // Use this for initialization
     void Awake () {
         //mMatchingPanel = GameObject.FindGameObjectWithTag("MatchingPanel");
@@ -25,7 +24,6 @@ public class Channel : MonoBehaviour {
                 CancleMatching();
             }
         }
-
     }
 
     public void RequestMatching()
@@ -36,6 +34,7 @@ public class Channel : MonoBehaviour {
             CheckState.ChangeState(State.ClientRequestMatching);
             DataPacketInfo dataEnterRoom = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.EnterRoom, (int)ProtocolChannelMenuTag.MatchingStart, null);
             mSender.Sendn(ref dataEnterRoom);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
@@ -47,6 +46,7 @@ public class Channel : MonoBehaviour {
             CheckState.ChangeState(State.ClientRequestCancleMactching);
             DataPacketInfo dataOutRoom = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutRoom, (int)ProtocolChannelMenuTag.MatchingCancel, null);
             mSender.Sendn(ref dataOutRoom);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
@@ -56,6 +56,7 @@ public class Channel : MonoBehaviour {
         if(State.ClientChannelMenu == curState)
         {
             CheckState.ChangeState(State.ClientMakeRoom);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
@@ -65,12 +66,14 @@ public class Channel : MonoBehaviour {
         if (State.ClientChannelMenu == curState)
         {
             CheckState.ChangeState(State.ClientEnterSpecialRoom);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
     public void ExitButton()
     {
         Application.Quit();
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
 }

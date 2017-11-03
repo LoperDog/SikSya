@@ -70,6 +70,7 @@ public class ChangeCharacter : MonoBehaviour {
             CheckState.ChangeState(State.ClientRequestGaemNotReady); // 요청 상태로 변경
             //CheckState.ChangeState(State.ClientNotReady);
         }
+        OutSoundPlayer.PlayClickSound(SoundClip.Click);
         DataPacketInfo dataInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, protocolDetail, 0, null);
         mSender.Sendn(ref dataInfo);
    //     Debug.Log("ReadyButton누름");
@@ -119,6 +120,7 @@ public class ChangeCharacter : MonoBehaviour {
             CheckState.ChangeState(State.ClientRequestCharacterChange);
             mSelectCharacterInfo.sprite = mSelectCharacterInfoSprite[(int)characterIndex];
             SelectCharacterMotion(characterIndex);
+            OutSoundPlayer.PlayClickSound(SoundClip.Click);
         }
     }
 
