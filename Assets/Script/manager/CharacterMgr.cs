@@ -585,6 +585,7 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
+        Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
         Start();
         thisCharacter.StartFalling();
     }
