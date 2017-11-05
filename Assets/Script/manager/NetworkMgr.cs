@@ -20,7 +20,7 @@ public class NetworkMgr : MonoBehaviour
     //NAT 기능의 사용 여부
     private bool _useNat = false;
     // 플레이어 프리팹
-    public GameObject[] player = new GameObject[4];
+    public GameObject[] player = new GameObject[6];
     public GameObject MyPlayer;
     public int MyPlayerNumb = 2;
 
