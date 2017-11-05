@@ -95,10 +95,21 @@ public class ConfigClass {
 
         TangsuStatus["MoveSpeed"] = 3.0f;
         TangsuStatus["RunSpeed"] = 8.0f;
-        TangsuStatus["JumpForce"] = 1500;
+        TangsuStatus["JumpForce"] = 10;
 
+        TangsuStatus["Cartridge"] = 0f;//근접공격이라 장탄수 없음
+        TangsuStatus["ReLoadTime"] = 0f;//재장전 안해
         TangsuStatus["Attack"] = 80f;//공격력
         TangsuStatus["AtttackSpeed"] = 0.25f;
+
+        TangsuStatus["StrongAttack"] = 30f;//우클릭 공격력
+        TangsuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
+
+        TangsuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
+        TangsuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
+
+        TangsuPosition.Add("FirePosition", new Vector3(0.0f, 0.0f, 0.0f));
+
         #endregion
 
         // 콘피그 적용. 
@@ -107,5 +118,6 @@ public class ConfigClass {
         StatusConfigs.Add(TangsuString, TangsuStatus);
         PositionConfig.Add(ManduString, ManduPosition);
         PositionConfig.Add(DubuString, DubuPosition);
+        PositionConfig.Add(TangsuString, TangsuPosition);
     }
 }

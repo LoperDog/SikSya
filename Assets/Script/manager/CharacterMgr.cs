@@ -199,7 +199,7 @@ public class CharacterMgr : MonoBehaviour
                 break;
             case Character_Type.Tangsu:
                 thisCharacter = new TangsuCharacter();
-                thisAnim = new ManduAnimation();
+                thisAnim = new TangsuAnimation();
                 CharType = config.TangsuString;
                 thisCharacter.SetCoroutine(gameObject.AddComponent<TangsuCoroutin>());
                 //특수기
@@ -228,7 +228,6 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.SetPlayerTr(Player_tr);
         thisCharacter.SetPlayerRb(Player_rb);
         thisCharacter.SetCameraTr(Camera_tr);
-
         thisCharacter.CreateBullet(config.StatusConfigs[CharType]["Cartridge"], tempBullet);
         thisCharacter.SetBulletObject(tempBullet);
         thisAnim.SetMgr(this);
@@ -244,9 +243,11 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.SetAnimator(thisAnim);
         thisAnim.SetChar(thisCharacter);
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
-        // 캐릭터 마스터 스테이터스,
+        // 캐릭터 마스터 스테이터스
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
+        Debug.Log("여기냐");
         MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
+        Debug.Log("마스터 세팅후에 ㅈ되나?");
         //UI
         if (_networkView.isMine)
         {
