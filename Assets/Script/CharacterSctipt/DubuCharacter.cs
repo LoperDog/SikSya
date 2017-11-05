@@ -69,8 +69,6 @@ public class DubuCharacter : CharacterSuper
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         mgr.RoundAttack[0].SetActive(true);
-        Debug.Log(mgr.RoundAttack[0]);
-        CharAnim.SetStrongAttackDash();
     }
     // 강공격이 끝나는 부분.
     public void StrongAttackEnd()

@@ -34,7 +34,6 @@ public class ManduCoroutin : CoroutinClass
     }
     public IEnumerator SetStrongAttackShoot()
     {
-        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -70,7 +69,11 @@ public class ManduCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackEnd()
     {
-        if (thisCharacterScript.Is_Dead) yield break;
+        if (thisCharacterScript.Is_Dead)
+        {
+            ManduChar.SpecialAttackEnd();
+            yield break;
+        }
         ManduChar.SpecialAttack_ing();
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
         ManduChar.SpecialAttackEnd();
