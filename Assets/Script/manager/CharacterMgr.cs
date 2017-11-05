@@ -516,14 +516,14 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.CharacterUpdate();
         thisCharacter.Check_Ground();
         thisAnim.PlayAnimation();
+        if (Player_rb.velocity.y >= 15)
+        {
+            Player_rb.velocity = new Vector3(Player_rb.velocity.x, 0.0f, Player_rb.velocity.z);
+        }
         if (_networkView.isMine)
         {
-            if (Player_rb.velocity.y >= 15)
-            {
-                Player_rb.velocity = new Vector3(Player_rb.velocity.x, 0.0f, Player_rb.velocity.z);
-            }
             thisCharacter.SetCharacterMove(Key_H, Key_V);
-            if (!thisCharacter.CanControll)
+            if (!thisCharacter.CanControll || thisCharacter.Is_Dead)
             {
                 Key_H = 0f;
                 Key_V = 0f;

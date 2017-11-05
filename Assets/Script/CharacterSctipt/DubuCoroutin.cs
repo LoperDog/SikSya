@@ -24,6 +24,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public override IEnumerator SetStrongAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -34,6 +35,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetStrongAttackDash()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -45,6 +47,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetStrongAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -67,6 +70,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public override IEnumerator SetSpecialAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -78,6 +82,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialSpecialAttakReady()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -88,6 +93,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackDash()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -98,6 +104,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -110,6 +117,7 @@ public class DubuCoroutin : CoroutinClass
     //도발
     public override IEnumerator SetTaunt1()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -122,6 +130,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public override IEnumerator SetTaunt2()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
