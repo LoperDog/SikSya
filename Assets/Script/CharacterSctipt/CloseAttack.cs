@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloseAttack : MonoBehaviour {
+public class CloseAttack : MonoBehaviour
+{
     protected Transform MyPlayer;
     protected CharacterMgr MyMgr;
     // 임시로 살아있을때 닿은 플레이어들을 저장한다. 리셋후 죽음

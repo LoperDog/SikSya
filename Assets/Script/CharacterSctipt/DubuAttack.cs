@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DubuAttack : CloseAttack {
+public class DubuAttack : CloseAttack
+{
     
 }

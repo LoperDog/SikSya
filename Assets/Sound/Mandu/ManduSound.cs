@@ -19,48 +19,46 @@ public class ManduSound : MonoBehaviour {
 
     public void AttackOnPlay()
     {
-        /*
-        int random = Random.Range(0, Attack.Length - 1);
-        GetComponent<AudioSource>().PlayOneShot(Attack[random]); 
-        */
-        GetComponent<AudioSource>().PlayOneShot(Attack);
+        AudioSource.PlayClipAtPoint(Attack, transform.position);
     }
 
     public void SpecialAttackOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(Skill);
+        AudioSource.PlayClipAtPoint(Attack, transform.position);
     }
 
     public void WalkOnPlay()
     {
-        int temprandom = Random.Range(0, Walk.Length - 1);
-        GetComponent<AudioSource>().PlayOneShot(Walk[temprandom]);
+        if (transform.GetComponent<CharacterMgr>().GetIsRun()) return;
+        int temprandom = Random.Range(0, Walk.Length);
+        AudioSource.PlayClipAtPoint(Walk[temprandom], transform.position);
     }
     public void RunOnPlay()
     {
-        int temprandom = Random.Range(0, Run.Length - 1);
-        GetComponent<AudioSource>().PlayOneShot(Run[temprandom]);
+        if (!transform.GetComponent<CharacterMgr>().GetIsRun()) return;
+        int temprandom = Random.Range(0, Run.Length);
+        AudioSource.PlayClipAtPoint(Run[temprandom], transform.position);
     }
 
     public void ReLoadOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(ReLoad);
+        AudioSource.PlayClipAtPoint(ReLoad, transform.position);
     }
     public void JumpStartOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(JumpStart);
+        AudioSource.PlayClipAtPoint(JumpStart, transform.position);
     }
     public void JumpEndOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(JumpEnd);
+        AudioSource.PlayClipAtPoint(JumpEnd, transform.position);
     }
 
     public void LanddingEndOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(LanddingEnd);
+        AudioSource.PlayClipAtPoint(LanddingEnd, transform.position);
     }
     public void LanddingStartOnPlay()
     {
-        GetComponent<AudioSource>().PlayOneShot(LanddingStart);
+        AudioSource.PlayClipAtPoint(LanddingStart, transform.position);
     }
 }

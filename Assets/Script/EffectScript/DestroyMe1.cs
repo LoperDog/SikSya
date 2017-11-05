@@ -7,7 +7,7 @@ public class DestroyMe1 : MonoBehaviour
     public Vector3 TargetPosition;
     void Start()
     {
-        Destroy(transform.gameObject, 0.9f);
+        Destroy(transform.gameObject, 1.7f);
     }
     void Update()
     {

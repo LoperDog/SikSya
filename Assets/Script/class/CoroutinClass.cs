@@ -175,8 +175,6 @@ public class CoroutinClass : MonoBehaviour
         {
             config = new ConfigClass();
         }
-        thisMgr.Dubu.enabled = false;
-        thisMgr.Mandu.enabled = false;
         yield return new WaitForSeconds(5.0f);
         thisMgr.StartRespawn();
     }

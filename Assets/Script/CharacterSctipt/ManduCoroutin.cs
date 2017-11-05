@@ -11,6 +11,7 @@ public class ManduCoroutin : CoroutinClass
         base.SetCharacterScript(CharacterClass);
         ManduChar = (ManduCharacter)CharacterClass;
     }
+
     //강공격
     public override void StartStrongAttckSetting()
     {
@@ -18,12 +19,12 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        
         thisMgr.StrongAttackCoolTime = config.StatusConfigs["Mandu"]["StrongAttack_CoolTime"];
         base.StartStrongAttckSetting();
     }
     public override IEnumerator SetStrongAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -56,6 +57,7 @@ public class ManduCoroutin : CoroutinClass
     }
     public override IEnumerator SetSpecialAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -67,6 +69,11 @@ public class ManduCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead)
+        {
+            ManduChar.SpecialAttackEnd();
+            yield break;
+        }
         ManduChar.SpecialAttack_ing();
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
         ManduChar.SpecialAttackEnd();
@@ -76,6 +83,7 @@ public class ManduCoroutin : CoroutinClass
     }
     public override IEnumerator SetTaunt1()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -88,6 +96,7 @@ public class ManduCoroutin : CoroutinClass
     }
     public override IEnumerator SetTaunt2()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();

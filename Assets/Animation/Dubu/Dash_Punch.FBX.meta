@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: faebd590cb5554b4783beab95bfd4697
-timeCreated: 1508932814
+guid: adf23b256a8061d43b0660aa2522bac3
+timeCreated: 1509644078
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -177,21 +177,13 @@ ModelImporter:
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.1717496
-        functionName: StrongAttackOnPlay
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 60f3cce167d58a04ab01c0b4e6e57265,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

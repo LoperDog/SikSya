@@ -24,36 +24,43 @@ public class DubuCoroutin : CoroutinClass
     }
     public override IEnumerator SetStrongAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.CanControll = false;
-        DubuChar.StrongAttackReady();//애니메이션
-        DubuChar.StrongAttackDash();//이팩트 킴
         StartCoroutine(SetStrongAttackDash());
         yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StrongAttack_CoolTime"]);
         thisCharacterScript.Is_StrongAttack = false;
     }
     public IEnumerator SetStrongAttackDash()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
         }
-        yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackTime"]);
+        thisCharacterScript.CanControll = false;
+        DubuChar.StrongAttackReady();
+        yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackReady"]);
         StartCoroutine(SetStrongAttackEnd());
     }
     public IEnumerator SetStrongAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead)
+        {
+            DubuChar.StrongAttackEnd();
+            yield break;
+        }
         if (config == null)
         {
             config = new ConfigClass();
         }
-        thisMgr.m_StrongAttack.ReSetAttack();
+        DubuChar.StrongAttackDash();
         DubuChar.StrongAttackEnd();
         yield return new WaitForSeconds(config.StatusConfigs["Dubu"]["StongAttackEnd"]);
         thisCharacterScript.CanControll = true;
+        thisMgr.m_StrongAttack.ReSetAttack();
     }
     //특수기
     public override void StartSpecialAttackSetting()
@@ -67,6 +74,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public override IEnumerator SetSpecialAttack()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -78,6 +86,7 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialSpecialAttakReady()
     {
+        if (thisCharacterScript.Is_Dead) yield break;
         if (config == null)
         {
             config = new ConfigClass();
@@ -88,6 +97,11 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackDash()
     {
+        if (thisCharacterScript.Is_Dead)
+        {
+            DubuChar.SpecialAttackEnd();
+            yield break;
+        }
         if (config == null)
         {
             config = new ConfigClass();
@@ -98,6 +112,11 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead)
+        {
+            thisMgr.m_SpecialAttack.ReSetAttack();
+            yield break;
+        }
         if (config == null)
         {
             config = new ConfigClass();

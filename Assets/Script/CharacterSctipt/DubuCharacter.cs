@@ -18,11 +18,15 @@ public class DubuCharacter : CharacterSuper
             // 왼쪽공격이라면
             if (AttackIsLeft)
             {
-
+                Transform temp = Instantiate(effect[0], Player_tr.position, Player_tr.rotation);
+                temp.SetParent(Player_tr);
+                temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[0].position);
             }
             else
             {
-
+                Transform temp = Instantiate(effect[1], effectPosition[1].position, effectPosition[1].rotation);
+                temp.SetParent(Player_tr);
+                temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[0].position);
             }
             ShotBullet();
             AttackIsLeft = !AttackIsLeft;
@@ -45,13 +49,13 @@ public class DubuCharacter : CharacterSuper
     // 강공격을 시작한다.
     public override void StrongAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.StrongAttackCoolTime == 0*/)
-        {
+        //if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 /*&& mgr.StrongAttackCoolTime == 0*/)
+        //{
             coroutine.StartStrongAttckSetting();
             Transform temp = Instantiate(effect[5], Player_tr.position, Player_tr.rotation);
             temp.SetParent(Player_tr);
             temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
-        }
+        //}
     }
     public void StrongAttackReady()
     {
@@ -65,7 +69,6 @@ public class DubuCharacter : CharacterSuper
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(effectPosition[1].position);
         mgr.RoundAttack[0].SetActive(true);
-        CharAnim.SetStrongAttackDash();
     }
     // 강공격이 끝나는 부분.
     public void StrongAttackEnd()
@@ -75,10 +78,7 @@ public class DubuCharacter : CharacterSuper
     //특수기 시작
     public override void SpecialAttack()
     {
-        if (!Is_StrongAttack && !Is_SpecialAttack && !Is_Attack && Is_Ground && !Is_Taunt1 && !Is_Taunt2 && mgr.SpecialAttackCoolTime == 0)
-        {
-            coroutine.StartSpecialAttackSetting();
-        }
+        coroutine.StartSpecialAttackSetting();
     }
     // 특수기가 시작할때 시간을 재기 시작한다.
     public void SpecialAttackReady()
@@ -125,7 +125,7 @@ public class DubuCharacter : CharacterSuper
         }
         CurrentAttack = config.StatusConfigs["Dubu"]["AtttackSpeed"];
     }
-    // 애니매이터 세팅을 바꿔준다. 여기에 온다면 분명 두부 애니매이션 일테니까
+
     public override void SetAnimator(AnimationSuper anim)
     {
         base.SetAnimator(anim);

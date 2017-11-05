@@ -56,27 +56,6 @@ public class BulletSuper : MonoBehaviour
         }
         SetBulletEnalbed();
     }
-    /* 
-    // 현재는 두개다 만들어 둔다.
-    protected virtual void OnCollisionEnter(Collision col)
-    {
-        // 각도 계산 필요.
-        Vector3 qu = transform.position - col.transform.position;
-
-        Transform effect = Instantiate(Effect, transform.position, Quaternion.LookRotation(qu));
-
-        IsLift = false;
-        if (col.transform.tag == "PLAYER")
-        {
-            if(config == null)
-            {
-                config = new ConfigClass();
-            }
-            Player_tr.GetComponent<CharacterMgr>().ShotPlayer(col.transform.GetComponent<NetworkView>(),config.StatusConfigs["Dubu"]["Attack"]);
-            Debug.Log("맞은 친구" + col.transform.name + " 뷰 아이디 : " + col.transform.GetComponent<NetworkView>().viewID);
-        }
-        SetBulletEnalbed();
-    }*/
 
     // 생성 당시에 플레이어 코드를 
     protected void SetCode(int Code) { PlayerCode = Code; }
@@ -115,7 +94,7 @@ public class BulletSuper : MonoBehaviour
     {
         if (IsLift)
         {
-            transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * 50f);
+            transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * 75f);
         }
     }
 }
