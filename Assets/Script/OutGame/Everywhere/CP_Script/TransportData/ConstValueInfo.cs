@@ -146,9 +146,8 @@ namespace ConstValueInfo
 
     static public class ConstValue
     {
-        public const int Port = 9000;
-        //public const string IP = "127.0.0.1";
-        public const string IP = "192.168.30.39";
+        public const string ServerIP_TextName = "Text/ServerIPInfo.txt";
+        public const string ServerPort_TextName = "Text/ServerPortInfo.txt";
         public const int BufSizeRecv = 1024;
         public const int BufSizeSend = 1024;   
         //public const int BufSizeTag = 64;  // 오브젝트 Tag값

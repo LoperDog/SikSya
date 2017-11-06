@@ -13,11 +13,29 @@ public class CReadyNetWork
     private static CReadyNetWork mInstance;
     private TcpClient mClient;// = new TcpClient();
     private NetworkStream mStream;
+    private string mIP;
+    private int mPort;
+    private string mPortStr;
 
     private CReadyNetWork()
     {
+        CReader.GetInstance().LoadTextFile(out mIP, ConstValue.ServerIP_TextName);
+        CReader.GetInstance().LoadTextFile(out mPortStr, ConstValue.ServerPort_TextName);
+        if (mIP == null)
+        {
+            UnityEngine.Debug.Log("IP정보 파일 못 읽음");
+            mIP = "127.0.0.1";
+        }
+        if(mPortStr != null)
+        {
+            mPort = int.Parse(mPortStr);
+        }else
+        {
+            UnityEngine.Debug.Log("Port정보 파일 못 읽음");
+            mPort = 9000;
+        }
         mClient = new TcpClient();
-        mClient.Connect(ConstValue.IP, ConstValue.Port);
+        mClient.Connect(mIP, mPort);
         mStream = mClient.GetStream();
     }
     ~CReadyNetWork()

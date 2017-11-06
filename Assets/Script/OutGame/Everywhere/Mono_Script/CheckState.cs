@@ -73,7 +73,7 @@ public class CheckState : MonoBehaviour {
                     break;
                 case ProtocolSceneName.FrontScene:
                     mFront = GameObject.FindGameObjectWithTag("TagFront");
-                    ChangeState(State.ClientFrontMenu);
+                    ChangeState(State.ClientGuest);
                     //mLoginStatePanels = GameObject.FindGameObjectsWithTag("LoginPanel");
                     //mLoginStateScripts = GameObject.FindGameObjectsWithTag("LoginScript");
                     break;
@@ -111,23 +111,29 @@ public class CheckState : MonoBehaviour {
                     break;
                 case State.ClientGuest:
                     FrontInit(false, true);
+                    mFront.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientRequestMatching:
                     break;
                 case State.ClientMatching:
                     ChannelInit(true, false, false, false);
+                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientChannelMenu:
                     ChannelInit(false, false, false, false);
+                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.white;
                     break;
                 case State.ClientMakeRoom:
                     ChannelInit(false, true, false, false);
+                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientEnterSpecialRoom:
                     ChannelInit(false, false, true, false);
+                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientFailEnterRoom:
                     ChannelInit(false, false, true, true);
+                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientReady:
                     Debug.Log("Ready 성공");

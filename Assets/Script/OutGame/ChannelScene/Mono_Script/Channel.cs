@@ -12,6 +12,7 @@ public class Channel : MonoBehaviour {
     void Awake () {
         //mMatchingPanel = GameObject.FindGameObjectWithTag("MatchingPanel");
         mSender = CSender.GetInstance();
+        GameObject.FindGameObjectWithTag("TagChannelMyNameText").GetComponent<Text>().text = MyInfoClass.GetInstance().MyName;
     }
 	
 	// Update is called once per frame

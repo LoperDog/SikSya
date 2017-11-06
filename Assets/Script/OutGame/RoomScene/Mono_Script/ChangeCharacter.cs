@@ -28,10 +28,10 @@ public class ChangeCharacter : MonoBehaviour {
     {
         while(true)
         {
-            Debug.Log("RoomInSelectMotion 코루틴 호출 됨.");
+            //Debug.Log("RoomInSelectMotion 코루틴 호출 됨.");
             if (MyInfoClass.IsMyInfoInit())
             {
-                SelectCharacterMotion(ProtocolCharacterImageNameIndex.Tofu);
+                SelectCharacterMotion((ProtocolCharacterImageNameIndex)MyInfoClass.GetInstance().MyCharNumb);
                 break;
             }
             yield return new WaitForSeconds(0.1f);
@@ -52,7 +52,7 @@ public class ChangeCharacter : MonoBehaviour {
 
     public void SelectTangsuyuk()
     {
-        SelectCharacter(ProtocolCharacterImageNameIndex.Tangsuyuk);
+        //SelectCharacter(ProtocolCharacterImageNameIndex.Tangsuyuk);
     }
 
     public void ReadyButton()
