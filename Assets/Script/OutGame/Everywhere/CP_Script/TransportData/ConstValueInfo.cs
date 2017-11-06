@@ -146,9 +146,8 @@ namespace ConstValueInfo
 
     static public class ConstValue
     {
-        public const int Port = 9000;
-        //public const string IP = "127.0.0.1";
-        public const string IP = "192.168.30.39";
+        public const string ServerIP_TextName = "Text/ServerIPInfo.txt";
+        public const string ServerPort_TextName = "Text/ServerPortInfo.txt";
         public const int BufSizeRecv = 1024;
         public const int BufSizeSend = 1024;   
         //public const int BufSizeTag = 64;  // 오브젝트 Tag값
@@ -159,6 +158,7 @@ namespace ConstValueInfo
         public const int CharacterLimitRoomNumber = 4; // 방입장 요청 방번호 글자수 제한
         public const int CharacterLimitGuestName = CharacterLimitID; // Guest로그인 name 글자수 제한
         public const int IntSize = 4;
+        public const int ChannelSceneCharacterKind = 4;
         public static readonly string[] ProtocolCharacterImageName = { "Tofu", "Mandu", "Tangsuyuk" };
         public static readonly string[] ProtocolCharacterTagIndexImage = { "RedImage01", "BlueImage01", "RedImage02", "BlueImage02", "RedImage03", "BlueImage03" };
         public static readonly string[] ProtocolCharacterTagIndexName = { "RedName01", "BlueName01", "RedName02", "BlueName02", "RedName03", "BlueName03" };

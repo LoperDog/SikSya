@@ -17,7 +17,7 @@ public class Front : MonoBehaviour
     //InputField mInputIDComponent; // ID 입력 창 컴포넌트
     //InputField mInputPWComponent; // PW 입력 창 컴포넌트
     InputField mInputGuestIDComponent;
-    GameObject mSelectLoginButton;
+    //GameObject mSelectLoginButton; // 로그인을 할거야 버튼
     Button mGuestLoginButton;
     [SerializeField]
     AudioClip mClickClip;
@@ -28,8 +28,8 @@ public class Front : MonoBehaviour
         mSender = CSender.GetInstance();
         //mListener = CListener.GetInstance();
         mInputGuestID = GameObject.FindGameObjectWithTag("TagInputGuestID");
-        mSelectLoginButton = GameObject.FindGameObjectWithTag("TagSelectLoginButton");
-        mSelectLoginButton.GetComponent<Button>().interactable = false;
+        //mSelectLoginButton = GameObject.FindGameObjectWithTag("TagSelectLoginButton");
+        //mSelectLoginButton.GetComponent<Button>().interactable = false;
         mGuestLoginButton = GameObject.FindGameObjectWithTag("TagButtonGuestLogin").GetComponent<Button>();
         //mInputID = GameObject.FindGameObjectWithTag("InputIDTag");
         //mInputPW = GameObject.FindGameObjectWithTag("InputPWTag");
@@ -120,6 +120,7 @@ public class Front : MonoBehaviour
         if (id != null && id != "")
         {
             Debug.Log("id = " + id);
+            MyInfoClass.GetInstance().MyName = id;
             //id = id.Replace(" ", "");
             DataPacketInfo dataIDPWString = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.FrontMenu, (int)ProtocolFrontMenuTag.GuestMenu, id);
             mSender.Sendn(ref dataIDPWString);

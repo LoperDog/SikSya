@@ -171,6 +171,7 @@
     <Compile Include="Assets\Script\CharacterSctipt\TangsuCoroutin.cs" />
     <Compile Include="Assets\Script\EffectScript\DestroyMe.cs" />
     <Compile Include="Assets\Script\EffectScript\DestroyMe1.cs" />
+    <Compile Include="Assets\Script\OutGame\CReader.cs" />
     <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\Channel.cs" />
     <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\EnterRoomPanel.cs" />
     <Compile Include="Assets\Script\OutGame\ChannelScene\Mono_Script\MakeRoomPanel.cs" />
