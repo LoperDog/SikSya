@@ -158,6 +158,7 @@ namespace ConstValueInfo
         public const int CharacterLimitRoomNumber = 4; // 방입장 요청 방번호 글자수 제한
         public const int CharacterLimitGuestName = CharacterLimitID; // Guest로그인 name 글자수 제한
         public const int IntSize = 4;
+        public const int ChannelSceneCharacterKind = 4;
         public static readonly string[] ProtocolCharacterImageName = { "Tofu", "Mandu", "Tangsuyuk" };
         public static readonly string[] ProtocolCharacterTagIndexImage = { "RedImage01", "BlueImage01", "RedImage02", "BlueImage02", "RedImage03", "BlueImage03" };
         public static readonly string[] ProtocolCharacterTagIndexName = { "RedName01", "BlueName01", "RedName02", "BlueName02", "RedName03", "BlueName03" };

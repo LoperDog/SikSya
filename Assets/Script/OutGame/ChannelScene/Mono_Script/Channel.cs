@@ -8,9 +8,14 @@ public class Channel : MonoBehaviour {
 
     //GameObject mMatchingPanel;
     CSender mSender;
+    
+    [SerializeField]
+    GameObject[] ChannelChannel = new GameObject[ConstValue.ChannelSceneCharacterKind];
     // Use this for initialization
     void Awake () {
         //mMatchingPanel = GameObject.FindGameObjectWithTag("MatchingPanel");
+        ChannelCharacterInit();
+        ChannelChannel[ChannelSelectRandomCharacter()].SetActive(true);
         mSender = CSender.GetInstance();
         GameObject.FindGameObjectWithTag("TagChannelMyNameText").GetComponent<Text>().text = MyInfoClass.GetInstance().MyName;
     }
@@ -25,6 +30,19 @@ public class Channel : MonoBehaviour {
                 CancleMatching();
             }
         }
+    }
+
+    void ChannelCharacterInit()
+    {
+        foreach(GameObject g in ChannelChannel)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    int ChannelSelectRandomCharacter()
+    {
+        return Random.Range(0, ConstValue.ChannelSceneCharacterKind);
     }
 
     public void RequestMatching()
