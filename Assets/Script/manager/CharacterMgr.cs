@@ -245,7 +245,6 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
         // 캐릭터 마스터 스테이터스
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
-        Debug.Log("여기냐");
         MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
         Debug.Log("마스터 세팅후에 ㅈ되나?");
         //UI

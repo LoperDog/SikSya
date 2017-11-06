@@ -62,19 +62,23 @@ public class ManduCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        thisCharacterScript.CanControll = false;
-        ManduChar.SpecialAttackReady();
+        thisCharacterScript.CanControll = false;//제어불가
+        ManduChar.SpecialAttackReady();//애니메이션 실행
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackReady"]);
-        StartCoroutine(SetSpecialAttackEnd());
+        StartCoroutine(SetSpecialAttackEnd());//다음 코루틴 실행
     }
     public IEnumerator SetSpecialAttackEnd()
     {
-        if (thisCharacterScript.Is_Dead)
+        if (thisCharacterScript.Is_Dead)//죽으면
         {
-            ManduChar.SpecialAttackEnd();
+            ManduChar.SpecialAttackEnd();//애니메이션 실행하고 종료
             yield break;
         }
-        ManduChar.SpecialAttack_ing();
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        ManduChar.SpecialAttack_ing();//공격판정,이팩트
         yield return new WaitForSeconds(config.StatusConfigs["Mandu"]["SpecialAttackTime"]);
         ManduChar.SpecialAttackEnd();
         thisCharacterScript.CanControll = true;
