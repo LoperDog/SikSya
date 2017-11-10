@@ -278,8 +278,20 @@ public class CharacterMgr : MonoBehaviour
 
             mainCamera = Camera.main;
             Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
+
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
+
+            if (MyInfoClass.GetInstance().MyGameNumb % 2 == 1)
+            {
+                mainCamera.GetComponent<Cam>().x = -180;
+                mainCamera.GetComponent<Cam>().y = 0;
+            }
+            else
+            {
+                mainCamera.GetComponent<Cam>().x = 0;
+                mainCamera.GetComponent<Cam>().y = 0;
+            }
         }
         IsCharacterLoaded = true;
     }
@@ -583,8 +595,11 @@ public class CharacterMgr : MonoBehaviour
     {
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
+        Debug.Log(LerpPos);
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
-        Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
+        Player_tr.rotation = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition [MyInfoClass.GetInstance().MyGameNumb].rotation;
+        Debug.Log(LerpPos);
+        //Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
         Start();
         thisCharacter.StartFalling();
     }
@@ -613,7 +628,7 @@ public class CharacterMgr : MonoBehaviour
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
             {
                 _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
             }

@@ -85,6 +85,11 @@ ModelImporter:
     100154: Tangsu
     100156: //RootNode
     100158: Tangsuyook
+    100160: Bone001
+    100162: Bone002
+    100164: Point001
+    100166: Point002
+    100168: Point003
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -165,6 +170,11 @@ ModelImporter:
     400154: //RootNode
     400156: Tangsu
     400158: Tangsuyook
+    400160: Bone001
+    400162: Bone002
+    400164: Point001
+    400166: Point002
+    400168: Point003
     4300000: Tangsu
     4300002: Head
     4300004: Tangsuyook
@@ -182,8 +192,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    animationImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone
-      found. Ensure both rig type match\n"
+    animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
