@@ -93,6 +93,16 @@ public class CharacterMgr : MonoBehaviour
     private bool IsGameLoaded = false;      // 게임로딩이 끝났는가?
     private bool IsInGameSetting = false;   // 요청이 떨어졌는가?
 
+    // 아이템
+    public bool AttackBuff;
+    public int AttackBuffIOverLapping;
+    public bool DepanceBuff;
+    public int DepanceBuffOverLapping;
+    public bool SmallBuff;
+    public int SmallBuffOverLapping;
+    public bool BigBuff;
+    public int BigBuffOverLapping;
+
     #endregion
     #region UI표현에 필요한 변수
     //강공격
@@ -213,6 +223,14 @@ public class CharacterMgr : MonoBehaviour
 
                 break;
         }
+        AttackBuff = false;
+        DepanceBuff = false;
+        AttackBuffIOverLapping = 0 ;
+        DepanceBuffOverLapping = 0;
+        SmallBuff = false ;
+        SmallBuffOverLapping = 0;
+        BigBuff = false;
+        BigBuffOverLapping = 0;
         // 세팅
         thisCharacter.SetPlayerOb(gameObject);
         thisCharacter.CharacterTypeString = CharType;
@@ -487,6 +505,9 @@ public class CharacterMgr : MonoBehaviour
     public void GetDamage(float de, NetworkViewID Attacker)
     {
         LastAttacker = Attacker;
+        if (DepanceBuff) de = de * 0.8f;
+        // 만약 방어 버프중이라면
+        if (DepanceBuff) de = de * 0.5f;
         Char_Current_HP -= de;
     }
     [RPC]
@@ -496,6 +517,22 @@ public class CharacterMgr : MonoBehaviour
     //도발
     [RPC]
     public void SetCharacterTaunt(int tnumb) { thisCharacter.Taunt(tnumb); }
+#region 아이템ㅋㅋㅋ
+    public void IGetMyItem()
+    {
+        if (_networkView.isMine)
+        {
+            // 얻은 아이템
+            int ItemKind = Random.Range(0, 5);
+            _networkView.RPC("SetITem", RPCMode.AllBuffered, ItemKind);
+        }
+    }
+    [RPC]
+    public void SetITem(int ItemKind)
+    {
+        thisCharacter.SetItem(20.0f, (CharacterSuper.ItemCode)ItemKind, 0.0f);
+    }
+#endregion
     // 마우스 올림
     [RPC]
     public void SetMouseUp()
@@ -512,6 +549,12 @@ public class CharacterMgr : MonoBehaviour
             {
                 return;
             }
+            // 만약 빅버프가 있다면
+            if (BigBuff) de = de * 1.3f;
+            // 아니 만약 작은 버프라면
+            else if (SmallBuff) de = de * 0.7f;
+            // 공격 버프 아이템 사용중이라면
+            if (AttackBuff) de = de * 1.5f;
             Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
         }
     }

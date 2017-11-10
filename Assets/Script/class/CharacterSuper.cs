@@ -106,11 +106,11 @@ public class CharacterSuper : MonoBehaviour
     public enum ItemCode
     {
         Buff_Attack,
-        Buff_Speed,
-        Buff_DotHill,
-        Nuff_Attack,
-        Nuff_Speed,
-        Nuff_DotDemage
+        Buff_Depance,
+        Buff_Hill,
+        Buff_Small,
+        Buff_Big,
+        Buff_CoolDown
     };
 
     public CharacterSuper()
@@ -352,26 +352,36 @@ public class CharacterSuper : MonoBehaviour
     }
     #endregion
     #region 아이템 영역
-    protected virtual void SetItem(float time, ItemCode code, float val)
+    public virtual void SetItem(float time, ItemCode code, float val)
     {
         switch (code)
         {
             case ItemCode.Buff_Attack:
-
+            case ItemCode.Buff_Depance:
+                //coroutine.StartBuffSetting(time, code, val);
                 break;
-            case ItemCode.Buff_DotHill:
+            case ItemCode.Buff_Hill:
+                Hill();
                 break;
-            case ItemCode.Nuff_Attack:
+            case ItemCode.Buff_Small:
                 break;
-            case ItemCode.Nuff_Speed:
+            case ItemCode.Buff_Big:
                 break;
-            case ItemCode.Nuff_DotDemage:
-
+            case ItemCode.Buff_CoolDown:
+                CoolDown();
                 break;
             default:
                 break;
         }
         coroutine.StartBuffSetting(time, code, val);
+    }
+    public virtual void Hill()
+    {
+        mgr.Char_Current_HP = (mgr.Char_Current_HP + (mgr.Char_Max_HP * 0.5f)) >= mgr.Char_Max_HP ? mgr.Char_Max_HP : mgr.Char_Current_HP + (mgr.Char_Max_HP * 0.5f);
+    }
+    public virtual void CoolDown()
+    {
+
     }
     #endregion
     #region 키세팅영역

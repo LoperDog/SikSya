@@ -112,6 +112,11 @@ public class DubuCoroutin : CoroutinClass
     }
     public IEnumerator SetSpecialAttackEnd()
     {
+        if (thisCharacterScript.Is_Dead)
+        {
+            thisMgr.m_SpecialAttack.ReSetAttack();
+            yield break;
+        }
         if (config == null)
         {
             config = new ConfigClass();

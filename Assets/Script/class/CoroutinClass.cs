@@ -58,20 +58,47 @@ public class CoroutinClass : MonoBehaviour
         switch (code)
         {
             case CharacterSuper.ItemCode.Buff_Attack:
+                if (thisMgr.AttackBuff) thisMgr.AttackBuffIOverLapping += 1;
+                thisMgr.AttackBuff = true;
                 break;
-            case CharacterSuper.ItemCode.Buff_Speed:
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (thisMgr.DepanceBuff) thisMgr.DepanceBuffOverLapping += 1;
+                thisMgr.DepanceBuff = true;
+                break;
 
+            case CharacterSuper.ItemCode.Buff_Hill:
                 break;
-            case CharacterSuper.ItemCode.Buff_DotHill:
-
+            case CharacterSuper.ItemCode.Buff_Small:
+                // 만약 캐릭터가 이미 빅버프를 가지고 있다
+                if (thisMgr.BigBuff)
+                {
+                    thisMgr.BigBuffOverLapping = 0;
+                    thisMgr.BigBuff = false;
+                }
+                if (thisMgr.SmallBuff) thisMgr.SmallBuffOverLapping += 1;
+                else
+                {
+                    // 캐릭터 크기를 줄여준다
+                    transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                thisMgr.SmallBuff = true;
                 break;
-            case CharacterSuper.ItemCode.Nuff_Attack:
-
+            case CharacterSuper.ItemCode.Buff_Big:
+                // 만일 캐릭터가 스몰 버프를 가지고 있다면.
+                if (thisMgr.SmallBuff)
+                {
+                    thisMgr.SmallBuffOverLapping = 0;
+                    thisMgr.SmallBuff = false;
+                }
+                if (thisMgr.BigBuff) thisMgr.BigBuffOverLapping += 1;
+                else
+                {
+                    //캐릭터 크기를 키운다.
+                    transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                thisMgr.BigBuff = true;
                 break;
-            case CharacterSuper.ItemCode.Nuff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_DotDemage:
+            case CharacterSuper.ItemCode.Buff_CoolDown:
 
                 break;
             default:
@@ -130,20 +157,42 @@ public class CoroutinClass : MonoBehaviour
         switch (Code)
         {
             case CharacterSuper.ItemCode.Buff_Attack:
+                if (thisMgr.AttackBuffIOverLapping != 0) thisMgr.AttackBuffIOverLapping -= 1;
+                else thisMgr.AttackBuff = false;
                 break;
-            case CharacterSuper.ItemCode.Buff_Speed:
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (thisMgr.DepanceBuffOverLapping != 0) thisMgr.DepanceBuffOverLapping -= 1;
+                else thisMgr.DepanceBuff = false;
+                break;
+
+            case CharacterSuper.ItemCode.Buff_Hill:
 
                 break;
-            case CharacterSuper.ItemCode.Buff_DotHill:
-
+            case CharacterSuper.ItemCode.Buff_Small:
+                if(thisMgr.SmallBuffOverLapping != 0)
+                {
+                    thisMgr.SmallBuffOverLapping -= 1;
+                }
+                else if(thisMgr.SmallBuff)
+                {
+                    //캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    thisMgr.SmallBuff = false;
+                }
                 break;
-            case CharacterSuper.ItemCode.Nuff_Attack:
-
+            case CharacterSuper.ItemCode.Buff_Big:
+                if (thisMgr.BigBuffOverLapping != 0)
+                {
+                    thisMgr.BigBuffOverLapping -= 1;
+                }
+                else if(thisMgr.BigBuff)
+                {
+                    // 캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    thisMgr.BigBuff = false;
+                }
                 break;
-            case CharacterSuper.ItemCode.Nuff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_DotDemage:
+            case CharacterSuper.ItemCode.Buff_CoolDown:
 
                 break;
             default:
