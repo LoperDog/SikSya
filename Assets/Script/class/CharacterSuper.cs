@@ -22,6 +22,8 @@ public class CharacterSuper : MonoBehaviour
     public Transform[] effect;
 
     public bool Is_Attack = false;
+    public bool Is_Attack2 = false;
+    public bool Is_Attack3 = false;
     public bool Is_ReLoad = false;
     public bool Is_Dead = false;
     public bool Is_Jump = false;
@@ -106,11 +108,11 @@ public class CharacterSuper : MonoBehaviour
     public enum ItemCode
     {
         Buff_Attack,
-        Buff_Speed,
-        Buff_DotHill,
-        Nuff_Attack,
-        Nuff_Speed,
-        Nuff_DotDemage
+        Buff_Depance,
+        Buff_Hill,
+        Buff_Small,
+        Buff_Big,
+        Buff_CoolDown
     };
 
     public CharacterSuper()
@@ -163,12 +165,8 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void Jump()
     {
-        //if (Is_Ground && !Is_Jump)
-        //{
-        //Player_rb.AddForce(0, m_Jump_Force, 0);
         Player_rb.velocity = new Vector3(Player_rb.velocity.x, m_Jump_Force, Player_rb.velocity.z);
-            Is_Jump = true;
-        //}
+        Is_Jump = true;
     }
     public virtual void Check_Ground()
     {
@@ -352,26 +350,47 @@ public class CharacterSuper : MonoBehaviour
     }
     #endregion
     #region 아이템 영역
-    protected virtual void SetItem(float time, ItemCode code, float val)
+    public virtual void SetItem(float time, ItemCode code, float val)
     {
         switch (code)
         {
             case ItemCode.Buff_Attack:
-
+            case ItemCode.Buff_Depance:
+                //coroutine.StartBuffSetting(time, code, val);
                 break;
-            case ItemCode.Buff_DotHill:
+            case ItemCode.Buff_Hill:
+                Hill();
                 break;
-            case ItemCode.Nuff_Attack:
+            case ItemCode.Buff_Small:
                 break;
-            case ItemCode.Nuff_Speed:
+            case ItemCode.Buff_Big:
                 break;
-            case ItemCode.Nuff_DotDemage:
-
+            case ItemCode.Buff_CoolDown:
+                CoolDown();
                 break;
             default:
                 break;
         }
         coroutine.StartBuffSetting(time, code, val);
+    }
+    public virtual void Hill()
+    {
+        mgr.Char_Current_HP = (mgr.Char_Current_HP + (mgr.Char_Max_HP * 0.5f)) >= mgr.Char_Max_HP ? mgr.Char_Max_HP : mgr.Char_Current_HP + (mgr.Char_Max_HP * 0.5f);
+    }
+    public virtual void CoolDown()
+    {
+        if (Is_StrongAttack)
+        {
+            Is_StrongAttack = false;
+            coroutine.StopCoroutine(coroutine.StrongCorutin);
+            m_CurrentStrongAttack = 0;
+        }
+        if (Is_SpecialAttack)
+        {
+            Is_SpecialAttack = false;
+            coroutine.StopCoroutine(coroutine.SpecialCorutin);
+            m_CurrentSpecialAttack = 0;
+        }
     }
     #endregion
     #region 키세팅영역
@@ -382,6 +401,8 @@ public class CharacterSuper : MonoBehaviour
     #region 캐릭터 상태값 가져오기
     public virtual bool GetAttackorReload() { return Is_Attack || Is_ReLoad; }
     public virtual bool GetIsAttack() { return Is_Attack; }
+    public virtual bool GetIsAttack2() { return Is_Attack2; }
+    public virtual bool GetIsAttack3() { return Is_Attack3; }
     public virtual bool GetIsReload() { return Is_ReLoad; }
     public virtual float GetMoveH() { return m_Move_H; }
     public virtual float GetMoveV() { return m_Move_V; }

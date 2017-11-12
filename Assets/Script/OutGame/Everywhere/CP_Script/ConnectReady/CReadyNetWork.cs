@@ -26,10 +26,11 @@ public class CReadyNetWork
             UnityEngine.Debug.Log("IP정보 파일 못 읽음");
             mIP = "192.168.30.32";
         }
-        if(mPortStr != null)
+        if (mPortStr != null)
         {
             mPort = int.Parse(mPortStr);
-        }else
+        }
+        else
         {
             UnityEngine.Debug.Log("Port정보 파일 못 읽음");
             mPort = 9000;
@@ -46,13 +47,13 @@ public class CReadyNetWork
     }
     public static CReadyNetWork GetInstance()
     {
-        if(null == mInstance)
+        if (null == mInstance)
         {
             mInstance = new CReadyNetWork();
         }
         return mInstance;
     }
-    
+
     public bool IsConnected()
     {
         return mClient.Connected;
@@ -76,4 +77,3 @@ public class CReadyNetWork
     }
 
 }
-

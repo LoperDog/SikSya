@@ -93,6 +93,18 @@ public class CharacterMgr : MonoBehaviour
     private bool IsGameLoaded = false;      // 게임로딩이 끝났는가?
     private bool IsInGameSetting = false;   // 요청이 떨어졌는가?
 
+    // 아이템
+    public bool AttackBuff;
+    public int AttackBuffIOverLapping;
+    public Transform AttackBuffEffect;
+    public bool DepanceBuff;
+    public int DepanceBuffOverLapping;
+    public Transform DepanceBuffEffect;
+    public bool SmallBuff;
+    public int SmallBuffOverLapping;
+    public bool BigBuff;
+    public int BigBuffOverLapping;
+
     #endregion
     #region UI표현에 필요한 변수
     //강공격
@@ -140,6 +152,7 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터가 가지고 있는 자원 이팩트위치나 이팩트 혹은 총알 종류. 추후 수정
     public Transform[] Effect;
     public Transform[] Effectposition;
+    public Transform[] ItemEffect;
 
     public GameObject tempBullet;
     public GameObject FirePoint;
@@ -213,6 +226,14 @@ public class CharacterMgr : MonoBehaviour
 
                 break;
         }
+        AttackBuff = false;
+        DepanceBuff = false;
+        AttackBuffIOverLapping = 0 ;
+        DepanceBuffOverLapping = 0;
+        SmallBuff = false ;
+        SmallBuffOverLapping = 0;
+        BigBuff = false;
+        BigBuffOverLapping = 0;
         // 세팅
         thisCharacter.SetPlayerOb(gameObject);
         thisCharacter.CharacterTypeString = CharType;
@@ -245,9 +266,7 @@ public class CharacterMgr : MonoBehaviour
         thisAnim.SetAnimator(gameObject.GetComponent<Animator>());
         // 캐릭터 마스터 스테이터스
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
-        Debug.Log("여기냐");
         MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
-        Debug.Log("마스터 세팅후에 ㅈ되나?");
         //UI
         if (_networkView.isMine)
         {
@@ -261,6 +280,8 @@ public class CharacterMgr : MonoBehaviour
                 case Character_Type.Mandu:
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
+                    break;
+                case Character_Type.Tangsu:
                     break;
                 default:
 
@@ -281,6 +302,17 @@ public class CharacterMgr : MonoBehaviour
             Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
+
+            if (MyInfoClass.GetInstance().MyGameNumb % 2 == 1)
+            {
+                mainCamera.GetComponent<Cam>().x = -180;
+                mainCamera.GetComponent<Cam>().y = 0;
+            }
+            else
+            {
+                mainCamera.GetComponent<Cam>().x = 0;
+                mainCamera.GetComponent<Cam>().y = 0;
+            }
         }
         IsCharacterLoaded = true;
     }
@@ -476,6 +508,9 @@ public class CharacterMgr : MonoBehaviour
     public void GetDamage(float de, NetworkViewID Attacker)
     {
         LastAttacker = Attacker;
+        if (DepanceBuff) de = de * 0.8f;
+        // 만약 방어 버프중이라면
+        if (DepanceBuff) de = de * 0.5f;
         Char_Current_HP -= de;
     }
     [RPC]
@@ -485,6 +520,22 @@ public class CharacterMgr : MonoBehaviour
     //도발
     [RPC]
     public void SetCharacterTaunt(int tnumb) { thisCharacter.Taunt(tnumb); }
+#region 아이템ㅋㅋㅋ
+    public void IGetMyItem()
+    {
+        if (_networkView.isMine)
+        {
+            // 얻은 아이템
+            int ItemKind = Random.Range(0, 5);
+            _networkView.RPC("SetITem", RPCMode.AllBuffered, ItemKind);
+        }
+    }
+    [RPC]
+    public void SetITem(int ItemKind)
+    {
+        thisCharacter.SetItem(20.0f, (CharacterSuper.ItemCode)ItemKind, 0.0f);
+    }
+#endregion
     // 마우스 올림
     [RPC]
     public void SetMouseUp()
@@ -501,6 +552,12 @@ public class CharacterMgr : MonoBehaviour
             {
                 return;
             }
+            // 만약 빅버프가 있다면
+            if (BigBuff) de = de * 1.3f;
+            // 아니 만약 작은 버프라면
+            else if (SmallBuff) de = de * 0.7f;
+            // 공격 버프 아이템 사용중이라면
+            if (AttackBuff) de = de * 1.5f;
             Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
         }
     }
@@ -584,8 +641,11 @@ public class CharacterMgr : MonoBehaviour
     {
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
+        Debug.Log(LerpPos);
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
-        Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
+        Player_tr.rotation = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition [MyInfoClass.GetInstance().MyGameNumb].rotation;
+        Debug.Log(LerpPos);
+        //Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
         Start();
         thisCharacter.StartFalling();
     }
@@ -614,7 +674,7 @@ public class CharacterMgr : MonoBehaviour
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
             {
                 _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
             }
@@ -674,6 +734,135 @@ public class CharacterMgr : MonoBehaviour
     {
         Network.Disconnect();
         MasterServer.UnregisterHost();
+    }
+    public void SetBuff(CharacterSuper.ItemCode Code)
+    {
+        switch (Code)
+        {
+            case CharacterSuper.ItemCode.Buff_Attack:
+                if (AttackBuff) AttackBuffIOverLapping += 1;
+                else
+                {
+                    AttackBuff = true;
+                    AttackBuffEffect = Instantiate(ItemEffect[0], transform.position, Quaternion.identity);
+                    AttackBuffEffect.SetParent(transform);
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (DepanceBuff) DepanceBuffOverLapping += 1;
+                else
+                {
+                    DepanceBuff = true;
+                    DepanceBuffEffect = Instantiate(ItemEffect[1], transform.position, Quaternion.identity);
+                    DepanceBuffEffect.SetParent(transform);
+                }
+                break;
+
+            case CharacterSuper.ItemCode.Buff_Hill:
+                Instantiate(ItemEffect[2], transform.position, Quaternion.identity).SetParent(transform);
+                break;
+            case CharacterSuper.ItemCode.Buff_Small:
+                // 만약 캐릭터가 이미 빅버프를 가지고 있다
+                if (BigBuff)
+                {
+                    BigBuffOverLapping = 0;
+                    BigBuff = false;
+                }
+                if (SmallBuff) SmallBuffOverLapping += 1;
+                else
+                {
+                    // 캐릭터 크기를 줄여준다
+                    transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                SmallBuff = true;
+                break;
+            case CharacterSuper.ItemCode.Buff_Big:
+                // 만일 캐릭터가 스몰 버프를 가지고 있다면.
+                if (SmallBuff)
+                {
+                    SmallBuffOverLapping = 0;
+                    SmallBuff = false;
+                }
+                if (BigBuff) BigBuffOverLapping += 1;
+                else
+                {
+                    //캐릭터 크기를 키운다.
+                    transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                BigBuff = true;
+                break;
+            case CharacterSuper.ItemCode.Buff_CoolDown:
+                break;
+            default:
+                break;
+        }
+    }
+    public void EndBuff(CharacterSuper.ItemCode Code)
+    {
+        switch (Code)
+        {
+            case CharacterSuper.ItemCode.Buff_Attack:
+                if (AttackBuffIOverLapping != 0) AttackBuffIOverLapping -= 1;
+                else
+                {
+                    AttackBuff = false;
+                    //Destroy(AttackBuffEffect);
+                    AttackBuffEffect.GetComponent<ItemDestroy>().DestroyMe();
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (DepanceBuffOverLapping != 0) DepanceBuffOverLapping -= 1;
+                else
+                {
+                    DepanceBuff = false;
+                    //Destroy(DepanceBuffEffect);
+                    DepanceBuffEffect.GetComponent<ItemDestroy>().DestroyMe();
+                }
+                break;
+
+            case CharacterSuper.ItemCode.Buff_Hill:
+
+                break;
+            case CharacterSuper.ItemCode.Buff_Small:
+                if (SmallBuffOverLapping != 0)
+                {
+                    SmallBuffOverLapping -= 1;
+                }
+                else if (SmallBuff)
+                {
+                    //캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    SmallBuff = false;
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Big:
+                if (BigBuffOverLapping != 0)
+                {
+                    BigBuffOverLapping -= 1;
+                }
+                else if (BigBuff)
+                {
+                    // 캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    BigBuff = false;
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_CoolDown:
+
+                break;
+            default:
+                if (AttackBuff)
+                {
+                    AttackBuff = false;
+                    Destroy(AttackBuffEffect);
+                }
+                if (DepanceBuff)
+                {
+                    DepanceBuff = false;
+                    Destroy(DepanceBuffEffect);
+                }
+                break;
+        }
     }
     #region RPC함수
     // 플레이어의 타겟이 맞았을때

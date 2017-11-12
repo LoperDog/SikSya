@@ -4,7 +4,8 @@ using UnityEngine;
 using System;
 using System.IO;
 
-public class CReader {
+public class CReader
+{
 
     private static CReader mInstance;
     public static CReader GetInstance()
@@ -31,7 +32,7 @@ public class CReader {
             }
             SR.Close();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             resultStr = null;
         }

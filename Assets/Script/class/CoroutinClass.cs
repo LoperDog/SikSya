@@ -6,6 +6,8 @@ public class CoroutinClass : MonoBehaviour
 {
     public CharacterSuper thisCharacterScript;
     public CharacterMgr thisMgr;
+    public Coroutine StrongCorutin;
+    public Coroutine SpecialCorutin;
     static public ConfigClass config;
 
     // 코루틴으로 사용할 컴포넌트에 스크립트를 설정한다.
@@ -25,12 +27,12 @@ public class CoroutinClass : MonoBehaviour
     }
     public virtual void StartStrongAttckSetting()
     {
-        StartCoroutine(SetStrongAttack());
+        StrongCorutin = StartCoroutine(SetStrongAttack());
         StartCoroutine(StartStrongCoolTime());
     }
     public virtual void StartSpecialAttackSetting()
     {
-        StartCoroutine(SetSpecialAttack());
+        SpecialCorutin =  StartCoroutine(SetSpecialAttack());
         StartCoroutine(StartSpecialCoolTime());
     }
     public virtual void StartReLoad()
@@ -55,28 +57,7 @@ public class CoroutinClass : MonoBehaviour
     }
     public virtual void StartBuffSetting(float time, CharacterSuper.ItemCode code, float value)
     {
-        switch (code)
-        {
-            case CharacterSuper.ItemCode.Buff_Attack:
-                break;
-            case CharacterSuper.ItemCode.Buff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Buff_DotHill:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_Attack:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_DotDemage:
-
-                break;
-            default:
-                break;
-        }
+        thisMgr.SetBuff(code);
         StartCoroutine(EndBuffItem(time, code, value));
     }
     
@@ -114,7 +95,7 @@ public class CoroutinClass : MonoBehaviour
     public IEnumerator SetFalling()
     {
         thisCharacterScript.CanControll = false;
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(3.0f);
         thisCharacterScript.CanControll = true;
     }
     // 아직은 작업 중.
@@ -127,28 +108,7 @@ public class CoroutinClass : MonoBehaviour
     public virtual IEnumerator EndBuffItem(float time, CharacterSuper.ItemCode Code, float value)
     {
         yield return new WaitForSeconds(time);
-        switch (Code)
-        {
-            case CharacterSuper.ItemCode.Buff_Attack:
-                break;
-            case CharacterSuper.ItemCode.Buff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Buff_DotHill:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_Attack:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_Speed:
-
-                break;
-            case CharacterSuper.ItemCode.Nuff_DotDemage:
-
-                break;
-            default:
-                break;
-        }
+        thisMgr.EndBuff(Code);
     }
 
     public virtual IEnumerator StartStrongCoolTime()
