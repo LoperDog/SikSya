@@ -805,7 +805,8 @@ public class CharacterMgr : MonoBehaviour
                 else
                 {
                     AttackBuff = false;
-                    Destroy(AttackBuffEffect);
+                    //Destroy(AttackBuffEffect);
+                    AttackBuffEffect.GetComponent<ItemDestroy>().DestroyMe();
                 }
                 break;
             case CharacterSuper.ItemCode.Buff_Depance:
@@ -813,7 +814,8 @@ public class CharacterMgr : MonoBehaviour
                 else
                 {
                     DepanceBuff = false;
-                    Destroy(DepanceBuffEffect);
+                    //Destroy(DepanceBuffEffect);
+                    DepanceBuffEffect.GetComponent<ItemDestroy>().DestroyMe();
                 }
                 break;
 

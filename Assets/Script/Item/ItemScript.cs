@@ -40,4 +40,5 @@ public class ItemScript : MonoBehaviour {
         MyMesh.enabled = true;
         Mycoll.enabled = true;
     }
+
 }
