@@ -15,6 +15,6 @@ public class DubuHead : MonoBehaviour {
     {
         LeftBullet= MyMgr.Current_Bullet;
         float height = LeftBullet / 100;
-        transform.localScale = new Vector3(1.0f, 1.0f - height, 1.0f);
+        transform.localScale = new Vector3(1.0f - height, 1.0f, 1.0f);
     }
 }
