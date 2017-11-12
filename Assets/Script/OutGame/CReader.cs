@@ -16,7 +16,7 @@ public class CReader {
         return mInstance;
     }
 
-    public void LoadTextFile(out string resultStr, string filePathName)
+    public void LoadTextFile(ref string resultStr, string filePathName)
     {
         try
         {
@@ -28,10 +28,6 @@ public class CReader {
             else
             {
                 resultStr = SR.ReadLine();
-                if (resultStr == null)
-                {
-                    resultStr = "TextFile 내용 없음";
-                }
             }
             SR.Close();
         }
@@ -39,6 +35,5 @@ public class CReader {
         {
             resultStr = null;
         }
-        
     }
 }

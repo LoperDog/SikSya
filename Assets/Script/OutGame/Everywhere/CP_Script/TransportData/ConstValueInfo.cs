@@ -159,11 +159,13 @@ namespace ConstValueInfo
         public const int CharacterLimitGuestName = CharacterLimitID; // Guest로그인 name 글자수 제한
         public const int IntSize = 4;
         public const int ChannelSceneCharacterKind = 4;
+        public const int MaxPlayGame = 6; // 각 방에 최대 6명이서 플레이
         public static readonly string[] ProtocolCharacterImageName = { "Tofu", "Mandu", "Tangsuyuk" };
         public static readonly string[] ProtocolCharacterTagIndexImage = { "RedImage01", "BlueImage01", "RedImage02", "BlueImage02", "RedImage03", "BlueImage03" };
         public static readonly string[] ProtocolCharacterTagIndexName = { "RedName01", "BlueName01", "RedName02", "BlueName02", "RedName03", "BlueName03" };
         public static readonly string[] ProtocolCharacterTagIndexReady = { "RedReadyImage01", "BlueReadyImage01", "RedReadyImage02", "BlueReadyImage02", "RedReadyImage03", "BlueReadyImage03" };
         public static readonly string[] ProtocolCharacterTagIndexNameImage = { "RedNameImage01", "BlueNameImage01", "RedNameImage02", "BlueNameImage02", "RedNameImage03", "BlueNameImage03" };
+        public static readonly string[] ProtocolCharacterTagIndexMyMark = { "RedMy01", "BlueMy01", "RedMy02", "BlueMy02", "RedMy03", "BlueMy03" };
         public static readonly string[] ProtocolMessageTag = { "TextView" };
         public static readonly string[] ProtocolSceneName = { "StartScene", "FrontScene", "ChannelScene", "RoomScene", "Main" };
         //public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "TestScene" };
@@ -174,6 +176,7 @@ namespace ConstValueInfo
         public static readonly string[] InfoPWText = { "공개방 상태이기 때문에 입력하실 수 없습니다.", "영어,숫자 15글자" };
         public const string RoomPWNone = "None";
         public const int WrongValue = -1;
+        public const float ChatScrollbarButtonMoveValue = 0.05f;
 
         // 몇자리 숫자인지 구하기
         public static int CalcCipher(int number)
