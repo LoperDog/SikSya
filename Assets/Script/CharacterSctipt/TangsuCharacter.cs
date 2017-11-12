@@ -6,9 +6,39 @@ public class TangsuCharacter : CharacterSuper
 {
     public TangsuAnimation CharAnim;
 
+    public bool ComboAttack = false;
+
     override public void Attack()
     {
-
+        if(!Is_Attack)
+        {
+            coroutine.StartAttackSetting();
+        }
+    }
+    //일반공격
+    public void Attack1_Start()
+    {
+        CharAnim.Attack1_Start();
+    }
+    public void Attack1_End()
+    {
+        CharAnim.Attack1_End();
+    }
+    public void Attack2_Start()
+    {
+        CharAnim.Attack2_Start();
+    }
+    public void Attack2_End()
+    {
+        CharAnim.Attack2_End();
+    }
+    public void Attack3_Start()
+    {
+        CharAnim.Attack3_Start();
+    }
+    public void Attack3_End()
+    {
+        CharAnim.Attack3_End();
     }
     //강공격 시작
     public override void StrongAttack()

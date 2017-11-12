@@ -22,6 +22,8 @@ public class CharacterSuper : MonoBehaviour
     public Transform[] effect;
 
     public bool Is_Attack = false;
+    public bool Is_Attack2 = false;
+    public bool Is_Attack3 = false;
     public bool Is_ReLoad = false;
     public bool Is_Dead = false;
     public bool Is_Jump = false;
@@ -163,12 +165,8 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void Jump()
     {
-        //if (Is_Ground && !Is_Jump)
-        //{
-        //Player_rb.AddForce(0, m_Jump_Force, 0);
         Player_rb.velocity = new Vector3(Player_rb.velocity.x, m_Jump_Force, Player_rb.velocity.z);
-            Is_Jump = true;
-        //}
+        Is_Jump = true;
     }
     public virtual void Check_Ground()
     {
@@ -381,7 +379,18 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void CoolDown()
     {
-
+        if (Is_StrongAttack)
+        {
+            Is_StrongAttack = false;
+            coroutine.StopCoroutine(coroutine.StrongCorutin);
+            m_CurrentStrongAttack = 0;
+        }
+        if (Is_SpecialAttack)
+        {
+            Is_SpecialAttack = false;
+            coroutine.StopCoroutine(coroutine.SpecialCorutin);
+            m_CurrentSpecialAttack = 0;
+        }
     }
     #endregion
     #region 키세팅영역

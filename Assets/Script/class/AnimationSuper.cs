@@ -36,7 +36,6 @@ public class AnimationSuper
     }
     public virtual void PlayRun()
     {
-
         m_Anim.SetFloat("Speed", m_Char_State.GetSpeed());
     }
     public virtual void PlayJump()

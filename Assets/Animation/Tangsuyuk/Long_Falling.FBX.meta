@@ -915,19 +915,19 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Tangsu(Clone)
+    - name: TangsuAvatar(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0.0000006535419, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 0.9451984, z: 0}
       rotation: {x: -0.50000036, y: 0.49999964, z: 0.49999964, w: 0.50000036}
       scale: {x: 0.99999994, y: 0.99999994, z: 1}
     - name: Bip001 Footsteps
       parentName: Bip001
-      position: {x: -0, y: 0, z: -0.94389206}
+      position: {x: -0, y: 0, z: -0.96044797}
       rotation: {x: 0, y: 0, z: -0.7071063, w: 0.70710725}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Pelvis
@@ -960,6 +960,31 @@ ModelImporter:
       position: {x: -0.1939565, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: Point001
+      parentName: Bip001 Spine1
+      position: {x: -0.071939826, y: -0.0011964738, z: -0.00020062923}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
+    - name: Point002
+      parentName: Point001
+      position: {x: 0.07823161, y: 0.01531446, z: 0.2942809}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: Point003
+      parentName: Point001
+      position: {x: -0.07820046, y: 0.0150038, z: 0.29400003}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: Bone002
+      parentName: Point001
+      position: {x: -0.079200566, y: 0.014074922, z: 0.073419176}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.000001, y: 1.0000023, z: 1.0000004}
+    - name: Bone001
+      parentName: Point001
+      position: {x: 0.079121135, y: 0.014074922, z: 0.0734191}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.99999976}
     - name: Bip001 L Clavicle
       parentName: Bip001 Spine1
       position: {x: -0.22867668, y: -0.034656614, z: 0.05502316}
@@ -1301,17 +1326,17 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
     - name: Head
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 1.5916911, z: -0.042686462}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Tangsu
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 0.75499505, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Tangsuyook
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: 0.70989716, y: 1.3951035, z: 0.50439453}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
@@ -1327,7 +1352,7 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 75ade2f86ce5fb245a7609258014b411,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f3901c5ae42ef48429a4e913e895cc47,
     type: 3}
   animationType: 3
   humanoidOversampling: 1

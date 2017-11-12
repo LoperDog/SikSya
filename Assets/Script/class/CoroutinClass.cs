@@ -6,6 +6,8 @@ public class CoroutinClass : MonoBehaviour
 {
     public CharacterSuper thisCharacterScript;
     public CharacterMgr thisMgr;
+    public Coroutine StrongCorutin;
+    public Coroutine SpecialCorutin;
     static public ConfigClass config;
 
     // 코루틴으로 사용할 컴포넌트에 스크립트를 설정한다.
@@ -25,12 +27,12 @@ public class CoroutinClass : MonoBehaviour
     }
     public virtual void StartStrongAttckSetting()
     {
-        StartCoroutine(SetStrongAttack());
+        StrongCorutin = StartCoroutine(SetStrongAttack());
         StartCoroutine(StartStrongCoolTime());
     }
     public virtual void StartSpecialAttackSetting()
     {
-        StartCoroutine(SetSpecialAttack());
+        SpecialCorutin =  StartCoroutine(SetSpecialAttack());
         StartCoroutine(StartSpecialCoolTime());
     }
     public virtual void StartReLoad()
@@ -141,7 +143,7 @@ public class CoroutinClass : MonoBehaviour
     public IEnumerator SetFalling()
     {
         thisCharacterScript.CanControll = false;
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(3.0f);
         thisCharacterScript.CanControll = true;
     }
     // 아직은 작업 중.

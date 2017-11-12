@@ -13,6 +13,31 @@ public class TangsuAnimation : AnimationSuper
     }
     public override void PlayAttack()
     {
+        m_Anim.SetBool("Attack", m_Char_State.GetIsAttack());
+    }
+    //일반공격
+    public void Attack1_Start()
+    {
+
+    }
+    public void Attack1_End()
+    {
+
+    }
+    public void Attack2_Start()
+    {
+
+    }
+    public void Attack2_End()
+    {
+
+    }
+    public void Attack3_Start()
+    {
+
+    }
+    public void Attack3_End()
+    {
 
     }
     //강공격

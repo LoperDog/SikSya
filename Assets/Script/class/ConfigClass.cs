@@ -102,7 +102,12 @@ public class ConfigClass {
         TangsuStatus["Attack"] = 80f;//공격력
         TangsuStatus["AtttackSpeed"] = 0.25f;
 
-        TangsuStatus["StrongAttack"] = 30f;//우클릭 공격력
+        TangsuStatus ["Atttack1_Start"] = 0.33f;//근접공격 1타
+        TangsuStatus ["Atttack1_End"] = 1.0f;//근접공격 1타
+        TangsuStatus ["Atttack2_Speed"] = 1.2f;//근접공격 2타
+        TangsuStatus ["Atttack3_Speed"] = 1.55f;//근접공격 3타
+
+        TangsuStatus ["StrongAttack"] = 30f;//우클릭 공격력
         TangsuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
 
         TangsuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지

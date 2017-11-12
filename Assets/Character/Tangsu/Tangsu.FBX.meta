@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 75ade2f86ce5fb245a7609258014b411
-timeCreated: 1509530030
+guid: f3901c5ae42ef48429a4e913e895cc47
+timeCreated: 1510468144
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -81,15 +81,15 @@ ModelImporter:
     100146: Bip001 Spine1
     100148: Bip001 Xtra01
     100150: Bip001 Xtra01Nub
-    100152: Head
-    100154: Tangsu
-    100156: //RootNode
-    100158: Tangsuyook
-    100160: Bone001
-    100162: Bone002
-    100164: Point001
-    100166: Point002
-    100168: Point003
+    100152: Bone001
+    100154: Bone002
+    100156: Head
+    100158: Point001
+    100160: Point002
+    100162: Point003
+    100164: Tangsu
+    100166: //RootNode
+    100168: Tangsuyook
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -166,15 +166,15 @@ ModelImporter:
     400146: Bip001 Spine1
     400148: Bip001 Xtra01
     400150: Bip001 Xtra01Nub
-    400152: Head
-    400154: //RootNode
-    400156: Tangsu
-    400158: Tangsuyook
-    400160: Bone001
-    400162: Bone002
-    400164: Point001
-    400166: Point002
-    400168: Point003
+    400152: Bone001
+    400154: Bone002
+    400156: Head
+    400158: Point001
+    400160: Point002
+    400162: Point003
+    400164: Tangsu
+    400166: //RootNode
+    400168: Tangsuyook
     4300000: Tangsu
     4300002: Head
     4300004: Tangsuyook
@@ -183,7 +183,7 @@ ModelImporter:
     13700002: Tangsu
     13700004: Tangsuyook
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -639,19 +639,19 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Tangsu(Clone)
+    - name: TangsuAvatar(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0.0000006535419, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 0.9451984, z: 0}
       rotation: {x: -0.50000036, y: 0.49999964, z: 0.49999964, w: 0.50000036}
       scale: {x: 0.99999994, y: 0.99999994, z: 1}
     - name: Bip001 Footsteps
       parentName: Bip001
-      position: {x: -0, y: 0, z: -0.94389206}
+      position: {x: -0, y: 0, z: -0.96044797}
       rotation: {x: 0, y: 0, z: -0.7071063, w: 0.70710725}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Pelvis
@@ -684,6 +684,31 @@ ModelImporter:
       position: {x: -0.1939565, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: Point001
+      parentName: Bip001 Spine1
+      position: {x: -0.071939826, y: -0.0011964738, z: -0.00020062923}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
+    - name: Point002
+      parentName: Point001
+      position: {x: 0.07823161, y: 0.01531446, z: 0.2942809}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: Point003
+      parentName: Point001
+      position: {x: -0.07820046, y: 0.0150038, z: 0.29400003}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: Bone002
+      parentName: Point001
+      position: {x: -0.079200566, y: 0.014074922, z: 0.073419176}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.000001, y: 1.0000023, z: 1.0000004}
+    - name: Bone001
+      parentName: Point001
+      position: {x: 0.079121135, y: 0.014074922, z: 0.0734191}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.99999976}
     - name: Bip001 L Clavicle
       parentName: Bip001 Spine1
       position: {x: -0.22867668, y: -0.034656614, z: 0.05502316}
@@ -1025,17 +1050,17 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
     - name: Head
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 1.5916911, z: -0.042686462}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Tangsu
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: -0, y: 0.75499505, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Tangsuyook
-      parentName: Tangsu(Clone)
+      parentName: TangsuAvatar(Clone)
       position: {x: 0.70989716, y: 1.3951035, z: 0.50439453}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}

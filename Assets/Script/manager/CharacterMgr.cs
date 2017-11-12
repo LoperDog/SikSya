@@ -296,7 +296,6 @@ public class CharacterMgr : MonoBehaviour
 
             mainCamera = Camera.main;
             Camera.main.GetComponent<Cam>().SetPlayer(Player_tr);
-
             GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().SetPlayer(gameObject);
             GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>().MyCharMgr = this;
 
