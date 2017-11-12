@@ -401,6 +401,8 @@ public class CharacterSuper : MonoBehaviour
     #region 캐릭터 상태값 가져오기
     public virtual bool GetAttackorReload() { return Is_Attack || Is_ReLoad; }
     public virtual bool GetIsAttack() { return Is_Attack; }
+    public virtual bool GetIsAttack2() { return Is_Attack2; }
+    public virtual bool GetIsAttack3() { return Is_Attack3; }
     public virtual bool GetIsReload() { return Is_ReLoad; }
     public virtual float GetMoveH() { return m_Move_H; }
     public virtual float GetMoveV() { return m_Move_V; }
