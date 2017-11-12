@@ -30,6 +30,7 @@ public class ItemScript : MonoBehaviour {
             Mycoll.enabled = false;
             MyMesh.enabled = false;
             StartCoroutine(SetEnVisibleAndReSet());
+            Instantiate(effect, transform.position, Quaternion.identity);
         }
     }
     
