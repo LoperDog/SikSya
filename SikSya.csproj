@@ -161,6 +161,7 @@
     <Compile Include="Assets\Script\CharacterSctipt\DubuAttack.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\DubuCharacter.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\DubuCoroutin.cs" />
+    <Compile Include="Assets\Script\CharacterSctipt\DubuHead.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\ManduAnimation.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\ManduAttack.cs" />
     <Compile Include="Assets\Script\CharacterSctipt\ManduCharacter.cs" />
