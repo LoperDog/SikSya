@@ -96,8 +96,10 @@ public class CharacterMgr : MonoBehaviour
     // 아이템
     public bool AttackBuff;
     public int AttackBuffIOverLapping;
+    public Transform AttackBuffEffect;
     public bool DepanceBuff;
     public int DepanceBuffOverLapping;
+    public Transform DepanceBuffEffect;
     public bool SmallBuff;
     public int SmallBuffOverLapping;
     public bool BigBuff;
@@ -150,6 +152,7 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터가 가지고 있는 자원 이팩트위치나 이팩트 혹은 총알 종류. 추후 수정
     public Transform[] Effect;
     public Transform[] Effectposition;
+    public Transform[] ItemEffect;
 
     public GameObject tempBullet;
     public GameObject FirePoint;
@@ -730,6 +733,133 @@ public class CharacterMgr : MonoBehaviour
     {
         Network.Disconnect();
         MasterServer.UnregisterHost();
+    }
+    public void SetBuff(CharacterSuper.ItemCode Code)
+    {
+        switch (Code)
+        {
+            case CharacterSuper.ItemCode.Buff_Attack:
+                if (AttackBuff) AttackBuffIOverLapping += 1;
+                else
+                {
+                    AttackBuff = true;
+                    AttackBuffEffect = Instantiate(ItemEffect[0], transform.position, Quaternion.identity);
+                    AttackBuffEffect.SetParent(transform);
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (DepanceBuff) DepanceBuffOverLapping += 1;
+                else
+                {
+                    DepanceBuff = true;
+                    DepanceBuffEffect = Instantiate(ItemEffect[1], transform.position, Quaternion.identity);
+                    DepanceBuffEffect.SetParent(transform);
+                }
+                break;
+
+            case CharacterSuper.ItemCode.Buff_Hill:
+                Instantiate(ItemEffect[2], transform.position, Quaternion.identity).SetParent(transform);
+                break;
+            case CharacterSuper.ItemCode.Buff_Small:
+                // 만약 캐릭터가 이미 빅버프를 가지고 있다
+                if (BigBuff)
+                {
+                    BigBuffOverLapping = 0;
+                    BigBuff = false;
+                }
+                if (SmallBuff) SmallBuffOverLapping += 1;
+                else
+                {
+                    // 캐릭터 크기를 줄여준다
+                    transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                SmallBuff = true;
+                break;
+            case CharacterSuper.ItemCode.Buff_Big:
+                // 만일 캐릭터가 스몰 버프를 가지고 있다면.
+                if (SmallBuff)
+                {
+                    SmallBuffOverLapping = 0;
+                    SmallBuff = false;
+                }
+                if (BigBuff) BigBuffOverLapping += 1;
+                else
+                {
+                    //캐릭터 크기를 키운다.
+                    transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                BigBuff = true;
+                break;
+            case CharacterSuper.ItemCode.Buff_CoolDown:
+                break;
+            default:
+                break;
+        }
+    }
+    public void EndBuff(CharacterSuper.ItemCode Code)
+    {
+        switch (Code)
+        {
+            case CharacterSuper.ItemCode.Buff_Attack:
+                if (AttackBuffIOverLapping != 0) AttackBuffIOverLapping -= 1;
+                else
+                {
+                    AttackBuff = false;
+                    Destroy(AttackBuffEffect);
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Depance:
+                if (DepanceBuffOverLapping != 0) DepanceBuffOverLapping -= 1;
+                else
+                {
+                    DepanceBuff = false;
+                    Destroy(DepanceBuffEffect);
+                }
+                break;
+
+            case CharacterSuper.ItemCode.Buff_Hill:
+
+                break;
+            case CharacterSuper.ItemCode.Buff_Small:
+                if (SmallBuffOverLapping != 0)
+                {
+                    SmallBuffOverLapping -= 1;
+                }
+                else if (SmallBuff)
+                {
+                    //캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    SmallBuff = false;
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_Big:
+                if (BigBuffOverLapping != 0)
+                {
+                    BigBuffOverLapping -= 1;
+                }
+                else if (BigBuff)
+                {
+                    // 캐릭터 크기를 원상복구 한다.
+                    transform.localScale = new Vector3(1, 1, 1);
+                    BigBuff = false;
+                }
+                break;
+            case CharacterSuper.ItemCode.Buff_CoolDown:
+
+                break;
+            default:
+                if (AttackBuff)
+                {
+                    AttackBuff = false;
+                    Destroy(AttackBuffEffect);
+                }
+                if (DepanceBuff)
+                {
+                    DepanceBuff = false;
+                    Destroy(DepanceBuffEffect);
+                }
+                break;
+        }
     }
     #region RPC함수
     // 플레이어의 타겟이 맞았을때
