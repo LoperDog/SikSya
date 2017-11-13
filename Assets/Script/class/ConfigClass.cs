@@ -31,7 +31,7 @@ public class ConfigClass {
     public ConfigClass()
     {
         #region 만두콘피그
-        ManduStatus["HP"] = 150f; //체력
+        ManduStatus["HP"] = 200f; //체력
 
         ManduStatus["MoveSpeed"] = 2.0f;
         ManduStatus["RunSpeed"] = 5.0f;
@@ -43,11 +43,11 @@ public class ConfigClass {
         ManduStatus["Attack"] = 50f;
         ManduStatus["AtttackSpeed"] = 1.9f;
 
-        ManduStatus["StrongAttack"] = 100f;//우클릭 공격력
-        ManduStatus["StrongAttack_CoolTime"] = 20.0f;//우클릭 쿨타임
+        ManduStatus["StrongAttack"] = 120f;//우클릭 공격력
+        ManduStatus["StrongAttack_CoolTime"] = 2.0f;//우클릭 쿨타임
         ManduStatus["StongAttackTime"] = 0.5f;
 
-        ManduStatus["SpecialAttack"] = 170.0f;//Q스킬 공격력
+        ManduStatus["SpecialAttack"] = 220.0f;//Q스킬 공격력
         ManduStatus["SpecialAttack_CoolTime"] = 40.0f;// Q스킬 쿨타임
         ManduStatus["SpecialAttackReady"] = 1.5f;
         ManduStatus["SpecialAttackTime"] = 1.9f;
@@ -59,7 +59,7 @@ public class ConfigClass {
         #endregion
 
         #region 두부콘피그
-        DubuStatus["HP"] = 125f;//체력
+        DubuStatus["HP"] = 100f;//체력
 
         DubuStatus["MoveSpeed"] = 2.5f;
         DubuStatus["RunSpeed"] = 7.0f;
@@ -68,7 +68,7 @@ public class ConfigClass {
         DubuStatus["Cartridge"] = 50f;//장탄수
         DubuStatus["ReLoadTime"] = 1.7f;
 
-        DubuStatus["Attack"] = 10f;//공격력
+        DubuStatus["Attack"] = 8f;//공격력
         DubuStatus["AtttackSpeed"] = 0.25f;
 
         DubuStatus["StrongAttack"] = 80f;//우클릭 공격력
@@ -77,7 +77,7 @@ public class ConfigClass {
         DubuStatus["StongAttackReady"] = 0.2f;
         DubuStatus["StongAttackEnd"] = 0.6f;
 
-        DubuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
+        DubuStatus["SpecialAttack"] = 150.0f;//Q스킬 대미지
         DubuStatus["SpecialAttack_CoolTime"] = 30.0f;//Q스킬 쿨타임
 
         DubuStatus["SpecialAttackReady"] = 0.86f;
@@ -91,7 +91,7 @@ public class ConfigClass {
         #endregion
 
         #region 탕수콘피그
-        TangsuStatus["HP"] = 200f;//체력
+        TangsuStatus["HP"] = 150f;//체력
 
         TangsuStatus["MoveSpeed"] = 3.0f;
         TangsuStatus["RunSpeed"] = 8.0f;
@@ -114,7 +114,7 @@ public class ConfigClass {
         TangsuStatus ["StrongAttack"] = 30f;//우클릭 공격력
         TangsuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
 
-        TangsuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
+        TangsuStatus["SpecialAttack"] = 150.0f;//Q스킬 대미지
         TangsuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
 
         TangsuStatus ["SpecialAttack_Ready"] = 0.9f;//공격 순간

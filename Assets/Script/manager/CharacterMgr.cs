@@ -574,11 +574,11 @@ public class CharacterMgr : MonoBehaviour
                 return;
             }
             // 만약 빅버프가 있다면
-            if (BigBuff) de = de * 1.3f;
+            if (BigBuff) de = de * 1.5f;
             // 아니 만약 작은 버프라면
             else if (SmallBuff) de = de * 0.7f;
             // 공격 버프 아이템 사용중이라면
-            if (AttackBuff) de = de * 1.5f;
+            if (AttackBuff) de = de * 1.35f;
             Player.RPC("GetDamage", RPCMode.AllBuffered, (float)de, _networkView.viewID);
         }
     }
