@@ -8,11 +8,11 @@ public class StartMovie : MonoBehaviour {
     public MovieTexture mTeamLogo;
 
     bool mIsPlayGameLogo = false;
-    Renderer mRen;
+    //Renderer mRen;
     // Use this for initialization
     void Start () {
         mTeamLogo.Play();
-        mRen = GetComponent<Renderer>();
+        //mRen = GetComponent<Renderer>();
     }
 	
 	// Update is called once per frame
