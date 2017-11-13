@@ -63,6 +63,15 @@ public class TangsuCharacter : CharacterSuper
     public void SpecialAttackReady()
     {
         CharAnim.SetSpecialAttackReady();
+        Transform temp = Instantiate(effect[3], Player_tr.position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
+    }
+    public void SpecialAttack_ing()
+    {
+        Transform temp = Instantiate(effect[4], Player_tr.position, Player_tr.rotation);
+        temp.SetParent(Player_tr);
+        temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
     }
     public void SpecialAttackEnd()
     {

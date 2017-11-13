@@ -712,7 +712,7 @@ public class CharacterMgr : MonoBehaviour
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2/* && SpecialAttackCoolTime == 0*/)//쿨타임
             {
                 _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
             }
@@ -1006,6 +1006,10 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
+            if (!_networkView.isMine)
+            {
+                Debug.Log("캐릭터 목표 Y " + Player_tr.position.y + "현재 캐릭터 위치 " + LerpPos.y);
+            }
             LerpPos = new Vector3(posx, Player_tr.position.y, posz);// + TempVel * PosSyncDelayTime;
             //LerpPos = revPos + TempVel * PosSyncDelayTime;
             /*

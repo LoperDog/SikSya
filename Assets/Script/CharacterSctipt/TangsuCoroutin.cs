@@ -114,7 +114,7 @@ public class TangsuCoroutin : CoroutinClass
         thisCharacterScript.CanControll = false;//제어불가
         TangsuChar.SpecialAttackReady();
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_Ready"]);//공격 순간
-        //이팩트,판정을 여기서 켠다
+        TangsuChar.SpecialAttack_ing();//이팩트,판정을 여기서 켠다
         StartCoroutine(SpecialAttack_Start());
     }
     public IEnumerator SpecialAttack_Start()
@@ -124,7 +124,7 @@ public class TangsuCoroutin : CoroutinClass
             config = new ConfigClass();
         }
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_End"]);//끝나는 시간
-        TangsuChar.SpecialAttackEnd();
+        TangsuChar.SpecialAttackEnd();//애니메이션만 끝낸다
         thisCharacterScript.CanControll = true;//제어가능
     }
     //도발
