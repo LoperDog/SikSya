@@ -617,6 +617,7 @@ public class CharacterMgr : MonoBehaviour
         else
         {
             PosSyncStartTime += Time.deltaTime;
+            LerpPos = new Vector3(LerpPos.x, Player_tr.position.y + (Player_rb.velocity.y * Time.deltaTime), LerpPos.z);
             if (Player_tr.position.y - LerpPos.y >= 0.2f &&
                 Player_tr.position.y - LerpPos.y <= -0.2f)
             {
@@ -996,11 +997,7 @@ public class CharacterMgr : MonoBehaviour
             //LerpPosStartTime = 0.0f;
             PosSyncStartTime = 0.0f;
             PosSyncDelayTime = Time.time - LastSyncTime;
-            if (!_networkView.isMine)
-            {
-                Debug.Log("캐릭터 목표 Y " + Player_tr.position.y + "현재 캐릭터 위치 " + LerpPos.y);
-            }
-            LerpPos = new Vector3(posx, Player_tr.position.y, posz);// + TempVel * PosSyncDelayTime;
+            LerpPos = new Vector3(posx, Player_tr.position.y/* + (Player_rb.velocity.y * Time.deltaTime)*/, posz);// + TempVel * PosSyncDelayTime;
             //LerpPos = revPos + TempVel * PosSyncDelayTime;
             /*
             float PosDistance = Vector3.Distance(LerpPos, revPos);
