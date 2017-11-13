@@ -60,6 +60,26 @@ public class CoroutinClass : MonoBehaviour
         thisMgr.SetBuff(code);
         StartCoroutine(EndBuffItem(time, code, value));
     }
+    public virtual void StartRespawnMesh()
+    {
+        StartCoroutine(SetRespawnMesh());
+    }
+    public virtual IEnumerator SetRespawnMesh()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            for(int j = 0; j < thisMgr.Meshs.Length; j++)
+            {
+                thisMgr.Meshs[j].enabled = false;
+            }
+            yield return new WaitForSeconds(0.3f);
+            for (int j = 0; j < thisMgr.Meshs.Length; j++)
+            {
+                thisMgr.Meshs[j].enabled = true;
+            }
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
     // 무적
     public virtual void StartOverPower()
     {
