@@ -103,8 +103,7 @@ public class CharacterSuper : MonoBehaviour
     }
 
     protected Dictionary<int, Queue<GameObject>> BulletPool = new Dictionary<int, Queue<GameObject>>();
-
-    // 버프 아이템이나 종류인데 할수있을까
+    
     public enum ItemCode
     {
         Buff_Attack,
@@ -112,7 +111,8 @@ public class CharacterSuper : MonoBehaviour
         Buff_Hill,
         Buff_Small,
         Buff_Big,
-        Buff_CoolDown
+        Buff_CoolDown,
+        Buff_Reset
     };
 
     public CharacterSuper()
@@ -379,6 +379,7 @@ public class CharacterSuper : MonoBehaviour
     }
     public virtual void CoolDown()
     {
+
         if (Is_StrongAttack)
         {
             Is_StrongAttack = false;
