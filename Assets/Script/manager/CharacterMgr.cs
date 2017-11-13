@@ -186,8 +186,9 @@ public class CharacterMgr : MonoBehaviour
         Mandu_Special = GameObject.Find("Mandu_Special").GetComponent<Image>();
         Mandu_Right = GameObject.Find("Mandu_Right").GetComponent<Image>();
 
-        Tangsu_Right = GameObject.Find("Mandu_Special").GetComponent<Image>();  //탕수 이미지 수정 해야된다.
-        Tangsu_Special = GameObject.Find("Mandu_Right").GetComponent<Image>();  //탕수 이미지 수정 해야된다.
+        Tangsu_Right = GameObject.Find("Tangsu_Right").GetComponent<Image>();
+        Tangsu_Special = GameObject.Find("Tangsu_Special").GetComponent<Image>();
+
         if (config == null)
         {
             config = new ConfigClass();
