@@ -64,7 +64,7 @@ public class CharacterMgr : MonoBehaviour
     private float LastSyncTime = 0.0f;
 
     // 캐릭터 리스트가 필요하다.
-
+    public SkinnedMeshRenderer[] Meshs;
     public enum Character_Type
     {
         Dubu,
@@ -322,16 +322,11 @@ public class CharacterMgr : MonoBehaviour
                 mainCamera.GetComponent<Cam>().y = 0;
             }
         }
+        Meshs = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
         IsCharacterLoaded = true;
         // 무적시작
         StartOverPower();
-        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
-        Renderer[] temp = gameObject.GetComponentsInChildren<Renderer>();
-        for(int i = 0; i < temp.Length; i++)
-        {
-            temp[i].material.SetFloat("_death", .0f);
-        }
-        //Debug.Log("셋팅은 되고 ㅈ되나?");
+        thisCharacter.coroutine.StartRespawnMesh();
     }
     public void SetStarted()
     {
@@ -665,11 +660,9 @@ public class CharacterMgr : MonoBehaviour
     }
     public void SetDead()
     {
-        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
-        Renderer[] temp = gameObject.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < temp.Length; i++)
+        for(int i = 0; i < Meshs.Length; i++)
         {
-            temp[i].material.SetFloat("_death", .1f);
+            Meshs[i].enabled = true;
         }
     }
     public void StartRespawn()
