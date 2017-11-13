@@ -90,7 +90,8 @@ public class CharacterMgr : MonoBehaviour
 
     [SerializeField]
     public int PlayerCode = 0;
-
+    // 초기화 무적
+    public bool OverPower = false;
     public float RAY_MaxDist = 500;
 
     private bool IsCharacterLoaded = false; // 캐릭터 세팅이 끝났는가?
@@ -321,6 +322,9 @@ public class CharacterMgr : MonoBehaviour
             }
         }
         IsCharacterLoaded = true;
+        // 무적시작
+        StartOverPower();
+        transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
     }
     public void SetStarted()
     {
@@ -330,6 +334,18 @@ public class CharacterMgr : MonoBehaviour
             AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("Started", RPCMode.AllBuffered, null);
         }
     }
+    public void StartOverPower()
+    {
+        OverPower = true;
+        //Instantiate(ItemEffect[3], transform.position, Quaternion.identity).SetParent(transform);
+        transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
+        thisCharacter.coroutine.StartOverPower();
+    }
+    public void EndOverPower()
+    {
+        OverPower = false;
+        transform.GetComponent<Renderer>().material.SetFloat("_shield", 0f);
+    }
     [RPC]
     void Started()
     {
@@ -337,9 +353,6 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             thisCharacter.StartFalling();
-            // 메니저에 플레이어들을 세팅 시킨다.
-            //MyMgr.StartGetGamePlayerInfo();
-            // 자신의 정보를 네트워크를 통해 넘긴다.
             StartSetMyInfo();
         }
         Player_rb.useGravity = true;
@@ -513,6 +526,7 @@ public class CharacterMgr : MonoBehaviour
     [RPC]
     public void GetDamage(float de, NetworkViewID Attacker)
     {
+        if (OverPower) return;
         LastAttacker = Attacker;
         if (DepanceBuff) de = de * 0.8f;
         // 만약 방어 버프중이라면
@@ -636,7 +650,14 @@ public class CharacterMgr : MonoBehaviour
     public void StartDeadRPC()
     {
         thisCharacter.Is_Dead = true;
+        // 버프 초기화
+        EndBuff(CharacterSuper.ItemCode.Buff_Reset);
+        thisCharacter.coroutine.StartDead();
         thisAnim.PlayAnimation();
+    }
+    public void SetDead()
+    {
+        transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
     }
     public void StartRespawn()
     {
@@ -796,6 +817,7 @@ public class CharacterMgr : MonoBehaviour
                 BigBuff = true;
                 break;
             case CharacterSuper.ItemCode.Buff_CoolDown:
+                Instantiate(ItemEffect[3], transform.position, Quaternion.identity).SetParent(transform);
                 break;
             default:
                 break;
@@ -857,13 +879,27 @@ public class CharacterMgr : MonoBehaviour
             default:
                 if (AttackBuff)
                 {
+                    AttackBuffIOverLapping = 0;
                     AttackBuff = false;
                     Destroy(AttackBuffEffect);
                 }
                 if (DepanceBuff)
                 {
+                    DepanceBuffOverLapping = 0;
                     DepanceBuff = false;
                     Destroy(DepanceBuffEffect);
+                }
+                if (BigBuff)
+                {
+                    BigBuffOverLapping = 0;
+                    BigBuff = false;
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                if (SmallBuff)
+                {
+                    SmallBuff = false;
+                    SmallBuffOverLapping = 0;
+                    transform.localScale = new Vector3(1, 1, 1);
                 }
                 break;
         }

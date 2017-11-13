@@ -60,7 +60,25 @@ public class CoroutinClass : MonoBehaviour
         thisMgr.SetBuff(code);
         StartCoroutine(EndBuffItem(time, code, value));
     }
-    
+    // 무적
+    public virtual void StartOverPower()
+    {
+        StartCoroutine(SetOverPower());
+    }
+    public IEnumerator SetOverPower()
+    {
+        yield return new WaitForSeconds(5.0f);
+        thisMgr.EndOverPower();
+    }
+    public virtual void StartDead()
+    {
+        StartCoroutine(SetDead());
+    }
+    public virtual IEnumerator SetDead()
+    {
+        yield return new WaitForSeconds(2.0f);
+        thisMgr.SetDead();
+    }
     public virtual IEnumerator SetAttackState()
     {
         yield return new WaitForSeconds(thisCharacterScript.CurrentAttack);
