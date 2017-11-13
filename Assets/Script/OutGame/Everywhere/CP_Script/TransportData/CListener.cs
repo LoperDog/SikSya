@@ -134,7 +134,6 @@ public class CListener {
                 mRecvMessage.Enqueue(new DataChatMessage((ProtocolDetail)dataPacket.InfoProtocolDetail, dataPacket.InfoValue));
                 break;
             case (int)ProtocolInfo.RequestResult:
-                Debug.Log("여기! = " + (State)dataPacket.InfoTagNumber);
                 CheckState.ChangeState((State)dataPacket.InfoTagNumber);
                 break;
             case (int)ProtocolInfo.ClientCommend:

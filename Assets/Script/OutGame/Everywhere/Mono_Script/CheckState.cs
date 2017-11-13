@@ -38,7 +38,6 @@ public class CheckState : MonoBehaviour {
 
     public static void ChangeSceneState(ProtocolSceneName state)
     {
-        Debug.Log("씬변경 = " + state);
         mCurrentSceneState = state;
         mIsSceneChangeStart = true;
         //ActiveObject(state);
@@ -48,7 +47,6 @@ public class CheckState : MonoBehaviour {
     {
         mCurrentState = state;
         mIsStateChanged = true;
-        Debug.Log("현재 상태 표시 = " + mCurrentState);
         //ActiveObject(state);
     }
 
@@ -95,7 +93,6 @@ public class CheckState : MonoBehaviour {
                     Debug.Log("=================");
                     Debug.Log("MyCharaNum = " + MyInfoClass.GetInstance().MyCharNumb);
                     Debug.Log("MyGameNumb = " + MyInfoClass.GetInstance().MyGameNumb);
-                    Debug.Log("MyName = " + MyInfoClass.GetInstance().MyName);
                     Debug.Log("=================");
                     break;
                 default:
@@ -106,7 +103,6 @@ public class CheckState : MonoBehaviour {
 
         if(mIsStateChanged) // 상태가 바뀌면 처음 해주는 일 (한번만 함)
         {
-            Debug.Log("상태 변경되어 할 작업 mCurrentState = " + mCurrentState);
             switch (mCurrentState)
             {
                 case State.ClientFrontMenu: // Scene전환시 호출 기본

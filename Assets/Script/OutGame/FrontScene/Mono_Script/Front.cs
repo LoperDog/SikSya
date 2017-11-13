@@ -119,7 +119,6 @@ public class Front : MonoBehaviour
         string id = mInputGuestIDComponent.text;
         if (id != null && id != "")
         {
-            Debug.Log("id = " + id);
             MyInfoClass.GetInstance().MyName = id;
             //id = id.Replace(" ", "");
             DataPacketInfo dataIDPWString = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.FrontMenu, (int)ProtocolFrontMenuTag.GuestMenu, id);

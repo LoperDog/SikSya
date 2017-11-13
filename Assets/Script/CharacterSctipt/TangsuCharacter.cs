@@ -72,10 +72,12 @@ public class TangsuCharacter : CharacterSuper
         Transform temp = Instantiate(effect[4], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
+        mgr.RoundAttack[1].SetActive(true);
     }
     public void SpecialAttackEnd()
     {
         CharAnim.SetSpecialAttackEnd();
+        mgr.m_SpecialAttack.ReSetAttack();
     }
     public override void SetAnimator(AnimationSuper anim)
     {

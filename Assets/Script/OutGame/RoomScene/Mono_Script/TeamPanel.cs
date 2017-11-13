@@ -161,7 +161,6 @@ public class TeamPanel : MonoBehaviour {
 
     bool UpdateImage(ProtocolCharacterTagIndex tagIndex, string imageProtocol, bool isMy = false)
     {
-        Debug.Log("변경 위치 = " + tagIndex);
         Transform targetTr = SearchTargetPlayerImage(ConstValue.ProtocolCharacterTagIndexImage[(int)tagIndex]);
         if (targetTr != null)
         {

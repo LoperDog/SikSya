@@ -99,7 +99,7 @@ public class ConfigClass {
 
         TangsuStatus["Cartridge"] = 0f;//근접공격이라 장탄수 없음
         TangsuStatus["ReLoadTime"] = 0f;//재장전 안해
-        TangsuStatus["Attack"] = 80f;//공격력
+        TangsuStatus["Attack"] = 50f;//공격력
         TangsuStatus["AtttackSpeed"] = 0.25f;
 
         TangsuStatus ["Atttack1_Start"] = 0.33f;

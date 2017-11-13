@@ -32,7 +32,6 @@ public class EnterRoomPanel : MonoBehaviour {
         mInputRoomPWComponent.characterLimit = ConstValue.CharacterLimitPW;
         mInputRoomNumberComponent.characterLimit = ConstValue.CharacterLimitRoomNumber;
         mPrivateToggle.isOn = mInputRoomPWComponent.interactable;
-        Debug.Log("AwakeEnterRoomPanel");
     }
 
     void Update()

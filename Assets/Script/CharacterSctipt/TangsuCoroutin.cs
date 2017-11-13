@@ -110,7 +110,6 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        Debug.Log("특수기 시작된다");
         thisCharacterScript.CanControll = false;//제어불가
         TangsuChar.SpecialAttackReady();
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_Ready"]);//공격 순간
@@ -124,7 +123,7 @@ public class TangsuCoroutin : CoroutinClass
             config = new ConfigClass();
         }
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_End"]);//끝나는 시간
-        TangsuChar.SpecialAttackEnd();//애니메이션만 끝낸다
+        TangsuChar.SpecialAttackEnd();//애니메이션,판정을 끈다
         thisCharacterScript.CanControll = true;//제어가능
     }
     //도발
@@ -151,6 +150,5 @@ public class TangsuCoroutin : CoroutinClass
         yield return new WaitForSeconds(config.StatusConfigs["Tangsu"]["Taunt2"]);
         thisCharacterScript.CanControll = true;
         thisCharacterScript.Is_Taunt2 = false;
-        Debug.Log("특수기 꺼진다");
     }
 }

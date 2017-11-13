@@ -339,15 +339,12 @@ public class CharacterMgr : MonoBehaviour
     public void StartOverPower()
     {
         OverPower = true;
-        //Instantiate(ItemEffect[3], transform.position, Quaternion.identity).SetParent(transform);
-        //transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
         Instantiate(ItemEffect[4], transform.position, Quaternion.identity).SetParent(transform);
         thisCharacter.coroutine.StartOverPower();
     }
     public void EndOverPower()
     {
         OverPower = false;
-        //transform.GetComponent<Renderer>().material.SetFloat("_shield", 0f);
     }
     [RPC]
     void Started()

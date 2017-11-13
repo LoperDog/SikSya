@@ -36,7 +36,6 @@ public class Channel : MonoBehaviour {
 
     IEnumerator GameLogoFade()
     {
-        Debug.Log("Fade 시작");
         mGameLogoObj.GetComponent<Image>().color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
         float alpha = 0.0f;
         float delayTime = 0.0f;
