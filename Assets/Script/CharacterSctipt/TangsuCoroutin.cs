@@ -37,7 +37,6 @@ public class TangsuCoroutin : CoroutinClass
             StartCoroutine(Attack2Start());//2타공격 시작
             yield break;
         }
-        Debug.Log("연타중 들어오면 안됨");
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack1_End"]);//1타 끝
         thisCharacterScript.CanControll = true;//제어가능
         thisCharacterScript.Is_Attack = false;//1타 공격 끝
@@ -48,7 +47,6 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        Debug.Log("2타시작");
         thisCharacterScript.CanControll = false;//제어불가
         thisCharacterScript.Is_Attack2 = true;//2타공격 시작
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack2_Start"]);//2타 시작
@@ -67,7 +65,6 @@ public class TangsuCoroutin : CoroutinClass
             StartCoroutine(Attack3Start());//3타공격 시작
             yield break;
         }
-        Debug.Log("2타 끝");
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack2_End"]);//2타 끝
         thisCharacterScript.CanControll = true;//제어가능
         thisCharacterScript.Is_Attack2 = false;//2타 공격 끝
@@ -78,7 +75,6 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        Debug.Log("3타시작");
         thisCharacterScript.CanControll = false;//제어불가
         thisCharacterScript.Is_Attack3 = true;//3타공격 시작
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack3_Start"]);//3타 시작
@@ -90,9 +86,42 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        Debug.Log("3타 끝");
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack3_End"]);//3타 끝
         thisCharacterScript.CanControll = true;//제어가능
         thisCharacterScript.Is_Attack3 = false;//3타 공격 끝
+    }
+    //특수기
+    public override void StartSpecialAttackSetting()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        Debug.Log("일단 여긴 들어올까?");
+        thisMgr.SpecialAttackCoolTime = config.StatusConfigs ["Tangsu"] ["SpecialAttack_CoolTime"];
+        base.StartSpecialAttackSetting();
+    }
+    public override IEnumerator SetSpecialAttack()
+    {
+        if (thisCharacterScript.Is_Dead) yield break;
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        thisCharacterScript.CanControll = false;//제어불가
+        TangsuChar.SpecialAttackReady();
+        yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_Ready"]);//공격 순간
+        //이팩트,판정을 여기서 켠다
+        StartCoroutine(SpecialAttack_Start());
+    }
+    public IEnumerator SpecialAttack_Start()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_End"]);//끝나는 시간
+        TangsuChar.SpecialAttackEnd();
+        thisCharacterScript.CanControll = true;//제어가능
     }
 }

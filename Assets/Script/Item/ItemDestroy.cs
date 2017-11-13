@@ -5,6 +5,6 @@ using UnityEngine;
 public class ItemDestroy : MonoBehaviour {
     public void DestroyMe()
     {
-        Destroy(transform);
+        Destroy(gameObject);
     }
 }

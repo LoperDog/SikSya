@@ -55,16 +55,16 @@ public class GameMgr : MonoBehaviour
     }
     void Start ()
     {
-        //점수
-        Blue_Score = GameObject.Find("Blue_Score").GetComponent<Text>();
-        Red_Score = GameObject.Find("Red_Score").GetComponent<Text>();
-
         SettingUIPlayer = 0;
         PlayersName = new Dictionary<NetworkViewID, string>();
         PlayersTeam = new Dictionary<NetworkViewID, int>();
         PlayersChar = new Dictionary<NetworkViewID, int>();
         PlayersKill = new Dictionary<NetworkViewID, int>();
         PlayersDeath = new Dictionary<NetworkViewID, int>();
+
+        //점수
+        Blue_Score = GameObject.Find("Blue_Score").GetComponent<Text>();
+        Red_Score = GameObject.Find("Red_Score").GetComponent<Text>();
         //시간
         Game_Time_M = GameObject.Find("Time_M").GetComponent<Text>();
         Game_Time_S = GameObject.Find("Time_S").GetComponent<Text>();
@@ -301,6 +301,11 @@ public class GameMgr : MonoBehaviour
                         Team_Image[i].sprite = GameObject.Find("Red_ManduLive").GetComponent<Image>().sprite;
                         Team_Image[i].enabled = true;
                     }
+                    else//탕수
+                    {
+                        Team_Image [i].sprite = GameObject.Find("Red_TangsuLive").GetComponent<Image>().sprite;
+                        Team_Image [i].enabled = true;
+                    }
                 }
                 else//블루팀
                 {
@@ -313,6 +318,11 @@ public class GameMgr : MonoBehaviour
                     {
                         Team_Image[i].sprite = GameObject.Find("Blue_ManduLive").GetComponent<Image>().sprite;
                         Team_Image[i].enabled = true;
+                    }
+                    else//탕수
+                    {
+                        Team_Image [i].sprite = GameObject.Find("Blue_TangsuLive").GetComponent<Image>().sprite;
+                        Team_Image [i].enabled = true;
                     }
                 }
                 Team_ID[i].text = PlayersName[PlayersID[i]];

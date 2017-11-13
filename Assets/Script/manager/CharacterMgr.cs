@@ -40,10 +40,14 @@ public class CharacterMgr : MonoBehaviour
     public Text Special_Cool;
 
     //캐릭터별 UI
-    public Image Dubu_Special;
-    public Image Mandu_Special;
     public Image Dubu_Right;
+    public Image Dubu_Special;
+
     public Image Mandu_Right;
+    public Image Mandu_Special;
+
+    public Image Tangsu_Right;
+    public Image Tangsu_Special;
 
     // 네트워크에서 약간의 딜레이가 들어간 움직임 목표점.
     private Vector3 LerpPos;
@@ -181,6 +185,8 @@ public class CharacterMgr : MonoBehaviour
         Mandu_Special = GameObject.Find("Mandu_Special").GetComponent<Image>();
         Mandu_Right = GameObject.Find("Mandu_Right").GetComponent<Image>();
 
+        Tangsu_Right = GameObject.Find("Mandu_Special").GetComponent<Image>();  //탕수 이미지 수정 해야된다.
+        Tangsu_Special = GameObject.Find("Mandu_Right").GetComponent<Image>();  //탕수 이미지 수정 해야된다.
         if (config == null)
         {
             config = new ConfigClass();
@@ -220,7 +226,6 @@ public class CharacterMgr : MonoBehaviour
                 m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<TangsuAttack>();
                 m_SpecialAttack.SetEffect(Effect[7]);
-
                 break;
             default:
 
@@ -244,7 +249,6 @@ public class CharacterMgr : MonoBehaviour
         m_SpecialAttack.Dam = config.StatusConfigs[CharType]["SpecialAttack"];
         m_StrongAttack.ReSetAttack();
         m_SpecialAttack.ReSetAttack();
-        //thisCharacter.SetCoroutine(gameObject.AddComponent<DubuCoroutin>());
         thisCharacter.mgr = this;
         thisCharacter.SetPlayerTr(Player_tr);
         thisCharacter.SetPlayerRb(Player_rb);
@@ -282,6 +286,8 @@ public class CharacterMgr : MonoBehaviour
                     Mandu_Right.enabled = true;
                     break;
                 case Character_Type.Tangsu:
+                    Tangsu_Special.enabled = true;
+                    Tangsu_Right.enabled = true;
                     break;
                 default:
 
@@ -641,10 +647,8 @@ public class CharacterMgr : MonoBehaviour
     {
         thisCharacter.Is_Dead = false;
         thisCharacter.Long_Falling = false;
-        Debug.Log(LerpPos);
         Player_tr.position = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition[MyInfoClass.GetInstance().MyGameNumb].position;
         Player_tr.rotation = GameObject.FindGameObjectWithTag("MGR").GetComponent<NetworkMgr>().PlayerCreatePosition [MyInfoClass.GetInstance().MyGameNumb].rotation;
-        Debug.Log(LerpPos);
         //Player_tr.position = new Vector3(Player_tr.position.x, 10.0f, Player_tr.position.z);
         Start();
         thisCharacter.StartFalling();

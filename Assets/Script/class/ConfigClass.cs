@@ -33,8 +33,8 @@ public class ConfigClass {
         #region 만두콘피그
         ManduStatus["HP"] = 150f; //체력
 
-        ManduStatus["MoveSpeed"] = 1.5f;
-        ManduStatus["RunSpeed"] = 3.5f;
+        ManduStatus["MoveSpeed"] = 2.0f;
+        ManduStatus["RunSpeed"] = 5.0f;
         ManduStatus["JumpForce"] = 13f;
 
         ManduStatus["Cartridge"] = 7f;//장탄수
@@ -61,8 +61,8 @@ public class ConfigClass {
         #region 두부콘피그
         DubuStatus["HP"] = 125f;//체력
 
-        DubuStatus["MoveSpeed"] = 2.0f;
-        DubuStatus["RunSpeed"] = 6.0f;
+        DubuStatus["MoveSpeed"] = 2.5f;
+        DubuStatus["RunSpeed"] = 7.0f;
         DubuStatus["JumpForce"] = 10;
 
         DubuStatus["Cartridge"] = 50f;//장탄수
@@ -116,6 +116,9 @@ public class ConfigClass {
 
         TangsuStatus["SpecialAttack"] = 100.0f;//Q스킬 대미지
         TangsuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
+
+        TangsuStatus ["SpecialAttack_Ready"] = 0.9f;//공격 순간
+        TangsuStatus ["SpecialAttack_End"] = 1.2f;//공격부터 끝나는 시간
 
         TangsuPosition.Add("FirePosition", new Vector3(0.0f, 0.0f, 0.0f));
 

@@ -37,21 +37,13 @@ public class TangsuCharacter : CharacterSuper
 
     }
     //특수기 시작
-    public override void SpecialAttack()
-    {
-
-    }
     public void SpecialAttackReady()
     {
-
-    }
-    public void SpecialAttack_ing()
-    {
-        
+        CharAnim.SetSpecialAttackReady();
     }
     public void SpecialAttackEnd()
     {
-
+        CharAnim.SetSpecialAttackEnd();
     }
     public override void SetAnimator(AnimationSuper anim)
     {
