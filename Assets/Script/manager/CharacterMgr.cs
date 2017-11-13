@@ -268,7 +268,6 @@ public class CharacterMgr : MonoBehaviour
         // 캐릭터 마스터 스테이터스
         thisCharacter.SetCharacterStatus(config.StatusConfigs[CharType]);
         MyMgr = GameObject.FindGameObjectWithTag("MGR").GetComponent<GameMgr>();
-        Debug.Log("마스터 세팅후에 ㅈ되나?");
         //UI
         if (_networkView.isMine)
         {
@@ -282,6 +281,8 @@ public class CharacterMgr : MonoBehaviour
                 case Character_Type.Mandu:
                     Mandu_Special.enabled = true;
                     Mandu_Right.enabled = true;
+                    break;
+                case Character_Type.Tangsu:
                     break;
                 default:
 
