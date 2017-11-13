@@ -346,26 +346,13 @@ public class CharacterMgr : MonoBehaviour
         OverPower = true;
         //Instantiate(ItemEffect[3], transform.position, Quaternion.identity).SetParent(transform);
         //transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
-        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
-        Renderer[] temp;
-        temp = gameObject.GetComponentsInChildren<Renderer>();
-        for(int i  = 0; i < temp.Length; i++)
-        {
-            temp[i].material.SetFloat("_shield", 1f);
-        }
+        Instantiate(ItemEffect[4], transform.position, Quaternion.identity).SetParent(transform);
         thisCharacter.coroutine.StartOverPower();
     }
     public void EndOverPower()
     {
         OverPower = false;
         //transform.GetComponent<Renderer>().material.SetFloat("_shield", 0f);
-        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
-        Renderer[] temp;
-        temp = gameObject.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < temp.Length; i++)
-        {
-            temp[i].material.SetFloat("_shield", 0f);
-        }
     }
     [RPC]
     void Started()
@@ -615,7 +602,7 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.CharacterUpdate();
         thisCharacter.Check_Ground();
         thisAnim.PlayAnimation();
-        if (Player_rb.velocity.y >= 15)
+        if (Player_rb.velocity.y >= 15 && MyInfoClass.GetInstance().MyCharNumb == 0)
         {
             Player_rb.velocity = new Vector3(Player_rb.velocity.x, 0.0f, Player_rb.velocity.z);
         }
