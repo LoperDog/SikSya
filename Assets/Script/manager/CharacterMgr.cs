@@ -596,7 +596,7 @@ public class CharacterMgr : MonoBehaviour
         thisCharacter.CharacterUpdate();
         thisCharacter.Check_Ground();
         thisAnim.PlayAnimation();
-        if (Player_rb.velocity.y >= 15)
+        if (Player_rb.velocity.y >= 15 && MyInfoClass.GetInstance().MyCharNumb == 0)
         {
             Player_rb.velocity = new Vector3(Player_rb.velocity.x, 0.0f, Player_rb.velocity.z);
         }
