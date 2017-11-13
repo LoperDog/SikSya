@@ -325,7 +325,13 @@ public class CharacterMgr : MonoBehaviour
         IsCharacterLoaded = true;
         // 무적시작
         StartOverPower();
-        transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
+        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
+        Renderer[] temp = gameObject.GetComponentsInChildren<Renderer>();
+        for(int i = 0; i < temp.Length; i++)
+        {
+            temp[i].material.SetFloat("_death", .0f);
+        }
+        //Debug.Log("셋팅은 되고 ㅈ되나?");
     }
     public void SetStarted()
     {
@@ -339,13 +345,27 @@ public class CharacterMgr : MonoBehaviour
     {
         OverPower = true;
         //Instantiate(ItemEffect[3], transform.position, Quaternion.identity).SetParent(transform);
-        transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
+        //transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
+        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
+        Renderer[] temp;
+        temp = gameObject.GetComponentsInChildren<Renderer>();
+        for(int i  = 0; i < temp.Length; i++)
+        {
+            temp[i].material.SetFloat("_shield", 1f);
+        }
         thisCharacter.coroutine.StartOverPower();
     }
     public void EndOverPower()
     {
         OverPower = false;
-        transform.GetComponent<Renderer>().material.SetFloat("_shield", 0f);
+        //transform.GetComponent<Renderer>().material.SetFloat("_shield", 0f);
+        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_shield", 1f);
+        Renderer[] temp;
+        temp = gameObject.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < temp.Length; i++)
+        {
+            temp[i].material.SetFloat("_shield", 0f);
+        }
     }
     [RPC]
     void Started()
@@ -547,7 +567,7 @@ public class CharacterMgr : MonoBehaviour
         if (_networkView.isMine)
         {
             // 얻은 아이템
-            int ItemKind = Random.Range(0, 5);
+            int ItemKind = Random.Range(0, 6);
             _networkView.RPC("SetITem", RPCMode.AllBuffered, ItemKind);
         }
     }
@@ -658,7 +678,12 @@ public class CharacterMgr : MonoBehaviour
     }
     public void SetDead()
     {
-        transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
+        //GameObject.FindWithTag("Renderer").transform.GetComponent<Renderer>().material.SetFloat("_death", .0f);
+        Renderer[] temp = gameObject.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < temp.Length; i++)
+        {
+            temp[i].material.SetFloat("_death", .1f);
+        }
     }
     public void StartRespawn()
     {

@@ -221,7 +221,7 @@ public class NetworkMgr : MonoBehaviour
         }
         else//블루
         {
-            Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + CheckTeam]
+            Network.Instantiate(player[MyInfoClass.GetInstance().MyCharNumb + 3]
             , pos.position, pos.rotation, 0);
         }
     }

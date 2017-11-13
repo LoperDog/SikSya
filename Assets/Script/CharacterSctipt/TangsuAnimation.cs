@@ -33,10 +33,10 @@ public class TangsuAnimation : AnimationSuper
     //특수기
     public void SetSpecialAttackReady()
     {
-        m_Anim.SetBool("Is_SpecialAttackReady", true);
+        m_Anim.SetBool("Is_SpecialAttack", true);
     }
     public void SetSpecialAttackEnd()
     {
-        m_Anim.SetBool("Is_SpecialAttackReady", false);
+        m_Anim.SetBool("Is_SpecialAttack", false);
     }
 }

@@ -21,6 +21,7 @@ public class TangsuCoroutin : CoroutinClass
         }
         thisCharacterScript.CanControll = false;//제어불가
         thisCharacterScript.Is_Attack = true;//공격시작
+        TangsuChar.Attack1();//1타 이팩트 킨다.
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack1_Start"]);//1타 시작
         StartCoroutine(Attack1End());//1타 끝내러 간다
     }
@@ -49,6 +50,7 @@ public class TangsuCoroutin : CoroutinClass
         }
         thisCharacterScript.CanControll = false;//제어불가
         thisCharacterScript.Is_Attack2 = true;//2타공격 시작
+        TangsuChar.Attack2();//2타 이팩트 킨다.
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack2_Start"]);//2타 시작
         StartCoroutine(Attack2End());
     }
@@ -77,6 +79,7 @@ public class TangsuCoroutin : CoroutinClass
         }
         thisCharacterScript.CanControll = false;//제어불가
         thisCharacterScript.Is_Attack3 = true;//3타공격 시작
+        TangsuChar.Attack3();//3타 이팩트 킨다.
         yield return new WaitForSeconds(thisMgr.StrongAttackCoolTime = config.StatusConfigs ["Tangsu"] ["Atttack3_Start"]);//3타 시작
         StartCoroutine(Attack3End());
     }
@@ -97,7 +100,6 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
-        Debug.Log("일단 여긴 들어올까?");
         thisMgr.SpecialAttackCoolTime = config.StatusConfigs ["Tangsu"] ["SpecialAttack_CoolTime"];
         base.StartSpecialAttackSetting();
     }
@@ -108,6 +110,7 @@ public class TangsuCoroutin : CoroutinClass
         {
             config = new ConfigClass();
         }
+        Debug.Log("특수기 시작된다");
         thisCharacterScript.CanControll = false;//제어불가
         TangsuChar.SpecialAttackReady();
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_Ready"]);//공격 순간
@@ -123,5 +126,31 @@ public class TangsuCoroutin : CoroutinClass
         yield return new WaitForSeconds(config.StatusConfigs ["Tangsu"] ["SpecialAttack_End"]);//끝나는 시간
         TangsuChar.SpecialAttackEnd();
         thisCharacterScript.CanControll = true;//제어가능
+    }
+    //도발
+    public override IEnumerator SetTaunt1()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        thisCharacterScript.CanControll = false;
+        thisCharacterScript.Is_Taunt1 = true;
+        yield return new WaitForSeconds(config.StatusConfigs["Tangsu"]["Taunt1"]);
+        thisCharacterScript.CanControll = true;
+        thisCharacterScript.Is_Taunt1 = false;
+    }
+    public override IEnumerator SetTaunt2()
+    {
+        if (config == null)
+        {
+            config = new ConfigClass();
+        }
+        thisCharacterScript.CanControll = false;
+        thisCharacterScript.Is_Taunt2 = true;
+        yield return new WaitForSeconds(config.StatusConfigs["Tangsu"]["Taunt2"]);
+        thisCharacterScript.CanControll = true;
+        thisCharacterScript.Is_Taunt2 = false;
+        Debug.Log("특수기 꺼진다");
     }
 }

@@ -120,6 +120,9 @@ public class ConfigClass {
         TangsuStatus ["SpecialAttack_Ready"] = 0.9f;//공격 순간
         TangsuStatus ["SpecialAttack_End"] = 1.2f;//공격부터 끝나는 시간
 
+        TangsuStatus["Taunt1"] = 2.7f;
+        TangsuStatus["Taunt2"] = 3.3f;
+
         TangsuPosition.Add("FirePosition", new Vector3(0.0f, 0.0f, 0.0f));
 
         #endregion
