@@ -15,6 +15,8 @@ public class ChangeCharacter : MonoBehaviour {
     GameObject[] mDubu = new GameObject[2];
     [SerializeField]
     GameObject[] mMandu = new GameObject[2];
+    [SerializeField]
+    GameObject[] mTangsu = new GameObject[2];
 
     // Use this for initialization
     void Awake () {
@@ -52,7 +54,7 @@ public class ChangeCharacter : MonoBehaviour {
 
     public void SelectTangsuyuk()
     {
-        //SelectCharacter(ProtocolCharacterImageNameIndex.Tangsuyuk);
+        SelectCharacter(ProtocolCharacterImageNameIndex.Tangsuyuk);
     }
 
     public void ReadyButton()
@@ -88,11 +90,17 @@ public class ChangeCharacter : MonoBehaviour {
             g.SetActive(false);
             g.transform.position = new Vector3();
         }
+        foreach(GameObject g in mTangsu)
+        {
+            g.SetActive(false);
+            g.transform.position = new Vector3();
+        }
     }
 
     void SelectCharacterMotion(ProtocolCharacterImageNameIndex characterIndex)
     {
         SelectCharacterInit();
+        Debug.Log("characterIndex" + characterIndex);
         int team = (MyInfoClass.GetInstance().MyGameNumb % 2); // red : 짝수 , blue : 홀수
         switch (characterIndex)
         {
@@ -103,6 +111,7 @@ public class ChangeCharacter : MonoBehaviour {
                 mMandu[team].SetActive(true);
                 break;
             case ProtocolCharacterImageNameIndex.Tangsuyuk:
+                mTangsu[team].SetActive(true);
                 break;
             default:
                 break;

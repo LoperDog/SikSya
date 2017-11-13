@@ -11,13 +11,15 @@ public class Channel : MonoBehaviour {
     
     [SerializeField]
     GameObject[] ChannelChannel = new GameObject[ConstValue.ChannelSceneCharacterKind];
+    GameObject mGameLogoObj;
     // Use this for initialization
     void Awake () {
         //mMatchingPanel = GameObject.FindGameObjectWithTag("MatchingPanel");
         ChannelCharacterInit();
-        ChannelChannel[ChannelSelectRandomCharacter()].SetActive(true);
+        //ChannelChannel[ChannelSelectRandomCharacter()].SetActive(true); // 랜덤 캐릭터 출력
         mSender = CSender.GetInstance();
         GameObject.FindGameObjectWithTag("TagChannelMyNameText").GetComponent<Text>().text = MyInfoClass.GetInstance().MyName;
+        mGameLogoObj = GameObject.FindGameObjectWithTag("TagChannelMaster").GetComponentInChildren<Transform>().FindChild("GameLogo").gameObject;
     }
 	
 	// Update is called once per frame
@@ -30,6 +32,27 @@ public class Channel : MonoBehaviour {
                 CancleMatching();
             }
         }
+    }
+
+    IEnumerator GameLogoFade()
+    {
+        Debug.Log("Fade 시작");
+        mGameLogoObj.GetComponent<Image>().color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
+        float alpha = 0.0f;
+        float delayTime = 0.0f;
+        while (delayTime < 9.0f)
+        {
+            delayTime += 1.0f;
+            yield return new WaitForSeconds(1.0f);
+        }
+        while(alpha < 255.0f)
+        {
+            mGameLogoObj.GetComponent<Image>().color = new Color(255.0f, 255.0f, 255.0f, alpha);
+            alpha += 5.0f;
+            yield return new WaitForSeconds(0.2f);
+        }
+       
+        yield return null;
     }
 
     void ChannelCharacterInit()

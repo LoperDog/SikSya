@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CheckState : MonoBehaviour {
+    public MovieTexture mChannelMovie;
     static ProtocolSceneName mCurrentSceneState;
     static State mCurrentState;
     static GameObject mChannelMasterPanel;
@@ -61,8 +62,6 @@ public class CheckState : MonoBehaviour {
         return mCurrentSceneState;
     }
 
-
-
     void Update()
     {
         if(mIsSceneChanged) // 씬이 바뀌고 난 후 처음 해주는 일 (한번만 함)
@@ -79,6 +78,10 @@ public class CheckState : MonoBehaviour {
                     break;
                 case ProtocolSceneName.ChannelScene:
                     mChannelMasterPanel = GameObject.FindGameObjectWithTag("TagChannelMaster");
+                    Channel channelScript = GameObject.FindGameObjectWithTag("LoginSuccessPanel").GetComponent<Channel>();
+                    channelScript.StartCoroutine("GameLogoFade");
+                    mChannelMovie.Stop();
+                    mChannelMovie.Play();
                     ChangeState(State.ClientChannelMenu);// 채널 메뉴
                     break;
                 case ProtocolSceneName.RoomScene:
@@ -111,29 +114,29 @@ public class CheckState : MonoBehaviour {
                     break;
                 case State.ClientGuest:
                     FrontInit(false, true);
-                    mFront.GetComponent<RawImage>().color = Color.gray;
+                    mFront.GetComponent<RawImage>().color = Color.black;
                     break;
                 case State.ClientRequestMatching:
                     break;
                 case State.ClientMatching:
                     ChannelInit(true, false, false, false);
-                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
+                    //mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientChannelMenu:
                     ChannelInit(false, false, false, false);
-                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.white;
+                    //mChannelMasterPanel.GetComponent<RawImage>().color = Color.white;
                     break;
                 case State.ClientMakeRoom:
                     ChannelInit(false, true, false, false);
-                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
+                    //mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientEnterSpecialRoom:
                     ChannelInit(false, false, true, false);
-                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
+                    //mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientFailEnterRoom:
                     ChannelInit(false, false, true, true);
-                    mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
+                    //mChannelMasterPanel.GetComponent<RawImage>().color = Color.gray;
                     break;
                 case State.ClientReady:
                     Debug.Log("Ready 성공");

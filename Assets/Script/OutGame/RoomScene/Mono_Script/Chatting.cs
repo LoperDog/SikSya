@@ -18,6 +18,7 @@ public class Chatting : MonoBehaviour {
     RectTransform mRectTransform;
     Text mText;
     List<String> DialogueRecord;
+    Scrollbar mChatScrollbar;
 
     int mLimitDialogueWindow;  // 몇줄까지 나타내는지 
     string my;
@@ -25,6 +26,7 @@ public class Chatting : MonoBehaviour {
     {
         mSender = CSender.GetInstance();
         mListener = CListener.GetInstance();
+        mChatScrollbar = GameObject.FindGameObjectWithTag("TagChatScrollbar").GetComponent<Scrollbar>();
         mInputFieldObj = GameObject.FindGameObjectWithTag("TextInput");
         mViewPort = GameObject.FindGameObjectWithTag(ConstValue.ProtocolMessageTag[(int)ProtocolMessageTag.Text]);
         mInputComponent = mInputFieldObj.GetComponent<InputField>();
@@ -39,6 +41,8 @@ public class Chatting : MonoBehaviour {
         mRectTransform.sizeDelta = new Vector2(960, 2200);
         DialogueRecordInit();
         my = "나 : ";
+        //mChatScrollbar.value = 0.0f;
+        //mChatScrollbar.size = 0.1f;
     }
 	
     void DialogueRecordInit()
@@ -131,5 +135,17 @@ public class Chatting : MonoBehaviour {
         OutSoundPlayer.PlayClickSound(SoundClip.Click);
     }
 
+    public void ChattSlidbarUpButton()
+    {
+        float val = (mChatScrollbar.value + ConstValue.ChatScrollbarButtonMoveValue);
+        if (val < 1.0f)
+        {
+            mChatScrollbar.value += ConstValue.ChatScrollbarButtonMoveValue;
+        }
+        else
+        {
+            mChatScrollbar.value = 1.0f;
+        }
+    }
 
 }

@@ -83,7 +83,7 @@ public class MakeRoomPanel : MonoBehaviour {
         }
     }
 
-    public void SetPrivateRoom()
+    public void SetPublicRoom()
     {
         mInputRoomPWComponent.interactable = mSelectPrivateToggle.GetComponent<Toggle>().isOn;
         if(false == mInputRoomPWComponent.interactable)

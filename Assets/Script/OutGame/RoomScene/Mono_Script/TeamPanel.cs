@@ -22,11 +22,12 @@ public class TeamPanel : MonoBehaviour {
     List<Transform> mPlayerNameImageList;
     Texture[] mCharacterTextureArray; // 캐릭터 이미지 텍스쳐 보관
     MyInfoClass mMyInfo;
-
+    bool mIsMyMarkSet;
 
     void Awake()
     {
         Screen.lockCursor = false;
+        mIsMyMarkSet = false;
         mListener = CListener.GetInstance();
         mMyInfo = MyInfoClass.GetInstance();
         mCharacterTextureArray = new Texture[ConstValue.CharacterKind];
@@ -38,18 +39,31 @@ public class TeamPanel : MonoBehaviour {
         mPlayerNameInfoList = new List<Transform>();
         mPlayerReadyInfoList = new List<Transform>();
         mPlayerNameImageList = new List<Transform>();
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerInfo"))
+        GameObject[] playerInfo = GameObject.FindGameObjectsWithTag("PlayerInfo");
+        for(int i=0; i< ConstValue.MaxPlayGame; ++i)
         {
-            mPlayerInfo.Add(g);
+            mPlayerInfo.Add(playerInfo[i]);
         }
-        foreach (GameObject g in mPlayerInfo)
+        for(int i=0; i<ConstValue.MaxPlayGame; ++i)
         {
-            mPlayerImageInfoList.Add(g.transform.FindChild("Image"));
-            mPlayerNameInfoList.Add(g.transform.FindChild("Name"));
-            mPlayerReadyInfoList.Add(g.transform.FindChild("ReadyImage"));
-            mPlayerNameImageList.Add(g.transform.FindChild("NameImage"));
+            mPlayerImageInfoList.Add(mPlayerInfo[i].transform.FindChild("Image"));
+            mPlayerNameInfoList.Add(mPlayerInfo[i].transform.FindChild("Name"));
+            mPlayerReadyInfoList.Add(mPlayerInfo[i].transform.FindChild("ReadyImage"));
+            mPlayerNameImageList.Add(mPlayerInfo[i].transform.FindChild("NameImage"));
         }
-    }
+            //foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerInfo"))
+            //{
+            //    mPlayerInfo.Add(g);
+            //}
+            //foreach (GameObject g in mPlayerInfo)
+            //{
+            //    mPlayerImageInfoList.Add(g.transform.FindChild("Image"));
+            //    mPlayerNameInfoList.Add(g.transform.FindChild("Name"));
+            //    mPlayerReadyInfoList.Add(g.transform.FindChild("ReadyImage"));
+            //    mPlayerNameImageList.Add(g.transform.FindChild("NameImage"));
+            //    mPlayerMyMarkList.Add(g.transform.FindChild("My"));
+            //}
+        }
 
     void Update()
     {
@@ -66,6 +80,10 @@ public class TeamPanel : MonoBehaviour {
             {
                 case ProtocolDetail.MyInfoImage:
                     UpdateImage(dataInfo.DataTagNumber, dataInfo.DataValue, true);
+                    if (!mIsMyMarkSet)
+                    {
+                        GameObject.FindGameObjectWithTag(ConstValue.ProtocolCharacterTagIndexMyMark[mMyInfo.MyGameNumb]).GetComponent<Image>().enabled = true;
+                    }
                     break;
                 case ProtocolDetail.ImageChange:
                     UpdateImage(dataInfo.DataTagNumber, dataInfo.DataValue);
