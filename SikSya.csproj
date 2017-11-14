@@ -194,6 +194,7 @@
     <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\RoomInfo.cs" />
     <Compile Include="Assets\Script\OutGame\RoomScene\Mono_Script\TeamPanel.cs" />
     <Compile Include="Assets\Script\OutGame\StartMovie.cs" />
+    <Compile Include="Assets\Script\TestScript\TangsuyukWeapon.cs" />
     <Compile Include="Assets\Script\TestScript\TestScript.cs" />
     <Compile Include="Assets\Script\TestScript\coroutinTestSuper.cs" />
     <Compile Include="Assets\Script\class\AnimationSuper.cs" />
@@ -275,6 +276,7 @@
     <None Include="Assets\BackGround\LightingBox\VolumetricLight\Shaders\VolumetricLight.shader" />
     <None Include="Assets\BackGround\floor\Tile.shader" />
     <None Include="Assets\Character\Character.shader" />
+    <None Include="Assets\Character\Character2.shader" />
     <None Include="Assets\EF(NEW)\Attack\E_Hit\Rim.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\01.shader" />
     <None Include="Assets\EF(NEW)\Resource\S\02.shader" />

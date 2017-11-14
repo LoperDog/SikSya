@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 48a73a6e71e47044e8d1a9ec05d8bcde
-timeCreated: 1510523610
+guid: b62f7353fd6f2ba4982fbf96f35194db
+timeCreated: 1510655301
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -87,9 +87,9 @@ ModelImporter:
     100158: Point001
     100160: Point002
     100162: Point003
-    100164: //RootNode
-    100166: Tangsu
-    100168: Tangsuyook
+    100164: Tangsu
+    100166: Tangsuyook
+    100168: //RootNode
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -172,13 +172,13 @@ ModelImporter:
     400158: Point001
     400160: Point002
     400162: Point003
-    400164: //RootNode
-    400166: Tangsu
-    400168: Tangsuyook
+    400164: Tangsu
+    400166: Tangsuyook
+    400168: //RootNode
     4300000: Tangsu
     4300002: Head
     4300004: Tangsuyook
-    7400000: Skill2
+    7400000: Tumbling
     9500000: //RootNode
     13700000: Head
     13700002: Tangsu
@@ -207,10 +207,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Skill2
+      name: Tumbling
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 63
+      lastFrame: 26
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -224,7 +224,7 @@ ModelImporter:
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000

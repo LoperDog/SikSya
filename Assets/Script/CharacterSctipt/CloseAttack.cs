@@ -59,7 +59,7 @@ public class CloseAttack : MonoBehaviour
                 }
             }
 
-             Instantiate(effect, tempTransForm.position, Quaternion.identity);
+            Instantiate(effect, tempTransForm.position, Quaternion.identity);
 
             Target_NetworkView[tempIndex] = tempTransForm.GetComponent<NetworkView>();
             AttackPlayer(Target_NetworkView[tempIndex]);

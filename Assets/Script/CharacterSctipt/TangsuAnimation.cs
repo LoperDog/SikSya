@@ -20,15 +20,11 @@ public class TangsuAnimation : AnimationSuper
     //강공격
     public void SetStrongAttackReady()
     {
-
-    }
-    public void SetStrongAttackDash()
-    {
-
+        m_Anim.SetBool("Tumbling", true);
     }
     public void SetStrongAttackEnd()
     {
-
+        m_Anim.SetBool("Tumbling", false);
     }
     //특수기
     public void SetSpecialAttackReady()

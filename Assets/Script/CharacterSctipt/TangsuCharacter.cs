@@ -6,8 +6,14 @@ public class TangsuCharacter : CharacterSuper
 {
     public TangsuAnimation CharAnim;
 
-    public bool ComboAttack = false;
+    public bool ComboAttack;
+    public TangsuCoroutin TangsuCorutine;
 
+    public override void SetCoroutine(CoroutinClass co)
+    {
+        base.SetCoroutine(co);
+        TangsuCorutine = (TangsuCoroutin)co;
+    }
     override public void Attack()
     {
         if (!Is_Attack && !Is_Jump)
@@ -15,45 +21,55 @@ public class TangsuCharacter : CharacterSuper
             coroutine.StartAttackSetting();
         }
     }
+    //구르기
+    public override void StrongAttack()
+    {
+        coroutine.StartStrongAttckSetting();
+    }
     //일반공격 시작
     public void Attack1()
     {
         Transform temp = Instantiate(effect[0], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
+        mgr.RoundAttack[0].SetActive(true);
     }
     public void Attack2()
     {
         Transform temp = Instantiate(effect[1], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
+        mgr.RoundAttack[0].SetActive(true);
     }
     public void Attack3()
     {
         Transform temp = Instantiate(effect[2], Player_tr.position, Player_tr.rotation);
         temp.SetParent(Player_tr);
         temp.GetComponent<DestroyMe1>().SetTargetPosition(Player_tr.position);
+        mgr.RoundAttack[0].SetActive(true);
+    }
+    public override void CharacterUpdate()
+    {
+        if (TangsuCorutine.TangsuDoingAttack)
+        {
+            //Player_rb.velocity = new Vector3(0.0f, Player_rb.velocity.y, 0.0f);
+            mgr.keyh = 0.0f;
+            mgr.keyv = 0.0f;
+        }
+        base.CharacterUpdate();
+        if (Input.GetMouseButton(0))
+        {
+            ComboAttack = true;
+        }
     }
     //강공격 시작
-    public override void StrongAttack()
-    {
-
-    }
     public void StrongAttackReady()
     {
-
+        CharAnim.SetStrongAttackReady();
     }
     public void StrongAttackEnd()
     {
-
-    }
-    public void StrongAttackShootStart()
-    {
-
-    }
-    public void StrongAttackShootEnd()
-    {
-
+        CharAnim.SetStrongAttackEnd();
     }
     //특수기 시작
     public override void SpecialAttack()

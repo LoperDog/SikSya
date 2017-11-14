@@ -16,7 +16,7 @@ public class CharacterMgr : MonoBehaviour
     private Rigidbody Player_rb;
     private Transform Camera_tr;
 
-    private NetworkView _networkView;
+    public NetworkView _networkView;
     private Vector3 Char_Pos;
     private Quaternion Char_Rot;
 
@@ -138,11 +138,13 @@ public class CharacterMgr : MonoBehaviour
     public float keyh
     {
         get { return Key_H; }
+        set { Key_H = value; }
     }
     private float Key_V = 0.0f;
     public float keyv
     {
         get { return Key_V; }
+        set { Key_V = value; }
     }
     // 공격키
     private bool Click_Left = false;        // 개별동기
@@ -165,6 +167,7 @@ public class CharacterMgr : MonoBehaviour
     #region 캐릭터의범위공격 지정.
     [SerializeField]
     public GameObject[] RoundAttack;
+    public CloseAttack m_Attack;
     public CloseAttack m_StrongAttack;
     public CloseAttack m_SpecialAttack;
     #endregion
@@ -227,7 +230,7 @@ public class CharacterMgr : MonoBehaviour
                 m_StrongAttack = RoundAttack[0].GetComponent<TangsuAttack>();
                 m_StrongAttack.SetEffect(Effect[7]);
                 m_SpecialAttack = RoundAttack[1].GetComponent<TangsuAttack>();
-                m_SpecialAttack.SetEffect(Effect[7]);
+                m_SpecialAttack.SetEffect(Effect[8]);
                 break;
             default:
 
@@ -703,7 +706,7 @@ public class CharacterMgr : MonoBehaviour
         Key_Special = Input.GetKey(KeyCode.Q);
         if (Input.GetKey(KeyCode.Q))
         {
-            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2/* && SpecialAttackCoolTime == 0*/)//쿨타임
+            if (!thisCharacter.Is_StrongAttack && !thisCharacter.Is_SpecialAttack && !thisCharacter.Is_Attack && !thisCharacter.Is_ReLoad && thisCharacter.GetIsGroud() && !thisCharacter.Is_Taunt1 && !thisCharacter.Is_Taunt2 && SpecialAttackCoolTime == 0)
             {
                 _networkView.RPC("SetCharacterSpecialAttack", RPCMode.AllBuffered, null);
             }
@@ -1020,6 +1023,18 @@ public class CharacterMgr : MonoBehaviour
             thisCharacter.CharSpeed = Speed;
             LastSyncTime = Time.time;
         }
+    }
+    [RPC]
+    public void TempTangsuAttack2()
+    {
+        TangsuCharacter temp = (TangsuCharacter)thisCharacter;
+        temp.TangsuCorutine.StartAttack2();
+    }
+    [RPC]
+    public void TempTangsuAttack3()
+    {
+        TangsuCharacter temp = (TangsuCharacter)thisCharacter;
+        temp.TangsuCorutine.StartAttack3();
     }
     #endregion
 }

@@ -170,9 +170,12 @@ namespace ConstValueInfo
         public static readonly string[] ProtocolSceneName = { "StartScene", "FrontScene", "ChannelScene", "RoomScene", "Main" };
         //public static readonly string[] ProtocolSceneName = { "FrontScene", "ChannelScene", "RoomScene", "TestScene" };
         public const int CharacterKind = 3;
-        public const string NoticeReadyNoChangeCharacter = "이미 요청중이거나 준비 상태이므로 캐릭터를 변경할 수 없습니다. 먼저 준비를 풀어주세요.";
-        public const string NoticeReadyNoBackExit = "이미 요청중이거나 준비 상태이므로 방을 나갈 수 없습니다. 먼저 준비를 풀어주세요.";
-        public const string NoticeNotReadyState = "변화가 발생하여 준비가 풀렸습니다. 다시 준비 해주세요.";
+        public const string NoticeReadyNoChangeCharacter = "준비 상태일 때는 캐릭터 변경이 불가능합니다.";
+        public const string NoticeReadyNoBackExit = "준비 상태일 때는 나갈 수 없습니다.";
+        public const string NoticeNotReadyState = "변화가 발생하여 준비가 풀렸습니다.";
+        //public const string NoticeReadyNoChangeCharacter = "이미 요청중이거나 준비 상태이므로 캐릭터를 변경할 수 없습니다. 먼저 준비를 풀어주세요.";
+        //public const string NoticeReadyNoBackExit = "이미 요청중이거나 준비 상태이므로 방을 나갈 수 없습니다. 먼저 준비를 풀어주세요.";
+        //public const string NoticeNotReadyState = "변화가 발생하여 준비가 풀렸습니다. 다시 준비 해주세요.";
         public static readonly string[] InfoPWText = { "공개방 상태이기 때문에 입력하실 수 없습니다.", "영어,숫자 15글자" };
         public const string RoomPWNone = "None";
         public const int WrongValue = -1;

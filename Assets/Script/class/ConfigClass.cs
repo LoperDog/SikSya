@@ -44,11 +44,11 @@ public class ConfigClass {
         ManduStatus["AtttackSpeed"] = 1.9f;
 
         ManduStatus["StrongAttack"] = 120f;//우클릭 공격력
-        ManduStatus["StrongAttack_CoolTime"] = 2.0f;//우클릭 쿨타임
+        ManduStatus["StrongAttack_CoolTime"] = 20.0f;//우클릭 쿨타임
         ManduStatus["StongAttackTime"] = 0.5f;
 
         ManduStatus["SpecialAttack"] = 220.0f;//Q스킬 공격력
-        ManduStatus["SpecialAttack_CoolTime"] = 40.0f;// Q스킬 쿨타임
+        ManduStatus["SpecialAttack_CoolTime"] = 30.0f;// Q스킬 쿨타임
         ManduStatus["SpecialAttackReady"] = 1.5f;
         ManduStatus["SpecialAttackTime"] = 1.9f;
 
@@ -78,7 +78,7 @@ public class ConfigClass {
         DubuStatus["StongAttackEnd"] = 0.6f;
 
         DubuStatus["SpecialAttack"] = 150.0f;//Q스킬 대미지
-        DubuStatus["SpecialAttack_CoolTime"] = 30.0f;//Q스킬 쿨타임
+        DubuStatus["SpecialAttack_CoolTime"] = 20.0f;//Q스킬 쿨타임
 
         DubuStatus["SpecialAttackReady"] = 0.86f;
         DubuStatus["SpecialAttackTime"] = 0.56f;
@@ -99,6 +99,7 @@ public class ConfigClass {
 
         TangsuStatus["Cartridge"] = 0f;//근접공격이라 장탄수 없음
         TangsuStatus["ReLoadTime"] = 0f;//재장전 안해
+
         TangsuStatus["Attack"] = 50f;//공격력
         TangsuStatus["AtttackSpeed"] = 0.25f;
 
@@ -111,11 +112,12 @@ public class ConfigClass {
         TangsuStatus ["Atttack3_Start"] = 0.5f;
         TangsuStatus ["Atttack3_End"] = 1.16f;
 
-        TangsuStatus ["StrongAttack"] = 30f;//우클릭 공격력
+        TangsuStatus ["StrongAttack"] = 27f;//기본 공격력
         TangsuStatus["StrongAttack_CoolTime"] = 5.0f;//우클릭 쿨타임
+        TangsuStatus["Tumbling_Time"] = 0.9f;//우클릭 쿨타임
 
-        TangsuStatus["SpecialAttack"] = 150.0f;//Q스킬 대미지
-        TangsuStatus["SpecialAttack_CoolTime"] = 25.0f;//Q스킬 쿨타임
+        TangsuStatus["SpecialAttack"] = 50.0f;//Q스킬 대미지
+        TangsuStatus["SpecialAttack_CoolTime"] = 8.0f;//Q스킬 쿨타임
 
         TangsuStatus ["SpecialAttack_Ready"] = 0.9f;//공격 순간
         TangsuStatus ["SpecialAttack_End"] = 1.2f;//공격부터 끝나는 시간
