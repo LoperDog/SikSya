@@ -337,4 +337,15 @@ public class GameMgr : MonoBehaviour
         #endregion
     // 플레이어들의 팀정보를 받아온다.
     public int GetTeam(NetworkViewID ID) { return PlayersTeam[ID]%2; }
+
+    public void MidWayExitEndIntoTheRoom()
+    {
+        // 게임이 끝난다.
+        GameObject[] AllPlayer = GameObject.FindGameObjectsWithTag("PLAYER");
+        for (int i = 0; i < AllPlayer.Length; i++)
+        {
+            AllPlayer[i].GetComponent<Transform>().GetComponent<NetworkView>().RPC("MidWayGameEnd", RPCMode.AllBuffered, null);
+            
+        }
+    }
 }

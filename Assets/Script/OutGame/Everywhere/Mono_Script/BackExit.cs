@@ -26,6 +26,7 @@ public class BackExit : MonoBehaviour {
                 case State.ClientNotAllReady:
                 case State.ClientNotReady:
                     dataInfo = new DataPacketInfo((int)ProtocolInfo.ServerCommend, (int)ProtocolDetail.OutRoom, (int)State.ClientRequestBackExit, null);
+                    MyInfoClass.GetInstance().MyCharNumb = (int)ProtocolCharacterImageNameIndex.Tofu; // 나갈땐 두부로 캐릭터 초기화
                     OutSoundPlayer.PlayClickSound(SoundClip.Click);
                     //Debug.Log("나가기 요청 패킷 만듬");
                     break;

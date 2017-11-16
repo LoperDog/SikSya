@@ -24,7 +24,8 @@ public class CReadyNetWork
         if (mIP == null)
         {
             UnityEngine.Debug.Log("IP정보 파일 못 읽음");
-            mIP = "192.168.30.32";
+            mIP = "127.0.0.1";
+            //mIP = "192.168.200.160";
         }
         if (mPortStr != null)
         {

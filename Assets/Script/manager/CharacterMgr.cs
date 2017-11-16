@@ -978,4 +978,18 @@ public class CharacterMgr : MonoBehaviour
         }
     }
     #endregion
+
+
+    public void MidWayGameEnd()
+    {
+        thisCharacter.CanControll = false;
+        if (Network.isServer)
+        {
+            DisConnectInClient();
+            MyMgr.GameOver();
+        }
+
+    }
+
+
 }
